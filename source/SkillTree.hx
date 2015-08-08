@@ -43,6 +43,15 @@ class SkillTree extends FlxSpriteGroup
 		b_BoostAgi = false;
 		b_BoostExp = false;
 		
+		cooldown_PowerShoot= 0;
+		cooldown_PowerShield= 0;
+		cooldown_PowerHit= 0;
+		cooldown_PowerBall= 0;
+		cooldown_PowerArmor= 0;
+		cooldown_BoostRegen= 0;
+		cooldown_BoostExp= 0;
+		cooldown_BoostAgi= 0;
+		
 		
 		active_PowerHit = false;
 		active_PowerShoot= false;

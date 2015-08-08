@@ -7,6 +7,7 @@ import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxMath;
+import flixel.util.FlxRect;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -54,8 +55,25 @@ class PlayState extends FlxState
 		player.update();
 		FlxG.collide(player, level.map.walls);
 		FlxG.collide(level._grpEnemies, level.map.walls);
-		FlxG.collide(player, level._grpEnemies);
 		FlxG.collide(level._grpEnemies, level.map.walls);
+		
+		FlxG.collide(player, level._grpEnemies);
+		
+		if (player.attack)
+		{
+			trace("attack");
+			var r : FlxRect = player.getAttackRect();
+			
+			level._grpEnemies.forEach(function (e:Enemy) 
+			{
+				var enemyRect : FlxRect = new FlxRect (e.x, e.y, e.width, e.height);
+				if (r.overlaps(enemyRect))
+				{
+					trace("hit");
+				}
+			});
+		}
+		
 		skillz.update();
 	}
 	

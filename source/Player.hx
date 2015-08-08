@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.util.FlxColorUtil;
 import flixel.util.FlxPoint;
 import flixel.util.FlxRect;
+import lime.math.Rectangle;
 
 /**
  * ...
@@ -17,6 +18,9 @@ class Player extends Creature
 	private var attacTimer : Float;
 	
 	private var targetbox : FlxSprite;
+	private var targetboxRect : FlxRect;
+	
+	public var attack : Bool;
 	
 	public function new() 
 	{
@@ -31,6 +35,7 @@ class Player extends Creature
 		attacTimer = 0;
 		targetbox = new FlxSprite();
 		targetbox.makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(0.5, 100, 200, 200));
+		targetboxRect = new FlxRect(x, y, GameProperties.TileSize, GameProperties.TileSize);
 	}
 	
 	override public function draw()
@@ -41,30 +46,32 @@ class Player extends Creature
 	
 	override public function update()
 	{
+		attack = false;
 		acceleration.set(0, 0);
 		getInput();
 		super.update();
 		
 		var f : EFacing = getLastFacing();
 			
-		var r : FlxRect  = new FlxRect(x, y, GameProperties.TileSize, GameProperties.TileSize);
+		targetboxRect.x = x;
+		targetboxRect.y = y;
 		if (f == EFacing.Right)
 		{
-			r.x += GameProperties.TileSize;
+			targetboxRect.x += GameProperties.TileSize;
 		}
 		else if (f == EFacing.Left)
 		{
-			r.x -= GameProperties.TileSize;
+			targetboxRect.x -= GameProperties.TileSize;
 		}
 		if (f == EFacing.Up)
 		{
-			r.y -= GameProperties.TileSize;
+			targetboxRect.y -= GameProperties.TileSize;
 		}
 		else if (f == EFacing.Down)
 		{
-			r.y += GameProperties.TileSize;
+			targetboxRect.y += GameProperties.TileSize;
 		}
-		targetbox.setPosition(r.x, r.y);
+		targetbox.setPosition(targetboxRect.x, targetboxRect.y);
 	}
 	
 	private function getInput () : Void 
@@ -113,7 +120,7 @@ class Player extends Creature
 			// do nothing, since both or no key is pressed
 		}
 		
-		var attack: Bool = false;
+		attack = false;
 		if (FlxG.mouse.justPressed)
 		{
 			attack = true;
@@ -131,28 +138,13 @@ class Player extends Creature
 		{
 			attacTimer = GameProperties.Player_AttackSpeed;
 			
-			var f : EFacing = getLastFacing();
-			
-			var r : FlxRect  = new FlxRect(x, y, GameProperties.TileSize, GameProperties.TileSize);
-			if (f == EFacing.Right)
-			{
-				r.x += GameProperties.TileSize;
-			}
-			else if (f == EFacing.Left)
-			{
-				r.x -= GameProperties.TileSize;
-			}
-			if (f == EFacing.Up)
-			{
-				r.y -= GameProperties.TileSize;
-			}
-			else if (f == EFacing.Down)
-			{
-				r.y += GameProperties.TileSize;
-			}
 		}
 	}
 	
+	public function getAttackRect() : FlxRect
+	{
+		return targetboxRect;
+	}
 	
 
 }

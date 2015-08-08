@@ -10,6 +10,33 @@ class PlayerProperties
 	public function new() 
 	{
 		level = 0;
+		experience = 0;
+		skillPoints = 0;
+		attributePoints = 0;
+		
+		St = 5;
+		Ag = 5;
+		En = 5;
+		Wi = 5;
+		Lk = 5;
+		baseHP = 30;
+		itemHP = 0;
+		skillHP = 0;
+		
+		baseMP = 0;
+	
+		baseDamage = 0;
+		itemDamage = 0;
+		skillDamage = 0;
+		skillPowerHitDamage = 0;
+		
+		baseDefense= 0;
+		itemDefense= 0;
+		skillDefense= 0;
+		skillPowerArmorDefense= 0;
+		baseHitChance= 0;
+		
+		
 	}
 
 	public var experience : Int;
@@ -64,7 +91,7 @@ class PlayerProperties
 		return  val;
 	}
 	
-	public var baseHitChance : Int;
+	public var baseHitChance : Float;
 	
 
 	
