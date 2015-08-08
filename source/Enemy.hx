@@ -1,18 +1,20 @@
 package;
 
 import flixel.FlxSprite;
+import flixel.util.FlxColor;
 
 /**
  * ...
  * @author 
  */
-class Enemy extends FlxSprite
+class Enemy extends Creature
 {
 
-	public function new(X:Float=0, Y:Float=0, ?SimpleGraphic:Dynamic) 
+	public function new() 
 	{
-		super(X, Y, ?SimpleGraphic);
+		super();
 		
+		makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.RED);
 	}
 	
 }

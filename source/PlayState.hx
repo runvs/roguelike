@@ -32,7 +32,7 @@ class PlayState extends FlxState
 		skillz = new SkillTree(player.properties);
 		
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
-		FlxG.camera.setBounds(0, 0, level.map.width, level.map.height);
+		//FlxG.camera.setBounds(0, 0, level.map.width, level.map.height);
 	}
 	
 	/**
@@ -52,7 +52,7 @@ class PlayState extends FlxState
 		super.update();
 		level.update();
 		player.update();
-		FlxG.collide(player, level.map);
+		FlxG.collide(player, level.map.walls);
 		skillz.update();
 	}
 	

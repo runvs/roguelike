@@ -28,6 +28,7 @@ class Player extends Creature
 	{
 		getInput();
 		super.update();
+		trace (x);
 	}
 	
 	private function getInput () : Void 

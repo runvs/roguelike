@@ -1,6 +1,9 @@
+package;
+
+
 class MapGenerator
 {
-	public static function generateMapFromTree(tree:flixel.group.FlxTypedGroup<Leaf>):StringBuf
+	public static function generateMapFromTree(tree:flixel.group.FlxTypedGroup<Leaf>): MyTileMap
 	{
 		//we need to give every room a roomType and every hall a hallType
 		//for now, we do it random
@@ -51,9 +54,13 @@ class MapGenerator
 			}
 		}
 
+		
+		
+		
 		//generate the map string
-		var mapString:StringBuf = new StringBuf();
-
+		//var mapString:StringBuf = new StringBuf();
+		var finalMap : MyTileMap = new MyTileMap();
+//
 		//really bad but hey i studied computer science twice!
 		for(y in 0 ... tree.members[0].height)
 		{
@@ -87,14 +94,21 @@ class MapGenerator
 					}
 				}
 
-				mapString.add(Std.string(type));
-				mapString.add(Std.string(","));
+				//mapString.add(Std.string(type));
+				var t : Tile = new Tile(x*GameProperties.TileSize, y*GameProperties.TileSize, type);
+				if (t.passable == true)
+				{
+					finalMap.floor.add(t);
+				}
+				else
+				{
+					finalMap.walls.add(t);
+				}
 			}
-			mapString.add(Std.string("\n"));
 		}
 
-		//trace(mapString);
-		return mapString;
+		////trace(mapString);
+		return finalMap;
 	}
 
 	public static function isInHall(x:Int, y:Int, room:flixel.util.FlxRect):Bool

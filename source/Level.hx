@@ -4,9 +4,9 @@ import flixel.tile.FlxTile;
 class Level extends FlxObject
 {
 	
-	//public var _grpEnemies:flixel.group.FlxTypedGroup<Enemy>;
+	public var _grpEnemies:flixel.group.FlxTypedGroup<Enemy>;
 
-	public var map : flixel.tile.FlxTilemap;
+	public var map : MyTileMap;
 	public var _state:PlayState;
 	private var _level : Int;
 
@@ -22,17 +22,9 @@ class Level extends FlxObject
 	{
 		var mapAsTree:flixel.group.FlxTypedGroup<Leaf> = MapGenerator.generateTree(sizeX, sizeY);
 
-		map = new flixel.tile.FlxTilemap();
-		map.loadMap(MapGenerator.generateMapFromTree(mapAsTree).toString(), AssetPaths.SpriteSheetA__png, GameProperties.TileSize, GameProperties.TileSize, 0, 0, 0);
-		// collision map
-		map.setTileProperties(0, FlxObject.ANY);
-		map.setTileProperties(1, FlxObject.NONE);
-		map.setTileProperties(2, FlxObject.NONE);
-		map.setTileProperties(3, FlxObject.NONE);
-		map.setTileProperties(4, FlxObject.NONE);
-		map.setTileProperties(5, FlxObject.NONE);
-		map.setTileProperties(6, FlxObject.NONE);
-		map.setTileProperties(7, FlxObject.NONE);
+		map = new MyTileMap();
+		map = MapGenerator.generateMapFromTree(mapAsTree);
+
 
 		//_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, (_level == 0) ? 0 : 50, _level-1);
 
