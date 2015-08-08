@@ -2,6 +2,8 @@ package;
 
 import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
+import flixel.ui.FlxButton;
+import flixel.util.FlxColor;
 
 /**
  * ...
@@ -9,6 +11,13 @@ import flixel.group.FlxSpriteGroup;
  */
 class SkillTree extends FlxSpriteGroup
 {
+	
+	public var showMe : Bool = false;
+	
+	private var btn_NaniteArmor : FlxButton;
+	private var btn_NaniteHealth : FlxButton;
+	private var btn_NaniteWeapon : FlxButton;
+	
 	
 	public function new( properties : PlayerProperties) 
 	{
@@ -64,7 +73,32 @@ class SkillTree extends FlxSpriteGroup
 		active_BoostExp= false;
 		
 		
+		btn_NaniteArmor = new FlxButton(200, 40, "Nanite Armor", upgrade_NaniteArmor);
+		btn_NaniteArmor.scrollFactor.set();
+		btn_NaniteHealth = new FlxButton(200, 120, "Nanite Health", upgrade_NaniteHealth);
+		btn_NaniteHealth.scrollFactor.set();
+		btn_NaniteWeapon = new FlxButton(200, 200, "Nanite Weapon", upgrade_NaniteWeapon);
+		btn_NaniteWeapon.scrollFactor.set();
+		
+		add(btn_NaniteArmor);
+		add(btn_NaniteHealth);
+		add(btn_NaniteWeapon);
+		this.scrollFactor.set();
 	}
+	
+	public function upgrade_NaniteArmor() : Void 
+	{
+		
+	}
+	public function upgrade_NaniteHealth() : Void 
+	{
+		
+	}
+	public function upgrade_NaniteWeapon() : Void 
+	{
+		
+	}
+	
 	
 	var _properties : PlayerProperties;
 	
@@ -120,8 +154,6 @@ class SkillTree extends FlxSpriteGroup
 	private var b_BoostRegen : Bool;
 	private var b_BoostAgi : Bool;
 	private var b_BoostExp : Bool;
-	
-	
 	
 	private function ActivateDeactivateLevelUpSkills ( ) : Void 
 	{
@@ -187,7 +219,10 @@ class SkillTree extends FlxSpriteGroup
 					b_BoostExp = true;
 				}
 			}
+			
+
 		}
+		
 		
 		// check if max level reached
 		if ( PowerHit >= 5) 
@@ -236,13 +271,61 @@ class SkillTree extends FlxSpriteGroup
 		{
 			b_BoostExp = false;
 		}
+		
+		CheckButtons();
+	}
+	
+	public function CheckButtons() : Void 
+	{
+		if (b_NaniteArmor)
+		{
+			btn_NaniteArmor.set_color(FlxColor.RED);
+		}
+		else
+		{
+			btn_NaniteArmor.set_color(FlxColor.GRAY);
+		}
+		
+		if (b_NaniteHealth)
+		{
+			btn_NaniteHealth.set_color(FlxColor.RED);
+		}
+		else
+		{
+			btn_NaniteHealth.set_color(FlxColor.GRAY);
+		}
+		
+		if (b_NaniteWeapon)
+		{
+			btn_NaniteWeapon.set_color(FlxColor.RED);
+		}
+		else
+		{
+			btn_NaniteWeapon.set_color(FlxColor.GRAY);
+		}
+	}
+	
+	override public function draw () : Void 
+	{
+		if (showMe)
+		{
+			super.draw();
+		}
 	}
 	
 	override public function update () : Void 
 	{
-		super.update();
+		if (showMe)
+		{
+			super.update();
+		}
 		ActivateDeactivateLevelUpSkills();
 		calculateSkillBoni();
+		
+		if (FlxG.keys.justPressed.C)
+		{
+			showMe = ! showMe;
+		}
 		
 		
 		cooldown_PowerShoot -= FlxG.elapsed;
