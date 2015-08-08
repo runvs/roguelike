@@ -36,8 +36,6 @@ class PlayerProperties
 		skillDefense= 0;
 		skillPowerArmorDefense= 0;
 		baseHitChance= 0;
-		
-		
 	}
 
 	public var experience : Int;
@@ -68,7 +66,7 @@ class PlayerProperties
 	public var skillPowerHitDamage :Int ;
 	public function getDamage () : Int 
 	{
-		var val : Int = Std.int(baseDamage + itemDamage + skillDamage + skillPowerHitDamage);
+		var val : Int = Math.round(baseDamage + itemDamage + skillDamage + skillPowerHitDamage);
 		return  val;
 	}
 	
