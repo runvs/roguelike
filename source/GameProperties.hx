@@ -37,4 +37,5 @@ class GameProperties
 	public static var Player_MaxSpeed : Float = 100;
 	public static var Player_VelocityDecay : Float = 800;
 	public static var Player_Speed : Float = 1000;
+	public static var Player_AttackSpeed : Float = 0.25;
 }

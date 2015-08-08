@@ -9,10 +9,12 @@ import flixel.FlxSprite;
 class Creature extends FlxSprite
 {
 
+	private var lastFacing : EFacing;
+	
 	public function new() 
 	{
 		super();
-		
+		lastFacing = EFacing.Left;
 	}
 	
 	override public function update()
@@ -54,10 +56,12 @@ class Creature extends FlxSprite
 				if (vx > 0)
 				{
 					// walk right animation
+					lastFacing = EFacing.Right;
 				}
 				else
 				{
 					// walk left animation
+					lastFacing = EFacing.Left;
 				}
 			}
 			else
@@ -65,10 +69,12 @@ class Creature extends FlxSprite
 				if (vy > 0)
 				{
 					// walk down animation
+					lastFacing = EFacing.Down;
 				}
 				else
 				{
 					// walk up animation
+					lastFacing = EFacing.Up;
 				}
 			}
 		}
@@ -76,5 +82,10 @@ class Creature extends FlxSprite
 		{
 			// idle animation
 		}
+	}
+	
+	public function getLastFacing() : EFacing
+	{
+		return lastFacing;
 	}
 }

@@ -16,6 +16,7 @@ class Enemy extends Creature
 	private var randomwalkTimer : Float;
 	private var randomWalkDirection : Int;
 
+
 	public function new() 
 	{
 		super();

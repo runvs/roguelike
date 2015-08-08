@@ -21,7 +21,7 @@ class Tile extends FlxSprite
 		
 		if (t == 0)
 		{
-			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.WHITE);
+			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GRAY);
 			passable = false;
 		}
 		else if (t == 3)
