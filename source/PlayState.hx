@@ -36,6 +36,12 @@ class PlayState extends FlxState
 		//FlxG.camera.setBounds(0, 0, level.map.width, level.map.height);
 	}
 	
+	public function cleanUp ()  : Void 
+	{
+		level.cleanUp();
+	}
+	
+	
 	/**
 	 * Function that is called when this state is destroyed - you might want to 
 	 * consider setting all objects this state uses to null to help garbage collection.
@@ -51,6 +57,7 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
+		cleanUp();
 		level.update();
 		player.update();
 		FlxG.collide(player, level.map.walls);
@@ -70,6 +77,7 @@ class PlayState extends FlxState
 				if (r.overlaps(enemyRect))
 				{
 					trace("hit");
+					e.TakeDamage(player.properties.getDamage());
 				}
 			});
 		}

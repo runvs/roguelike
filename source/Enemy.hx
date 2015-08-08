@@ -15,11 +15,15 @@ class Enemy extends Creature
 	
 	private var randomwalkTimer : Float;
 	private var randomWalkDirection : Int;
+	
+	public var properties : EnemyPropeties;
 
 
 	public function new() 
 	{
 		super();
+		
+		properties = new EnemyPropeties( 1 );
 		
 		makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.RED);
 		
@@ -63,6 +67,17 @@ class Enemy extends Creature
 			moveRight();
 		}
 		
+	}
+	
+	
+	public function TakeDamage ( d : Int ) : Void 
+	{
+		properties.currentHP -= d;
+		trace ("take damage " + Std.string(d) + " newHP " + Std.string(properties.currentHP));
+		if (properties.currentHP <= 0)
+		{
+			alive = false;
+		}
 	}
 	
 }

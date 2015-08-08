@@ -71,6 +71,7 @@ class Player extends Creature
 		{
 			targetboxRect.y += GameProperties.TileSize;
 		}
+		
 		targetbox.setPosition(targetboxRect.x, targetboxRect.y);
 	}
 	

@@ -22,10 +22,11 @@ class PlayerProperties
 		baseHP = 30;
 		itemHP = 0;
 		skillHP = 0;
+		currentHP = baseHP;
 		
 		baseMP = 0;
 	
-		baseDamage = 0;
+		baseDamage = 3;
 		itemDamage = 0;
 		skillDamage = 0;
 		skillPowerHitDamage = 0;
@@ -50,6 +51,7 @@ class PlayerProperties
 	public var Wi : Int;
 	public var Lk : Int;
 	
+	public var currentHP : Int;
 	public var baseHP : Int;
 	public var itemHP : Int;
 	public var skillHP : Int;
@@ -64,9 +66,9 @@ class PlayerProperties
 	public var itemDamage : Int;
 	public var skillDamage : Int;
 	public var skillPowerHitDamage :Int ;
-	public function getDamage () : Float 
+	public function getDamage () : Int 
 	{
-		var val : Int = baseDamage + itemDamage + skillDamage + skillPowerHitDamage;
+		var val : Int = Std.int(baseDamage + itemDamage + skillDamage + skillPowerHitDamage);
 		return  val;
 	}
 	

@@ -88,4 +88,7 @@ class Creature extends FlxSprite
 	{
 		return lastFacing;
 	}
+	
+	
+	
 }

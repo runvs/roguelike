@@ -1,4 +1,5 @@
 import flixel.FlxObject;
+import flixel.group.FlxTypedGroup;
 import flixel.tile.FlxTile;
 
 class Level extends FlxObject
@@ -49,6 +50,17 @@ class Level extends FlxObject
 		super.draw();
 		map.draw();
 		_grpEnemies.draw();
+	}
+	
+	public function cleanUp () : Void 
+	{
+		var newEnemies : FlxTypedGroup<Enemy> = new FlxTypedGroup<Enemy>();
+		
+		_grpEnemies.forEach(function (e: Enemy ) : Void 
+		{
+			if (e.alive) { newEnemies.add(e); } else { e.destroy(); }
+		});
+		_grpEnemies = newEnemies;
 	}
 	
 }
