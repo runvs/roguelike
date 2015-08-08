@@ -82,9 +82,9 @@ class SkillTree extends FlxSpriteGroup
 		btn_NaniteHealth = new FlxButton(400, 100, "Nanite Health", upgrade_NaniteHealth);
 		btn_NaniteWeapon = new FlxButton(400, 160, "Nanite Weapon", upgrade_NaniteWeapon);
 		
-		btn_BoostRegen = new FlxButton(600, 40, "Boost Regen", upgrade_NaniteArmor);
-		btn_BoostAgi = new FlxButton(600, 100, "Boost Agi", upgrade_NaniteArmor);
-		btn_BoostExp = new FlxButton(600, 160, "Boost Exp", upgrade_NaniteArmor);
+		btn_BoostRegen = new FlxButton(600, 40, "Boost Regen", upgrade_BoostRegen);
+		btn_BoostAgi = new FlxButton(600, 100, "Boost Agi", upgrade_BoostAgi);
+		btn_BoostExp = new FlxButton(600, 160, "Boost Exp", upgrade_BoostExp);
 		
 		
 		add(btn_NaniteArmor);

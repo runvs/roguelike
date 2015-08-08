@@ -51,6 +51,7 @@ class Player extends Creature
 		getInput();
 		super.update();
 		
+		properties.CheckLevelUp();
 		var f : EFacing = getLastFacing();
 			
 		targetboxRect.x = x;

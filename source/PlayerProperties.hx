@@ -11,6 +11,7 @@ class PlayerProperties
 	{
 		level = 0;
 		experience = 0;
+		
 		experienceLevelUp =100;
 		skillPoints = 0;
 		attributePoints = 0;
@@ -36,7 +37,8 @@ class PlayerProperties
 		itemDefense= 0;
 		skillDefense= 0;
 		skillPowerArmorDefense= 0;
-		baseHitChance= 0;
+		baseHitChance = 0;
+		gainXP(50000);
 	}
 
 	public var experience : Int;
@@ -96,6 +98,11 @@ class PlayerProperties
 	public function gainXP(xp:Int)
 	{
 		experience += xp;
+		CheckLevelUp();
+	}
+	
+	public function CheckLevelUp():Void 
+	{
 		if (experience >= experienceLevelUp)
 		{
 			level += 1;
