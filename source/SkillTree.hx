@@ -45,9 +45,6 @@ class SkillTree extends FlxSpriteGroup
 		
 	}
 	
-	
-	
-	
 	var _properties : PlayerProperties;
 	
 	public var PowerHit : Int;
@@ -196,6 +193,40 @@ class SkillTree extends FlxSpriteGroup
 		}
 	}
 	
+	override public function update () : Void 
+	{
+		super.update();
+		calculateSkillBoni();
+	}
+	
+	private function calculateSkillBoni() : Void 
+	{
+		calculateSkillNaniteHealth();
+		calculateSkillNaniteArmor();
+		
+		calculateSkillNaniteDamage();
+	}
+	
+	function calculateSkillNaniteHealth():Void 
+	{
+		var incfactor : Float = NaniteHealth * GameProperties.Skills_NaniteHealth_FactorPerLevel;
+		var incHP :Float = _properties.baseHP * incfactor;
+		_properties.skillHP = incHP;
+	}
+	
+	function calculateSkillNaniteArmor():Void 
+	{
+		var incFactor : Float = NaniteArmor * GameProperties.Skills_NaniteArmor_FactorPerLevel;
+		_properties.skillDefense = incFactor;
+	}
+	
+	function calculateSkillNaniteDamage():Void 
+	{
+		var incD : Int = NaniteWeapon * GameProperties.Skills_NaniteWeapon_DamagePerLevel;
+		var incF : Float = NaniteWeapon * GameProperties.Skills_NaniteWeapon_FactorPerLevel;
+		incD += incF * (_properties.baseDamage + 0.25 * _properties.itemDamage);
+		_properties.skillDamage = incD;
+	}
 	
 	
 }
