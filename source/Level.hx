@@ -23,7 +23,7 @@ class Level extends FlxObject
 		var mapAsTree:flixel.group.FlxTypedGroup<Leaf> = MapGenerator.generateTree(sizeX, sizeY);
 
 		map = new flixel.tile.FlxTilemap();
-		map.loadMap(MapGenerator.generateMapFromTree(mapAsTree).toString(), AssetPaths.SpriteSheetA__png, 16, 16, 0, 0, 0);
+		map.loadMap(MapGenerator.generateMapFromTree(mapAsTree).toString(), AssetPaths.SpriteSheetA__png, GameProperties.TileSize, GameProperties.TileSize, 0, 0, 0);
 		// collision map
 		map.setTileProperties(0, FlxObject.ANY);
 		map.setTileProperties(1, FlxObject.NONE);

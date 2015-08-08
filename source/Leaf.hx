@@ -35,9 +35,9 @@ class Leaf extends flixel.FlxBasic
         // otherwise we split randomly
         var splitH:Bool = flixel.util.FlxRandom.float() > 0.5;
 		
-        if (width > height && height / width >= 0.05)
+        if (width > height && height / width >= 0.01)
             splitH = false;
-        else if (height > width && width / height >= 0.05)
+        else if (height > width && width / height >= 0.01)
             splitH = true;
  
         var max:Int = (splitH ? height : width) - MIN_LEAF_SIZE; // determine the maximum height or width
