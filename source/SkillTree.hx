@@ -96,7 +96,7 @@ class SkillTree extends FlxSpriteGroup
 	public var cooldown_BoostExp: Float;
 	
 	public var lifeTime_PowerArmor : Float; 
-	
+	public var lifeTime_BoostRegen : Float;
 	
 	private var b_PowerHit : Bool;
 	private var b_PowerShoot : Bool;
@@ -245,8 +245,7 @@ class SkillTree extends FlxSpriteGroup
 		cooldown_BoostExp -= FlxG.elapsed;
 		cooldown_BoostAgi -= FlxG.elapsed;
 		
-		
-		
+		CheckSkillLifeTime();
 	}
 	
 	
@@ -275,6 +274,7 @@ class SkillTree extends FlxSpriteGroup
 	{
 		cooldown_PowerShield = GameProperties.Skills_PowerBall_CoolDown;
 	}
+	
 	public function useSkillPowerArmor() : Void 
 	{
 		if ( cooldown_PowerArmor  <= 0)
@@ -284,6 +284,13 @@ class SkillTree extends FlxSpriteGroup
 			lifeTime_PowerArmor = GameProperties.Skills_PowerArmor_LifeTime;
 		}
 	}
+	
+	public function activateSkillBoostRegen() : Void 
+	{
+		active_BoostRegen = true;
+		cooldown_BoostRegen = GameProperties.Skills_BoostRegen_CoolDown;
+		lifeTime_BoostRegen = GameProperties.Skills_BoostRegen_LifeTime;
+	}
 
 	
 	private function calculateSkillBoni() : Void 
@@ -292,11 +299,8 @@ class SkillTree extends FlxSpriteGroup
 		calculateSkillNaniteArmor();
 		calculateSkillNaniteDamage();
 	
-		calculateSkillPowerHit();
-		if (active_PowerArmor && lifeTime_PowerArmor >= 0)
-		{
-			_properties.skillPowerArmorDefense = PowerArmor * GameProperties.Skills_PowerArmor_DefensePerLevel;
-		}
+		
+		calculateSkillPowerArmor();
 	}
 	
 	function calculateSkillNaniteHealth():Void 
@@ -329,6 +333,40 @@ class SkillTree extends FlxSpriteGroup
 		else 
 		{
 			_properties.skillPowerHitDamage = 0;
+		}
+	}
+	
+	function calculateSkillPowerArmor():Void 
+	{
+		calculateSkillPowerHit();
+		if (active_PowerArmor && lifeTime_PowerArmor >= 0)
+		{
+			_properties.skillPowerArmorDefense = PowerArmor * GameProperties.Skills_PowerArmor_DefensePerLevel;
+		}
+		else 
+		{
+			_properties.skillPowerArmorDefense = 0;
+		}
+	}
+	
+	function CheckSkillLifeTime():Void 
+	{
+		if (lifeTime_PowerArmor >= 0 && active_PowerArmor )
+		{
+			lifeTime_PowerArmor -= FlxG.elapsed;
+			if (lifeTime_PowerArmor <= 0)
+			{	
+				active_PowerArmor = false;
+			}
+		}
+		
+		if (lifeTime_BoostRegen >= 0 && active_BoostRegen)
+		{
+			lifeTime_BoostRegen -= FlxG.elapsed;
+			if (lifeTime_BoostRegen <= 0)
+			{
+				active_BoostRegen = false;
+			}
 		}
 	}
 	

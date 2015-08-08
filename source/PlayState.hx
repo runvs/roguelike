@@ -14,6 +14,7 @@ class PlayState extends FlxState
 {
 	
 	var level : Level;
+	var player : Player;
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -22,6 +23,7 @@ class PlayState extends FlxState
 	{
 		super.create();
 		level = new Level(this, 40, 40, 1);
+		player = new Player();
 	}
 	
 	/**
@@ -40,10 +42,13 @@ class PlayState extends FlxState
 	{
 		super.update();
 		level.update();
+		player.update();
 	}	
 	override public function draw(): Void
 	{
-		super.draw();
+		
 		level.draw();
+		player.draw();
+		super.draw();
 	}
 }

@@ -31,4 +31,11 @@ class GameProperties
 	public static var Skills_PowerArmor_LifeTime : Float = 5;
 	public static var Skills_PowerArmor_DefensePerLevel : Float = 0.10;
 	
+	public static var Skills_BoostRegen_CoolDown : Float = 5;
+	public static var Skills_BoostRegen_LifeTime : Float = 4;
+	
+	public static var Player_MaxSpeed : Float = 155;
+	public static var Player_VelocityDecay : Float = 0.875;
+	public static var Player_Speed : Float = 100;
+	
 }

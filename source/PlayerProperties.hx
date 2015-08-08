@@ -43,6 +43,9 @@ class PlayerProperties
 		return  val;
 	}
 	
+	
+	
+	
 	public var baseDefense : Float;
 	public var itemDefense : Float;
 	public var skillDefense : Float;
