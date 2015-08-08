@@ -12,12 +12,16 @@ import flixel.util.FlxMath;
  */
 class PlayState extends FlxState
 {
+	
+	var level : Level;
+	
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
 	{
 		super.create();
+		level = new Level(this, 40, 40, 1);
 	}
 	
 	/**
@@ -35,5 +39,11 @@ class PlayState extends FlxState
 	override public function update():Void
 	{
 		super.update();
+		level.update();
 	}	
+	override public function draw(): Void
+	{
+		super.draw();
+		level.draw();
+	}
 }
