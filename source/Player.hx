@@ -26,14 +26,14 @@ class Player extends Creature
 	
 	override public function update()
 	{
+		acceleration.set(0, 0);
 		getInput();
 		super.update();
-		trace (x);
 	}
 	
 	private function getInput () : Void 
 	{
-		acceleration.set(0, 0);
+		
 		var left : Bool = false;
 		var right : Bool = false;
 		

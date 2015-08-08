@@ -26,7 +26,7 @@ class Level extends FlxObject
 		map = MapGenerator.generateMapFromTree(mapAsTree);
 
 
-		//_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, (_level == 0) ? 0 : 50, _level-1);
+		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, (_level == 0) ? 0 : 50, _level-1);
 
 		//var forbiddenList:Array<Int> = new Array<Int>();
 		//forbiddenList.push(0);
@@ -40,7 +40,7 @@ class Level extends FlxObject
 		
 		//flixel.FlxG.collide(_grpEnemies, map);
 		
-		//_grpEnemies.forEachAlive(function(e:Enemy):Void{e.update();});
+		_grpEnemies.update();
 		//_grpEnemies.forEachAlive(checkEnemyVision);
 	}
 
@@ -48,7 +48,7 @@ class Level extends FlxObject
 	{
 		super.draw();
 		map.draw();
-		//_grpEnemies.forEachAlive(function(e:Enemy):Void{e.draw();});
+		_grpEnemies.draw();
 	}
 	
 }

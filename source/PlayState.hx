@@ -53,6 +53,7 @@ class PlayState extends FlxState
 		level.update();
 		player.update();
 		FlxG.collide(player, level.map.walls);
+		FlxG.collide(level._grpEnemies, level.map.walls);
 		skillz.update();
 	}
 	
