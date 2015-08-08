@@ -132,13 +132,13 @@ class SkillTree extends FlxSpriteGroup
 		
 		if ( _properties.skillPoints > 0)
 		{
-			if ( Level >= GameProperties.Skills_Level1)
+			if ( _properties.level >= GameProperties.Skills_Level1)
 			{
 				b_PowerHit = true;
 				b_NaniteArmor = true;
 				b_BoostRegen = true;
 			}
-			if (Level >= GameProperties.Skills_Level2)
+			if (_properties.level >= GameProperties.Skills_Level2)
 			{
 				if (PowerHit >= 1)
 				{
@@ -157,7 +157,7 @@ class SkillTree extends FlxSpriteGroup
 				}
 
 			}
-			if (Level >= GameProperties.Skills_Level3)
+			if (_properties.level >= GameProperties.Skills_Level3)
 			{
 				if (PowerShoot >= 1)
 				{
@@ -307,7 +307,7 @@ class SkillTree extends FlxSpriteGroup
 	{
 		var incfactor : Float = NaniteHealth * GameProperties.Skills_NaniteHealth_FactorPerLevel;
 		var incHP :Float = _properties.baseHP * incfactor;
-		_properties.skillHP = incHP;
+		_properties.skillHP = Std.int(incHP);
 	}
 	
 	function calculateSkillNaniteArmor():Void 
@@ -320,7 +320,7 @@ class SkillTree extends FlxSpriteGroup
 	{
 		var incD : Int = NaniteWeapon * GameProperties.Skills_NaniteWeapon_DamagePerLevel;
 		var incF : Float = NaniteWeapon * GameProperties.Skills_NaniteWeapon_FactorPerLevel;
-		incD += incF * (_properties.baseDamage + 0.25 * _properties.itemDamage);
+		incD += Std.int(incF * (_properties.baseDamage + 0.25 * _properties.itemDamage));
 		_properties.skillDamage = incD;
 	}
 	

@@ -8,10 +8,9 @@ import flixel.util.FlxPoint;
  * ...
  * @author 
  */
-class Player extends FlxSprite
+class Player extends Creature
 {
-	
-	var properties : PlayerProperties;
+	public var properties : PlayerProperties;
 	
 	public function new() 
 	{
@@ -27,46 +26,8 @@ class Player extends FlxSprite
 	
 	override public function update()
 	{
-		super.update();
-		
 		getInput();
-		doMovement();
-	}
-	
-	function doMovement():Void 
-	{
-		var vx : Float = velocity.x;
-		var vy : Float = velocity.y;
-		// animation stuff
-		if (vx * vx + vy * vy >= 1)
-		{
-			if (Math.abs(vx) > Math.abs(vy))
-			{
-				if (vx > 0)
-				{
-					// walk right animation
-				}
-				else
-				{
-					// walk left animation
-				}
-			}
-			else
-			{
-				if (vy > 0)
-				{
-					// walk down animation
-				}
-				else
-				{
-					// walk up animation
-				}
-			}
-		}
-		else
-		{
-			// idle animation
-		}
+		super.update();
 	}
 	
 	private function getInput () : Void 
@@ -82,11 +43,11 @@ class Player extends FlxSprite
 			
 		if (left && !right)
 		{
-			steerLeft();
+			moveLeft();
 		}
 		else if (right != left)
 		{
-			steerRight();
+			moveRight();
 		}
 		else
 		{
@@ -104,11 +65,11 @@ class Player extends FlxSprite
 			
 		if (up && !down)
 		{
-			steerUp();
+			moveUp();
 		}
 		else if (down != up)
 		{
-			steerDown();
+			moveDown();
 		}
 		else
 		{
@@ -127,24 +88,5 @@ class Player extends FlxSprite
 	}
 	
 	
-	public function steerLeft() : Void 
-	{
-		acceleration.x = -GameProperties.Player_Speed;
-	}
-	
-	public function steerRight() : Void 
-	{
-		acceleration.x = GameProperties.Player_Speed;
-	}
-	
-	private function steerUp() : Void 
-	{
-		acceleration.y = -GameProperties.Player_Speed;
-	}
-	
-	private function steerDown() : Void 
-	{
-		acceleration.y = GameProperties.Player_Speed;
-	}
-	
+
 }

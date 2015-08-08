@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -16,16 +17,22 @@ class PlayState extends FlxState
 	var level : Level;
 	var player : Player;
 	
+	var skillz : SkillTree;
+	
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
 	override public function create():Void
 	{
 		super.create();
-		level = new Level(this, 40, 40, 1);
+		level = new Level(this, 100, 30, 1);
 		player = new Player();
 		player.x = 100;
 		player.y = 100;
+		skillz = new SkillTree(player.properties);
+		
+		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
+		FlxG.camera.setBounds(0, 0, level.map.width, level.map.height);
 	}
 	
 	/**
@@ -46,12 +53,14 @@ class PlayState extends FlxState
 		level.update();
 		player.update();
 		FlxG.collide(player, level.map);
-	}	
+		skillz.update();
+	}
+	
 	override public function draw(): Void
 	{
-		
 		level.draw();
 		player.draw();
+		skillz.draw();
 		super.draw();
 	}
 }
