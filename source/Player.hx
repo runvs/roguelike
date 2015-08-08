@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.util.FlxPoint;
 
 /**
  * ...
@@ -19,6 +20,9 @@ class Player extends FlxSprite
 		properties = new PlayerProperties();
 		
 		this.makeGraphic(GameProperties.TileSize, GameProperties.TileSize);
+		
+		this.drag = new FlxPoint( GameProperties.Player_VelocityDecay, GameProperties.Player_VelocityDecay);
+		this.maxVelocity = new FlxPoint(GameProperties.Player_MaxSpeed,  GameProperties.Player_MaxSpeed);
 	}
 	
 	override public function update()
@@ -33,25 +37,41 @@ class Player extends FlxSprite
 	{
 		var vx : Float = velocity.x;
 		var vy : Float = velocity.y;
-		
-		var mssx = GameProperties.Player_MaxSpeed;
-		var mssy = GameProperties.Player_MaxSpeed;
-		
-		if (vx > mssx)
-			vx = mssx;
-		if (vx < -mssx)
-			vx = -mssx;
-			
-		if (vy > mssy )
-			vy = mssy;
-		if (vy < -mssy)
-			vy = -mssy;
-			
-		velocity = new flixel.util.FlxPoint(vx * GameProperties.Player_VelocityDecay , vy * GameProperties.Player_VelocityDecay);
+		// animation stuff
+		if (vx * vx + vy * vy >= 1)
+		{
+			if (Math.abs(vx) > Math.abs(vy))
+			{
+				if (vx > 0)
+				{
+					// walk right animation
+				}
+				else
+				{
+					// walk left animation
+				}
+			}
+			else
+			{
+				if (vy > 0)
+				{
+					// walk down animation
+				}
+				else
+				{
+					// walk up animation
+				}
+			}
+		}
+		else
+		{
+			// idle animation
+		}
 	}
 	
 	private function getInput () : Void 
 	{
+		acceleration.set(0, 0);
 		var left : Bool = false;
 		var right : Bool = false;
 		
@@ -109,22 +129,22 @@ class Player extends FlxSprite
 	
 	public function steerLeft() : Void 
 	{
-		velocity.x -= GameProperties.Player_Speed;
+		acceleration.x = -GameProperties.Player_Speed;
 	}
 	
 	public function steerRight() : Void 
 	{
-		velocity.x += GameProperties.Player_Speed;
+		acceleration.x = GameProperties.Player_Speed;
 	}
 	
 	private function steerUp() : Void 
 	{
-		velocity.y -= GameProperties.Player_Speed;
+		acceleration.y = -GameProperties.Player_Speed;
 	}
 	
 	private function steerDown() : Void 
 	{
-		velocity.y += GameProperties.Player_Speed;
+		acceleration.y = GameProperties.Player_Speed;
 	}
 	
 }

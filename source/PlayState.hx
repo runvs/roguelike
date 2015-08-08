@@ -24,6 +24,8 @@ class PlayState extends FlxState
 		super.create();
 		level = new Level(this, 40, 40, 1);
 		player = new Player();
+		player.x = 100;
+		player.y = 100;
 	}
 	
 	/**
@@ -43,6 +45,7 @@ class PlayState extends FlxState
 		super.update();
 		level.update();
 		player.update();
+		FlxG.collide(player, level.map);
 	}	
 	override public function draw(): Void
 	{

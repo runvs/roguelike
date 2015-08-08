@@ -34,8 +34,8 @@ class GameProperties
 	public static var Skills_BoostRegen_CoolDown : Float = 5;
 	public static var Skills_BoostRegen_LifeTime : Float = 4;
 	
-	public static var Player_MaxSpeed : Float = 155;
-	public static var Player_VelocityDecay : Float = 0.875;
-	public static var Player_Speed : Float = 100;
+	public static var Player_MaxSpeed : Float = 100;
+	public static var Player_VelocityDecay : Float = 800;
+	public static var Player_Speed : Float = 1000;
 	
 }
