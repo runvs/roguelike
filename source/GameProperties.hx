@@ -17,4 +17,18 @@ class GameProperties
 	
 	public static var Skills_NaniteWeapon_FactorPerLevel : Float = 0.05;
 	public static var Skills_NaniteWeapon_DamagePerLevel : Int = 5;
+	
+	public static var Skills_PowerHit_CoolDown : Float = 5;
+	public static var Skills_PowerHit_DamagePerLevel : Int = 5;
+	
+	public static var Skills_PowerShoot_CoolDown : Float = 5;
+	
+	public static var Skills_PowerShield_CoolDown : Float = 5;
+	
+	public static var Skills_PowerBall_CoolDown : Float = 5;
+	
+	public static var Skills_PowerArmor_CoolDown : Float = 5;
+	public static var Skills_PowerArmor_LifeTime : Float = 5;
+	public static var Skills_PowerArmor_DefensePerLevel : Float = 0.10;
+	
 }

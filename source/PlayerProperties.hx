@@ -36,18 +36,20 @@ class PlayerProperties
 	public var baseDamage : Int;
 	public var itemDamage : Int;
 	public var skillDamage : Int;
+	public var skillPowerHitDamage :Int ;
 	public function getDamage () : Float 
 	{
-		var val : Int = baseDamage + itemDamage + skillDamage;
+		var val : Int = baseDamage + itemDamage + skillDamage + skillPowerHitDamage;
 		return  val;
 	}
 	
 	public var baseDefense : Float;
 	public var itemDefense : Float;
 	public var skillDefense : Float;
+	public var skillPowerArmorDefense : Float;
 	public function getDefense () : Float 
 	{
-		var val : Float = baseDefense + itemDefense + skillDefense;
+		var val : Float = baseDefense + itemDefense + skillDefense + skillPowerArmorDefense;
 		if (val > 0.9)
 		{
 			val = 0.9 + (val - 0.9 * 0.05); 

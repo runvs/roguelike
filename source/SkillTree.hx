@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
 
 /**
@@ -43,6 +44,17 @@ class SkillTree extends FlxSpriteGroup
 		b_BoostExp = false;
 		
 		
+		active_PowerHit = false;
+		active_PowerShoot= false;
+		active_PowerShield= false;
+		active_PowerBall= false;
+		active_PowerArmor= false;
+		
+		active_BoostRegen= false;
+		active_BoostAgi= false;
+		active_BoostExp= false;
+		
+		
 	}
 	
 	var _properties : PlayerProperties;
@@ -60,7 +72,31 @@ class SkillTree extends FlxSpriteGroup
 	public var BoostRegen : Int;
 	public var BoostAgi : Int;
 	public var BoostExp : Int;
-
+	
+	
+	public var active_PowerHit : Bool;
+	public var active_PowerShoot: Bool;
+	public var active_PowerShield: Bool;
+	public var active_PowerBall: Bool;
+	public var active_PowerArmor: Bool;
+	
+	public var active_BoostRegen: Bool;
+	public var active_BoostAgi: Bool;
+	public var active_BoostExp: Bool;
+	
+	
+	public var cooldown_PowerHit: Float;
+	public var cooldown_PowerShoot: Float;
+	public var cooldown_PowerShield: Float;
+	public var cooldown_PowerBall: Float;
+	public var cooldown_PowerArmor: Float;
+	
+	public var cooldown_BoostRegen: Float;
+	public var cooldown_BoostAgi: Float;
+	public var cooldown_BoostExp: Float;
+	
+	public var lifeTime_PowerArmor : Float; 
+	
 	
 	private var b_PowerHit : Bool;
 	private var b_PowerShoot : Bool;
@@ -78,7 +114,7 @@ class SkillTree extends FlxSpriteGroup
 	
 	
 	
-	private function ActivateDeactivateSkills ( ) : Void 
+	private function ActivateDeactivateLevelUpSkills ( ) : Void 
 	{
 		b_PowerHit = false;
 		b_PowerShoot = false;
@@ -196,15 +232,71 @@ class SkillTree extends FlxSpriteGroup
 	override public function update () : Void 
 	{
 		super.update();
+		ActivateDeactivateLevelUpSkills();
 		calculateSkillBoni();
+		
+		
+		cooldown_PowerShoot -= FlxG.elapsed;
+		cooldown_PowerShield -= FlxG.elapsed;
+		cooldown_PowerHit -= FlxG.elapsed;
+		cooldown_PowerBall -= FlxG.elapsed;
+		cooldown_PowerArmor -= FlxG.elapsed;
+		cooldown_BoostRegen -= FlxG.elapsed;
+		cooldown_BoostExp -= FlxG.elapsed;
+		cooldown_BoostAgi -= FlxG.elapsed;
+		
+		
+		
 	}
+	
+	
+	public function activateSkillPowerHit(): Void 
+	{
+		active_PowerHit = true;
+		cooldown_PowerHit = GameProperties.Skills_PowerHit_CoolDown;
+	}
+	
+	public function useSkillPowerHit(): Void 
+	{
+		active_PowerHit = false;
+	}
+
+	public function useSkillPowerShoot() : Void 
+	{
+		cooldown_PowerShoot = GameProperties.Skills_PowerShoot_CoolDown;
+	}
+	
+	public function useSkillPowerShield() : Void 
+	{
+		cooldown_PowerShield = GameProperties.Skills_PowerShield_CoolDown;
+	}
+	
+	public function useSkillPowerBall() : Void 
+	{
+		cooldown_PowerShield = GameProperties.Skills_PowerBall_CoolDown;
+	}
+	public function useSkillPowerArmor() : Void 
+	{
+		if ( cooldown_PowerArmor  <= 0)
+		{
+			cooldown_PowerArmor = GameProperties.Skills_PowerArmor_CoolDown;
+			active_PowerArmor = true;
+			lifeTime_PowerArmor = GameProperties.Skills_PowerArmor_LifeTime;
+		}
+	}
+
 	
 	private function calculateSkillBoni() : Void 
 	{
 		calculateSkillNaniteHealth();
 		calculateSkillNaniteArmor();
-		
 		calculateSkillNaniteDamage();
+	
+		calculateSkillPowerHit();
+		if (active_PowerArmor && lifeTime_PowerArmor >= 0)
+		{
+			_properties.skillPowerArmorDefense = PowerArmor * GameProperties.Skills_PowerArmor_DefensePerLevel;
+		}
 	}
 	
 	function calculateSkillNaniteHealth():Void 
@@ -226,6 +318,18 @@ class SkillTree extends FlxSpriteGroup
 		var incF : Float = NaniteWeapon * GameProperties.Skills_NaniteWeapon_FactorPerLevel;
 		incD += incF * (_properties.baseDamage + 0.25 * _properties.itemDamage);
 		_properties.skillDamage = incD;
+	}
+	
+	function calculateSkillPowerHit():Void 
+	{
+		if (active_PowerHit)
+		{
+			_properties.skillPowerHitDamage = PowerHit * GameProperties.Skills_PowerHit_DamagePerLevel;
+		}
+		else 
+		{
+			_properties.skillPowerHitDamage = 0;
+		}
 	}
 	
 	
