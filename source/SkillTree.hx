@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.group.FlxSpriteGroup;
+import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 
@@ -18,6 +19,10 @@ class SkillTree extends FlxSpriteGroup
 	private var btn_NaniteHealth : FlxButton;
 	private var btn_NaniteWeapon : FlxButton;
 	
+	private var btn_BoostRegen : FlxButton;
+	private var btn_BoostAgi : FlxButton;
+	private var btn_BoostExp : FlxButton;
+	private var text_Skillpoints : FlxText;
 	
 	public function new( properties : PlayerProperties) 
 	{
@@ -73,30 +78,78 @@ class SkillTree extends FlxSpriteGroup
 		active_BoostExp= false;
 		
 		
-		btn_NaniteArmor = new FlxButton(200, 40, "Nanite Armor", upgrade_NaniteArmor);
-		btn_NaniteArmor.scrollFactor.set();
-		btn_NaniteHealth = new FlxButton(200, 120, "Nanite Health", upgrade_NaniteHealth);
-		btn_NaniteHealth.scrollFactor.set();
-		btn_NaniteWeapon = new FlxButton(200, 200, "Nanite Weapon", upgrade_NaniteWeapon);
-		btn_NaniteWeapon.scrollFactor.set();
+		btn_NaniteArmor = new FlxButton(400, 40, "Nanite Armor", upgrade_NaniteArmor);
+		btn_NaniteHealth = new FlxButton(400, 100, "Nanite Health", upgrade_NaniteHealth);
+		btn_NaniteWeapon = new FlxButton(400, 160, "Nanite Weapon", upgrade_NaniteWeapon);
+		
+		btn_BoostRegen = new FlxButton(600, 40, "Boost Regen", upgrade_NaniteArmor);
+		btn_BoostAgi = new FlxButton(600, 100, "Boost Agi", upgrade_NaniteArmor);
+		btn_BoostExp = new FlxButton(600, 160, "Boost Exp", upgrade_NaniteArmor);
+		
 		
 		add(btn_NaniteArmor);
 		add(btn_NaniteHealth);
 		add(btn_NaniteWeapon);
+		
+		add(btn_BoostRegen);
+		add(btn_BoostAgi);
+		add(btn_BoostExp);
+		
+		text_Skillpoints = new FlxText(200, 30, 100, "");
+		add(text_Skillpoints);
+		
 		this.scrollFactor.set();
 	}
 	
 	public function upgrade_NaniteArmor() : Void 
 	{
-		
+		if (_properties.skillPoints >= 1)
+		{
+			_properties.skillPoints -= 1;
+			NaniteArmor += 1;
+		}
 	}
 	public function upgrade_NaniteHealth() : Void 
 	{
-		
+		if (_properties.skillPoints >= 1)
+		{
+			_properties.skillPoints -= 1;
+			NaniteHealth += 1;
+		}
 	}
 	public function upgrade_NaniteWeapon() : Void 
 	{
-		
+		if (_properties.skillPoints >= 1)
+		{
+			_properties.skillPoints -= 1;
+			NaniteWeapon += 1;
+		}
+	}
+	
+	
+	public function upgrade_BoostRegen() : Void 
+	{
+		if (_properties.skillPoints >= 1)
+		{
+			_properties.skillPoints -= 1;
+			BoostRegen += 1;
+		}
+	}
+	public function upgrade_BoostAgi() : Void 
+	{
+		if (_properties.skillPoints >= 1)
+		{
+			_properties.skillPoints -= 1;
+			BoostAgi += 1;
+		}
+	}
+	public function upgrade_BoostExp() : Void 
+	{
+		if (_properties.skillPoints >= 1)
+		{
+			_properties.skillPoints -= 1;
+			BoostExp += 1;
+		}
 	}
 	
 	
@@ -303,6 +356,33 @@ class SkillTree extends FlxSpriteGroup
 		{
 			btn_NaniteWeapon.set_color(FlxColor.GRAY);
 		}
+		
+		if (b_BoostRegen)
+		{
+			btn_BoostRegen.set_color(FlxColor.RED);
+		}
+		else
+		{
+			btn_BoostRegen.set_color(FlxColor.GRAY);
+		}
+		
+		if (b_BoostAgi)
+		{
+			btn_BoostAgi.set_color(FlxColor.RED);
+		}
+		else
+		{
+			btn_BoostAgi.set_color(FlxColor.GRAY);
+		}
+		
+		if (b_BoostExp)
+		{
+			btn_BoostExp.set_color(FlxColor.RED);
+		}
+		else
+		{
+			btn_BoostExp.set_color(FlxColor.GRAY);
+		}
 	}
 	
 	override public function draw () : Void 
@@ -318,6 +398,7 @@ class SkillTree extends FlxSpriteGroup
 		if (showMe)
 		{
 			super.update();
+			text_Skillpoints.text = "Exp: " + Std.string(_properties.experience) + "/" + Std.string(_properties.experienceLevelUp)  +  "\nSkillpoints: " + Std.string(_properties.skillPoints);
 		}
 		ActivateDeactivateLevelUpSkills();
 		calculateSkillBoni();

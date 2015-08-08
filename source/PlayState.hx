@@ -78,6 +78,10 @@ class PlayState extends FlxState
 				{
 					trace("hit");
 					e.TakeDamage(player.properties.getDamage());
+					if (e.alive == false)
+					{
+						player.properties.gainXP(120);
+					}
 				}
 			});
 		}

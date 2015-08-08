@@ -1,7 +1,7 @@
 class Leaf extends flixel.FlxBasic
 {
  
-    private var MIN_LEAF_SIZE:Int = 8;
+    private var MIN_LEAF_SIZE:Int = 6;
  
     public var y:Int;
     public var x:Int;

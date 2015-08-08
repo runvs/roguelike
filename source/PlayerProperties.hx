@@ -11,6 +11,7 @@ class PlayerProperties
 	{
 		level = 0;
 		experience = 0;
+		experienceLevelUp =100;
 		skillPoints = 0;
 		attributePoints = 0;
 		
@@ -39,6 +40,7 @@ class PlayerProperties
 	}
 
 	public var experience : Int;
+	public var experienceLevelUp : Int;
 	public var level: Int;
 	public var skillPoints : Int;
 	public var attributePoints : Int;
@@ -89,6 +91,18 @@ class PlayerProperties
 			val = 0.99;
 		}
 		return  val;
+	}
+	
+	public function gainXP(xp:Int)
+	{
+		experience += xp;
+		if (experience >= experienceLevelUp)
+		{
+			level += 1;
+			skillPoints += 1;
+			attributePoints += 5;
+			experienceLevelUp = Std.int(experienceLevelUp * 1.75);
+		}
 	}
 	
 	public var baseHitChance : Float;
