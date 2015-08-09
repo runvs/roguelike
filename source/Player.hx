@@ -143,7 +143,7 @@ class Player extends Creature
 		{
 			skill_PowerHit.color = FlxColor.BLACK;
 		}
-		else if (skillz.cooldown_PowerHit >= 0)
+		else if (skillz.cooldown_PowerHit >= 0 || properties.currentMP < GameProperties.Skills_PowerHitMPCost)
 		{
 			skill_PowerHit.color = FlxColor.GRAY;
 		}
@@ -156,7 +156,7 @@ class Player extends Creature
 		{
 			skill_PowerShoot.color = FlxColor.BLACK;
 		}
-		else if (skillz.cooldown_PowerShoot >= 0)
+		else if (skillz.cooldown_PowerShoot >= 0 || properties.currentMP < GameProperties.Skills_PowerShootMPCost)
 		{
 			skill_PowerShoot.color = FlxColor.GRAY;
 		}
@@ -169,7 +169,7 @@ class Player extends Creature
 		{
 			skill_PowerShield.color = FlxColor.BLACK;
 		}
-		else if (skillz.cooldown_PowerShield >= 0)
+		else if (skillz.cooldown_PowerShield >= 0 || properties.currentMP < GameProperties.Skills_PowerShieldMPCost)
 		{
 			skill_PowerShield.color = FlxColor.GRAY;
 		}
@@ -182,7 +182,7 @@ class Player extends Creature
 		{
 			skill_PowerBall.color = FlxColor.BLACK;
 		}
-		else if (skillz.cooldown_PowerBall >= 0)
+		else if (skillz.cooldown_PowerBall >= 0 || properties.currentMP < GameProperties.Skills_PowerBallMPCost)
 		{
 			skill_PowerBall.color = FlxColor.GRAY;
 		}
@@ -195,7 +195,7 @@ class Player extends Creature
 		{
 			skill_PowerArmor.color = FlxColor.BLACK;
 		}
-		else if (skillz.cooldown_PowerArmor >= 0)
+		else if (skillz.cooldown_PowerArmor >= 0 || properties.currentMP < GameProperties.Skills_PowerArmorMPCost)
 		{
 			skill_PowerArmor.color = FlxColor.GRAY;
 		}
@@ -208,7 +208,7 @@ class Player extends Creature
 		{
 			skill_BoostRegen.color = FlxColor.BLACK;
 		}
-		else if (skillz.cooldown_BoostRegen >= 0)
+		else if (skillz.cooldown_BoostRegen >= 0 || properties.currentMP < GameProperties.Skills_BoostRegenMPCost)
 		{
 			skill_BoostRegen.color = FlxColor.GRAY;
 		}
@@ -221,7 +221,7 @@ class Player extends Creature
 		{
 			skill_BoostAgi.color = FlxColor.BLACK;
 		}
-		else if (skillz.cooldown_BoostAgi >= 0)
+		else if (skillz.cooldown_BoostAgi >= 0 || properties.currentMP < GameProperties.Skills_BoostAgiMPCost)
 		{
 			skill_BoostAgi.color = FlxColor.GRAY;
 		}
@@ -234,7 +234,7 @@ class Player extends Creature
 		{
 			skill_BoostExp.color = FlxColor.BLACK;
 		}
-		else if (skillz.cooldown_BoostExp >= 0)
+		else if (skillz.cooldown_BoostExp >= 0 || properties.currentMP < GameProperties.Skills_BoostExpMPCost)
 		{
 			skill_BoostExp.color = FlxColor.GRAY;
 		}
@@ -347,6 +347,7 @@ class Player extends Creature
 			{
 				trace("active");
 				skillz.activateSkillPowerHit();
+				skillz.payMP(GameProperties.Skills_PowerHitMPCost);
 			}
 		}
 		if (FlxG.keys.justPressed.TWO)
@@ -354,6 +355,7 @@ class Player extends Creature
 			if (FlxColorUtil.getRed(skill_PowerShoot.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.useSkillPowerShoot();
+				skillz.payMP(GameProperties.Skills_PowerShootMPCost);
 				// TODO spawn Particle and so on
 			}
 		}
@@ -363,6 +365,7 @@ class Player extends Creature
 			{
 				skillz.useSkillPowerShield();
 				// TODO spawn Shield and so on
+				skillz.payMP(GameProperties.Skills_PowerShieldMPCost);
 			}
 		}
 		if (FlxG.keys.justPressed.FOUR)
@@ -371,6 +374,7 @@ class Player extends Creature
 			{
 				skillz.useSkillPowerBall();
 				// TODO spawn Ball and so on
+				skillz.payMP(GameProperties.Skills_PowerBallMPCost);
 			}
 		}
 		if (FlxG.keys.justPressed.FIVE)
@@ -378,6 +382,7 @@ class Player extends Creature
 			if (FlxColorUtil.getRed(skill_PowerArmor.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.useSkillPowerArmor();
+				skillz.payMP(GameProperties.Skills_PowerArmorMPCost);
 			}
 		}
 		if (FlxG.keys.justPressed.SIX)
@@ -385,6 +390,7 @@ class Player extends Creature
 			if (FlxColorUtil.getRed(skill_BoostRegen.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.activateSkillBoostRegen();
+				skillz.payMP(GameProperties.Skills_BoostRegenMPCost);
 			}
 		}
 		if (FlxG.keys.justPressed.SEVEN)
@@ -392,6 +398,7 @@ class Player extends Creature
 			if (FlxColorUtil.getRed(skill_BoostAgi.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.activateSkillBoostAgi();
+				skillz.payMP(GameProperties.Skills_BoostAgiMPCost);
 			}
 		}
 		if (FlxG.keys.justPressed.EIGHT)
@@ -399,6 +406,7 @@ class Player extends Creature
 			if (FlxColorUtil.getRed(skill_BoostExp.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.activateSkillBoostExp();
+				skillz.payMP(GameProperties.Skills_BoostExpMPCost);
 			}
 		}
 	}

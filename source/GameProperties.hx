@@ -21,28 +21,36 @@ class GameProperties
 	
 	public static var Skills_PowerHit_CoolDown : Float = 5;
 	public static var Skills_PowerHit_DamagePerLevel : Int = 5;
+	public static var Skills_PowerHitMPCost : Int = 5; 
 	
 	public static var Skills_PowerShoot_CoolDown : Float = 5;
+	public static var Skills_PowerShootMPCost : Int = 5; 
 	
 	public static var Skills_PowerShield_CoolDown : Float = 5;
+	public static var Skills_PowerShieldMPCost : Int = 5; 
 	
 	public static var Skills_PowerBall_CoolDown : Float = 5;
+	public static var Skills_PowerBallMPCost : Int = 5; 
 	
 	public static var Skills_PowerArmor_CoolDown : Float = 5;
 	public static var Skills_PowerArmor_LifeTime : Float = 5;
 	public static var Skills_PowerArmor_DefensePerLevel : Float = 0.10;
+	public static var Skills_PowerArmorMPCost : Int = 5; 
 	
 	public static var Skills_BoostRegen_CoolDown : Float = 20;
 	public static var Skills_BoostRegen_LifeTime : Float = 5;
 	public static var Skills_BoostRegen_GainPerTickPerLevel : Int = 3;
+	public static var Skills_BoostRegenMPCost : Int = 5; 
 	
 	public static var Skills_BoostAgi_Cooldown : Float = 30;
 	public static var Skills_BoostAgi_LifeTime : Float = 10;
 	public static var Skills_BoostAgi_OffsetPerLevel : Int = 5;
+	public static var Skills_BoostAgiMPCost : Int = 5; 
 	
 	public static var Skills_BoostExp_Cooldown : Float = 40;
 	public static var Skills_BoostExp_LifeTime : Float = 20;
 	public static var Skills_BoostExp_FactorPerLevel : Float = 0.075;
+	public static var Skills_BoostExpMPCost : Int = 5; 
 	
 	public static var Player_MaxSpeed : Float = 100;
 	public static var Player_VelocityDecay : Float = 800;
@@ -50,6 +58,7 @@ class GameProperties
 	public static var Player_AttackSpeed : Float = 0.25;
 	public static var Player_experienceLevelUpBase : Int = 50;
 	public static var Player_experienceLevelUpFactor : Float = 1.125;
+	
 	
 	public static function floatToStringPrecision(n:Float, prec:Int)
 	{

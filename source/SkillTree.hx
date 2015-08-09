@@ -879,5 +879,9 @@ class SkillTree extends FlxSpriteGroup
 		}
 	}
 	
+	public function payMP(p:Int):Void
+	{
+		_properties.payMP(p);
+	}
 	
 }

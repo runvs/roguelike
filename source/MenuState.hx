@@ -18,6 +18,12 @@ class MenuState extends FlxState
 	override public function create():Void
 	{
 		super.create();
+		
+		#if flash
+		FlxG.sound.playMusic(AssetPaths.roguelike_ost__mp3, 1.0, true);
+		#else
+		FlxG.sound.playMusic(AssetPaths.roguelike_ost__ogg, 1.0, true);
+		#end
 	}
 	
 	/**

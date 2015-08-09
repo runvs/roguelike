@@ -83,7 +83,6 @@ class PlayState extends FlxState
 	{
 		if (!_ending)
 		{
-			FlxGameJolt.addScore("Main", _score);
 			_ending = true;
 			FlxG.camera.fade(FlxColor.BLACK, 1.0, false, function () : Void { FlxG.switchState(new MenuState()); } );
 			//FlxGameJolt.fetchScore(
@@ -104,7 +103,6 @@ class PlayState extends FlxState
 			{
 				endGame();
 			}
-			
 			
 			if (!skillz.showMe)
 			{

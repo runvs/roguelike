@@ -62,7 +62,6 @@ class PlayerProperties
 		{
 			currentMP = baseMP;
 		}
-		
 	}
 
 	public var experience : Int;
@@ -101,6 +100,15 @@ class PlayerProperties
 	
 	public var MPRegenTimer :Float ;
 	public var MPRegenTimerMax : Float;
+	
+	public function payMP (p:Int) : Void 
+	{
+		currentMP -= p;
+		if (currentMP < 0 )
+		{
+			currentMP = 0;
+		}
+	}
 	
 	
 	public var baseDamage : Int;
