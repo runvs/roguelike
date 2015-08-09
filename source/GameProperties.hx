@@ -11,8 +11,8 @@ class GameProperties
 	public static var WorldSizeInTilesy : Int = 24;
 	public static var Skills_Level1 : Int = 1;
 	
-	public static var Skills_Level2 : Int = 5;
-	public static var Skills_Level3 : Int = 10;
+	public static var Skills_Level2 : Int = 10;
+	public static var Skills_Level3 : Int = 20;
 	
 	// Tier 1
 	public static var Skills_NaniteArmor_FactorPerLevel : Float = 0.05;
@@ -52,7 +52,7 @@ class GameProperties
 	public static var Skills_BoostRegen_CoolDown : Float = 3;
 	public static var Skills_BoostRegen_LifeTime : Float = 2;
 	public static var Skills_BoostRegen_GainPerTickPerLevel : Int = 1;
-	public static var Skills_BoostRegenMPCost : Int = 5; 
+	public static var Skills_BoostRegenMPCost : Int = 8; 
 	
 	// Tier 2
 	public static var Skills_BoostAgi_Cooldown : Float = 30;
