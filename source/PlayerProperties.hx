@@ -11,8 +11,8 @@ class PlayerProperties
 	{
 		level = 0;
 		experience = 0;
-		
-		experienceLevelUp =100;
+		experienceLevelUp = 100;
+		experienceFactor = 0;
 		skillPoints = 0;
 		attributePoints = 0;
 		
@@ -95,9 +95,11 @@ class PlayerProperties
 		return  val;
 	}
 	
+	public var experienceFactor : Float;
 	public function gainXP(xp:Int)
 	{
-		experience += xp;
+		var f = 1.0 + experienceFactor;
+		experience += Std.int(xp * f);
 		CheckLevelUp();
 	}
 	
