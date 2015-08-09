@@ -12,7 +12,7 @@ class EnemyPropeties
 		level = l;
 		currentHP = baseHP = 6 * (level +1);
 		
-		baseDamage = 30 * (level + 1);
+		baseDamage = (level + 1);
 	}
 	
 	public var level : Int;
