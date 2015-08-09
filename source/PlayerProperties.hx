@@ -26,7 +26,7 @@ class PlayerProperties
 		skillHP = 0;
 		currentHP = baseHP;
 		
-		skillRegenTimerMax = skillRegenTimer = 0.5;
+		skillRegenTimerMax = skillRegenTimer = 0.25;
 		
 		MPRegenTimer = MPRegenTimerMax = 5;
 		

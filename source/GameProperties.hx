@@ -49,7 +49,7 @@ class GameProperties
 	public static var Skills_PowerArmorMPCost : Int = 5; 
 	
 	// Tier 1
-	public static var Skills_BoostRegen_CoolDown : Float = 20;
+	public static var Skills_BoostRegen_CoolDown : Float = 3;
 	public static var Skills_BoostRegen_LifeTime : Float = 2;
 	public static var Skills_BoostRegen_GainPerTickPerLevel : Int = 1;
 	public static var Skills_BoostRegenMPCost : Int = 5; 
