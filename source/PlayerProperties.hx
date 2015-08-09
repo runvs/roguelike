@@ -12,6 +12,7 @@ class PlayerProperties
 	{
 		level = 0;
 		experience = 0;
+		experienceLevelUpLast = 0;
 		experienceLevelUp = GameProperties.Player_experienceLevelUpBase;
 		experienceFactor = 0;
 		skillPoints = 0;
@@ -66,6 +67,7 @@ class PlayerProperties
 
 	public var experience : Int;
 	public var experienceLevelUp : Int;
+	public var experienceLevelUpLast : Int;
 	public var level: Int;
 	public var skillPoints : Int;
 	public var attributePoints : Int;
@@ -155,6 +157,7 @@ class PlayerProperties
 			level += 1;
 			skillPoints += 1;
 			attributePoints += 3;
+			experienceLevelUpLast = experienceLevelUp;
 			experienceLevelUp = Std.int(experienceLevelUp * GameProperties.Player_experienceLevelUpFactor);
 		}
 	}

@@ -11,6 +11,7 @@ class HudBar extends FlxSprite
 {
 
 	var _vertical : Bool;
+	public var _background : FlxSprite;
 	
 	public function new(X:Float=0, Y:Float=0, w : Float, h : Float, vertical: Bool =true) 
 	{
@@ -22,6 +23,12 @@ class HudBar extends FlxSprite
 		makeGraphic(Std.int(w), Std.int(h), FlxColor.WHITE);
 		this.origin.set(0, 0);
 		this.scrollFactor.set();
+		
+		
+		_background = new FlxSprite(x-2,y-2);
+		_background.makeGraphic(Std.int(w) + 4, Std.int(h) + 4, FlxColor.GRAY);
+		_background.scrollFactor.set();
+		
 	}
 	
 	override public function update():Void
@@ -39,6 +46,12 @@ class HudBar extends FlxSprite
 		{
 			scale.set(val, 1);
 		}
+	}
+	
+	public override function draw() : Void 
+	{
+		_background.draw();
+		super.draw();
 	}
 	
 }

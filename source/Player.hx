@@ -36,6 +36,7 @@ class Player extends Creature
 	
 	private var HPBar : HudBar;
 	private var MPBar : HudBar;
+	private var ExpBar : HudBar;
 	
 	var skillz : SkillTree;
 	
@@ -73,10 +74,12 @@ class Player extends Creature
 		skill_BoostExp    = new FlxText(200, FlxG.height - 10, 200, "Boost Exp [8]");
 		skill_BoostExp.scrollFactor.set();
 		
-		HPBar = new HudBar(100, FlxG.height - 100, 30, 100);
+		HPBar = new HudBar(100, FlxG.height - 100 -10, 30, 100);
 		HPBar.color = FlxColor.RED;
-		MPBar = new HudBar(FlxG.width - 100, FlxG.height - 100, 30, 100);
-		MPBar.color = FlxColor.BLUE;
+		MPBar = new HudBar(FlxG.width - 100 , FlxG.height - 100 - 10, 30, 100);
+		MPBar.color = FlxColor.BLUE; 
+		ExpBar = new HudBar( 300, FlxG.height - 30 -10, FlxG.width - 600, 30, false);
+		ExpBar.color = FlxColor.GOLDEN;
 		
 	}
 	
@@ -106,6 +109,7 @@ class Player extends Creature
 		skill_BoostExp.draw();
 		HPBar.draw();
 		MPBar.draw();
+		ExpBar.draw();
 	}
 	
 	override public function update()
@@ -119,6 +123,9 @@ class Player extends Creature
 		HPBar.update();
 		MPBar.health = properties.currentMP / properties.baseMP;
 		MPBar.update();
+		var f : Float = (properties.experience - properties.experienceLevelUpLast) / (properties.experienceLevelUp - properties.experienceLevelUpLast) ;
+		ExpBar.health = f;
+		ExpBar.update();
 		
 		attack = false;
 		acceleration.set(0, 0);
