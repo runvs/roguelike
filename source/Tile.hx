@@ -29,6 +29,11 @@ class Tile extends FlxSprite
 		{
 			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.BLACK);
 		}
+		else if (t == 7)
+		{
+			trace("exit created");
+			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GREEN);
+		}
 		this.updateHitbox();
 	}
 	

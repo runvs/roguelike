@@ -17,6 +17,7 @@ class Level extends FlxObject
 	
 	public var StartPos : FlxPoint;
 	
+	
 
 	public function new(state:PlayState, sX:Int, sY:Int, level:Int)
 	{
@@ -37,7 +38,8 @@ class Level extends FlxObject
 		StartPos = StartFinder.findPosition(mapAsTree);
 		
 		map = new MyTileMap();
-		map = MapGenerator.generateMapFromTree(mapAsTree);
+		map = ExitGenerator.generateExitsForMap(MapGenerator.generateMapFromTree(mapAsTree));
+		
 		
 		// create boundaries
 		createBoundaries();
