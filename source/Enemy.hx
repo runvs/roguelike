@@ -17,6 +17,8 @@ class Enemy extends Creature
 	private var randomwalkTimer : Float;
 	private var randomWalkDirection : Int;
 	
+	private var walkTarget : FlxObject;
+	
 	public var properties : EnemyPropeties;
 	public var doRandomWalk:Bool;
 
@@ -81,11 +83,39 @@ class Enemy extends Creature
 				moveRight();
 			}
 		}
+		// walk target is obviously in aggro range
+		else
+		{
+			var xx = walkTarget.x - x;
+			var yy = walkTarget.y - y;
+			
+			if (xx > 0)
+			{
+				// target to the right
+				moveRight();
+			}
+			else
+			{
+				// target to the left
+				moveLeft();
+			}
+			
+			if (yy > 0)
+			{
+				// target below
+				moveDown();
+			}
+			else
+			{
+				// target above
+				moveUp();
+			}
+		}
 	}
 	
 	public function walkTowards(obj:FlxObject):Void
 	{
-		//trace('Aggro!');
+		walkTarget = obj;
 	}
 	
 	public function TakeDamage ( d : Int ) : Void 
