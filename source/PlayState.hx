@@ -9,6 +9,7 @@ import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import flixel.util.FlxMath;
+import flixel.util.FlxPoint;
 import flixel.util.FlxRect;
 
 /**
@@ -37,13 +38,15 @@ class PlayState extends FlxState
 		
 		level = new Level(this, 100, 30, 1);
 		player = new Player();
-		player.x = 100;
-		player.y = 100;
+		player.setPosition(level.StartPos.x, level.StartPos.y);
+		
 		skillz = new SkillTree(player.properties);
 		player.setSkills(skillz);
 		
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
-		//FlxG.camera.setBounds(0, 0, level.map.width, level.map.height);
+		//FlxG.camera.focusOn(new FlxPoint(player.x, player.y));
+		
+		FlxG.camera.setBounds(0, 0, level.sizeX*GameProperties.TileSize, level.sizeY*GameProperties.TileSize);
 		
 		
 		

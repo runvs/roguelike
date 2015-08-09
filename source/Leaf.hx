@@ -12,6 +12,7 @@ class Leaf extends flixel.FlxBasic
     public var rightChild:Leaf; // the Leaf's right child Leaf
     public var room:flixel.util.FlxRect; // the room that is inside this Leaf
     public var halls:Array<flixel.util.FlxRect>; // hallways to connect this Leaf to other Leafs
+
  
     public function new(X:Int, Y:Int, Width:Int, Height:Int)
     {

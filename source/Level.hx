@@ -1,6 +1,8 @@
 import flixel.FlxObject;
 import flixel.group.FlxTypedGroup;
 import flixel.tile.FlxTile;
+import flixel.util.FlxAngle;
+import flixel.util.FlxPoint;
 
 class Level extends FlxObject
 {
@@ -10,8 +12,11 @@ class Level extends FlxObject
 	public var map : MyTileMap;
 	public var _state:PlayState;
 	private var _level : Int;
-	private var sizeX: Int;
-	private var sizeY: Int;
+	public var sizeX: Int;
+	public var sizeY: Int;
+	
+	public var StartPos : FlxPoint;
+	
 
 	public function new(state:PlayState, sX:Int, sY:Int, level:Int)
 	{
@@ -26,14 +31,17 @@ class Level extends FlxObject
 	private function initializeLevel(sizeX:Int, sizeY:Int):Void
 	{
 		var mapAsTree:flixel.group.FlxTypedGroup<Leaf> = MapGenerator.generateTree(sizeX, sizeY);
-
+		
+		StartPos = StartFinder.findPosition(mapAsTree);
+		
 		map = new MyTileMap();
 		map = MapGenerator.generateMapFromTree(mapAsTree);
 		
 		// create boundaries
 		createBoundaries();
 
-		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, (_level == 0) ? 0 : 50, _level-1);
+		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, (_level == 0) ? 0 : 50, _level - 1);
+		
 
 		//var forbiddenList:Array<Int> = new Array<Int>();
 		//forbiddenList.push(0);

@@ -19,6 +19,7 @@ class Tile extends FlxSprite
 		passable = true;
 		immovable = true;
 		
+		
 		if (t == 0)
 		{
 			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GRAY);
@@ -28,7 +29,7 @@ class Tile extends FlxSprite
 		{
 			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.BLACK);
 		}
-		
+		this.updateHitbox();
 	}
 	
 }

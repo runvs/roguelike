@@ -25,7 +25,16 @@ class Enemy extends Creature
 		
 		properties = new EnemyPropeties( 1 );
 		
-		makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.RED);
+		//makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.RED);
+		loadGraphic(AssetPaths.Enemy__png, true, 32, 32);
+		this.animation.add("idle", [0, 1, 2, 3, 4],FlxRandom.intRanged(4,6));
+		this.animation.add("walk", [5, 6, 7, 8]);
+		this.animation.play("idle", false, FlxRandom.intRanged(0,3));
+		
+		this.offset.set();
+		this.origin.set();
+		this.scale.set(2, 2);
+		this.updateHitbox();
 		
 		randomwalkTimer = 1.5;
 		randomWalkDirection = FlxRandom.intRanged(0, 3);

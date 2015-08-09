@@ -47,7 +47,7 @@ class Player extends Creature
 		properties = new PlayerProperties();
 		
 		this.makeGraphic(GameProperties.TileSize, GameProperties.TileSize);
-		
+		this.updateHitbox();
 		this.drag = new FlxPoint( GameProperties.Player_VelocityDecay, GameProperties.Player_VelocityDecay);
 		this.maxVelocity = new FlxPoint(GameProperties.Player_MaxSpeed,  GameProperties.Player_MaxSpeed);
 		attacTimer = 0;
