@@ -48,7 +48,7 @@ class SkillTree extends FlxSpriteGroup
 		
 		PowerHit = 0;
 		PowerShoot = 0;
-		PowerShield = 2;
+		PowerShield = 5;
 		PowerBall  = 0;
 		PowerArmor = 0;
 		
@@ -212,7 +212,8 @@ class SkillTree extends FlxSpriteGroup
 	{
 		if (_properties.attributePoints >= 1)
 		{
-			_properties.Wi += 1;
+			//_properties.Wi += 1;
+			_properties.increaseWI();
 			_properties.attributePoints -= 1;
 			_properties.ReCalculateDerivedValues();
 		}

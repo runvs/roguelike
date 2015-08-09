@@ -89,6 +89,17 @@ class PlayerProperties
 		currentHP = Math.round(f * h);
 	}
 	
+	public function increaseWI() : Void 
+	{
+		var h : Float = currentMP;
+		var hm : Float = baseMP();
+		
+		Wi += 1;
+		ReCalculateDerivedValues();
+		var f : Float = getMP() / hm;
+		currentMP = Math.round(f * h);
+	}
+	
 	public var skillAg : Int;
 	public function getAg () : Int
 	{
