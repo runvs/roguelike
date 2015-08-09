@@ -158,7 +158,7 @@ class PlayState extends FlxState
 					}
 				}
 				
-				FlxG.collide(player, level._grpEnemies);
+				FlxG.collide(player, level._grpEnemies, Enemy.handlePlayerCollision);
 				
 				ChangeLevel();
 				

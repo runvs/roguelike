@@ -201,6 +201,15 @@ class PlayerProperties
 		}
 	}
 	
+	public function takeDamage(damage:Float) : Void
+	{
+		var reducedDamage = Std.int(damage * getDefense());
+		
+		trace("Took " + reducedDamage + " damage!");
+		
+		currentHP -= reducedDamage;
+	}
+	
 	public var baseHitChance : Float;
 	
 
