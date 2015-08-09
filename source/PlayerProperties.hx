@@ -78,6 +78,17 @@ class PlayerProperties
 	public var Wi : Int;
 	public var Lk : Int;
 	
+	public function increaseEN() : Void 
+	{
+		var h : Float = currentHP;
+		var hm : Float = getHP();
+		
+		En += 1;
+		ReCalculateDerivedValues();
+		var f : Float = getHP() / hm;
+		currentHP = Math.round(f * h);
+	}
+	
 	public var skillAg : Int;
 	public function getAg () : Int
 	{

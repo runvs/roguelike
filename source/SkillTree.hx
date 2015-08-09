@@ -202,9 +202,10 @@ class SkillTree extends FlxSpriteGroup
 	{
 		if (_properties.attributePoints >= 1)
 		{
-			_properties.En += 1;
+			_properties.increaseEN();
 			_properties.attributePoints -= 1;
 			_properties.ReCalculateDerivedValues();
+			
 		}
 	}
 	public function upgradeWi()
