@@ -49,7 +49,9 @@ class Level extends FlxObject
 		});
 		
 		// create boundaries
+		TileReplacement();
 		createBoundaries();
+		
 
 		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, (_level == 0) ? 0 : 50, _level - 1);
 		
@@ -77,18 +79,81 @@ class Level extends FlxObject
 		}
 	}
 	
-	function get(x:Int, y:Int) : Tile
+	function TileReplacement() : Void 
 	{
-		var t : Tile = null;
+		var newWalls : FlxTypedGroup<Tile> = new FlxTypedGroup<Tile>();
+		
+		map.walls.forEach(function (t:Tile) : Void 
+		{
+			var N : Int = 0;
+			map.floor.forEach(function(ft:Tile) : Void
+			{
+				var dx : Int = ft.tx -t.tx;
+				var dy : Int = ft.ty -t.ty;
+				if (dx * dx <= 1 && dy * dy <= 1)
+				{
+					N += 1;
+				}
+				
+			});
+			
+			if (N != 0)
+			{
+				
+				var posX : Int = t.tx;
+				var posY : Int = t.ty;
+				if (getFloor(posX, posY+1) != null)
+				{
+					newWalls.add(t);
+				}
+				else
+				{
+					var tnew : Tile = new Tile(posX, posY, 8);
+					newWalls.add(tnew);
+					t.destroy();
+				}
+			}
+			else
+			{
+				t.destroy();
+			}
+		});
+		
+		map.walls = newWalls;
+	}
+	
+	
+	function getFloor(x:Int, y:Int) : Tile
+	{
+		var tf : Tile = null;
 		if (x > 0 && x  < sizeX && y > 0 && y < sizeY)
 		{
 			map.floor.forEach(function(t:Tile)
-			
 			{
-				
+				if (t.tx == x && t.ty == y)
+				{
+					tf = t;
+				}
 			});
 		}
-		return t;
+		return tf;
+			
+	}
+	
+	function getWall(x:Int, y:Int) : Tile
+	{
+		var tf : Tile = null;
+		if (x > 0 && x  < sizeX && y > 0 && y < sizeY)
+		{
+			map.walls.forEach(function(t:Tile)
+			{
+				if (t.tx == x && t.ty == y)
+				{
+					tf = t;
+				}
+			});
+		}
+		return tf;
 			
 	}
 	

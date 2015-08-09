@@ -29,20 +29,24 @@ class Tile extends FlxSprite
 		
 		type = t;
 		
-		if (t == 0)
+		if (t == 0)	// Wall Tile
 		{
 			//makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GRAY);
 			loadGraphic(AssetPaths.Background_Wall__png, false, 32, 32);
 			passable = false;
 		}
-		else if (t == 3)
+		else if (t == 3)	// Floor
 		{
 			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(1,78, 96, 81));
 		}
-		else if (t == 7)
+		else if (t == 7)	// exit
 		{
 			trace("exit created");
 			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GREEN);
+		}
+		else if (t == 8)
+		{
+			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GRAY);
 		}
 		this.updateHitbox();
 	}
