@@ -182,8 +182,8 @@ class PlayerProperties
 	
 	function updateHPRegen():Void 
 	{
-		trace (skillRegenTimer);
-		trace ("g "  + skillRegenGain);
+		//trace (skillRegenTimer);
+		//trace ("g "  + skillRegenGain);
 		if (skillRegenTimer < 0)
 		{
 			skillRegenTimer = skillRegenTimerMax;

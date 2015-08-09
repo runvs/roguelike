@@ -42,7 +42,7 @@ class Tile extends FlxSprite
 		}
 		else if (t == 7)	// exit
 		{
-			trace("exit created");
+			//trace("exit created");
 			//makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GREEN);
 			loadGraphic(AssetPaths.Staircase__png, false , 32, 32);
 		}
