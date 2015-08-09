@@ -15,6 +15,13 @@ class SkillTree extends FlxSpriteGroup
 	
 	public var showMe : Bool = false;
 	
+	private var btn_PowerShoot: FlxButton;
+	private var btn_PowerShield: FlxButton;
+	private var btn_PowerHit: FlxButton;
+	private var btn_PowerBall: FlxButton;
+	private var btn_PowerArmor: FlxButton;
+	
+	
 	private var btn_NaniteArmor : FlxButton;
 	private var btn_NaniteHealth : FlxButton;
 	private var btn_NaniteWeapon : FlxButton;
@@ -75,17 +82,52 @@ class SkillTree extends FlxSpriteGroup
 		
 		active_BoostRegen= false;
 		active_BoostAgi= false;
-		active_BoostExp= false;
+		active_BoostExp = false;
 		
 		
-		btn_NaniteArmor = new FlxButton(400, 40, "Nanite Armor", upgrade_NaniteArmor);
-		btn_NaniteHealth = new FlxButton(400, 100, "Nanite Health", upgrade_NaniteHealth);
-		btn_NaniteWeapon = new FlxButton(400, 160, "Nanite Weapon", upgrade_NaniteWeapon);
+		btn_PowerHit   = new FlxButton(200, 40, "Power Hit 0/5", upgrade_PowerHit);
+		btn_PowerHit.scale.set(1, 1.5);
+		btn_PowerHit.updateHitbox();
+		btn_PowerShoot = new FlxButton(150, 100, "Power Shoot 0/5", upgrade_PowerShoot);
+		btn_PowerShoot.scale.set(1, 1.5);
+		btn_PowerShoot.updateHitbox();
+		btn_PowerShield = new FlxButton(250, 100, "Power Shield 0/5", upgrade_PowerShield);
+		btn_PowerShield.scale.set(1, 1.5);
+		btn_PowerShield.updateHitbox();
+		btn_PowerBall  = new FlxButton(150, 160, "Power Ball 0/5", upgrade_PowerBall);
+		btn_PowerBall.scale.set(1, 1.5);
+		btn_PowerBall.updateHitbox();
+		btn_PowerArmor = new FlxButton(250, 160, "Power Armor 0/5", upgrade_PowerArmor);
+		btn_PowerArmor.scale.set(1, 1.5);
+		btn_PowerArmor.updateHitbox();
 		
-		btn_BoostRegen = new FlxButton(600, 40, "Boost Regen", upgrade_BoostRegen);
-		btn_BoostAgi = new FlxButton(600, 100, "Boost Agi", upgrade_BoostAgi);
-		btn_BoostExp = new FlxButton(600, 160, "Boost Exp", upgrade_BoostExp);
 		
+		btn_NaniteArmor = new FlxButton(400, 40, "Nanite Armor 0/5", upgrade_NaniteArmor);
+		btn_NaniteArmor.scale.set(1, 1.5);
+		btn_NaniteArmor.updateHitbox();
+
+		btn_NaniteHealth = new FlxButton(400, 100, "Nanite Health 0/5", upgrade_NaniteHealth);
+		btn_NaniteHealth.scale.set(1, 1.5);
+		btn_NaniteHealth.updateHitbox();
+		btn_NaniteWeapon = new FlxButton(400, 160, "Nanite Weapon 0/5", upgrade_NaniteWeapon);
+		btn_NaniteWeapon.scale.set(1, 1.5);
+		btn_NaniteWeapon.updateHitbox();
+		
+		btn_BoostRegen = new FlxButton(600, 40, "Boost Regen 0/5", upgrade_BoostRegen);
+		btn_BoostRegen.scale.set(1, 1.5);
+		btn_BoostRegen.updateHitbox();
+		btn_BoostAgi = new FlxButton(600, 100, "Boost Agi 0/5", upgrade_BoostAgi);
+		btn_BoostAgi.scale.set(1, 1.5);
+		btn_BoostAgi.updateHitbox();
+		btn_BoostExp = new FlxButton(600, 160, "Boost Exp 0/5", upgrade_BoostExp);
+		btn_BoostExp.scale.set(1, 1.5);
+		btn_BoostExp.updateHitbox();
+		
+		add(btn_PowerShoot);
+		add(btn_PowerShield);
+		add(btn_PowerHit);
+		add(btn_PowerBall);
+		add(btn_PowerArmor);
 		
 		add(btn_NaniteArmor);
 		add(btn_NaniteHealth);
@@ -101,54 +143,106 @@ class SkillTree extends FlxSpriteGroup
 		this.scrollFactor.set();
 	}
 	
+	public function upgrade_PowerShoot() : Void 
+	{		
+		if (_properties.skillPoints >= 1 && b_PowerShoot)
+		{
+			_properties.skillPoints -= 1;
+			PowerShoot += 1;
+			btn_PowerShoot.text = "Power Shot " + Std.string(PowerShoot) + "/5";
+		}
+	}
+	public function upgrade_PowerShield() : Void 
+	{
+		if (_properties.skillPoints >= 1 && b_PowerShield)
+		{
+			_properties.skillPoints -= 1;
+			PowerShield += 1;
+			btn_PowerShield.text = "Power Shield " + Std.string(PowerShield) + "/5";
+		}
+	}
+	public function upgrade_PowerHit() : Void 
+	{
+		if (_properties.skillPoints >= 1 && b_PowerHit)
+		{
+			_properties.skillPoints -= 1;
+			PowerHit += 1;
+			btn_PowerHit.text = "Power Hit " + Std.string(PowerHit) + "/5";
+		}
+	}
+	public function upgrade_PowerBall() : Void 
+	{
+		if (_properties.skillPoints >= 1 && b_PowerBall)
+		{
+			_properties.skillPoints -= 1;
+			PowerBall += 1;
+			btn_PowerBall.text = "Power Ball " + Std.string(PowerBall) + "/5";
+		}
+	}
+	public function upgrade_PowerArmor() : Void 
+	{
+		if (_properties.skillPoints >= 1 && b_PowerArmor)
+		{
+			_properties.skillPoints -= 1;
+			PowerArmor += 1;
+			btn_PowerArmor.text = "Power Armor " + Std.string(PowerArmor) + "/5";
+		}
+	}
+	
 	public function upgrade_NaniteArmor() : Void 
 	{
-		if (_properties.skillPoints >= 1)
+		if (_properties.skillPoints >= 1 && b_NaniteArmor)
 		{
 			_properties.skillPoints -= 1;
 			NaniteArmor += 1;
+			btn_NaniteArmor.text = "Nanite Armor " + Std.string(NaniteArmor) + "/5";
 		}
 	}
 	public function upgrade_NaniteHealth() : Void 
 	{
-		if (_properties.skillPoints >= 1)
+		if (_properties.skillPoints >= 1 && b_NaniteHealth)
 		{
 			_properties.skillPoints -= 1;
 			NaniteHealth += 1;
+			btn_NaniteHealth.text = "Nanite Health " + Std.string(NaniteHealth) + "/5";
 		}
 	}
 	public function upgrade_NaniteWeapon() : Void 
 	{
-		if (_properties.skillPoints >= 1)
+		if (_properties.skillPoints >= 1 && b_NaniteWeapon)
 		{
 			_properties.skillPoints -= 1;
 			NaniteWeapon += 1;
+			btn_NaniteWeapon.text = "Nanite Weapon " + Std.string(NaniteWeapon) + "/5";
 		}
 	}
 	
 	
 	public function upgrade_BoostRegen() : Void 
 	{
-		if (_properties.skillPoints >= 1)
+		if (_properties.skillPoints >= 1 && b_BoostRegen)
 		{
 			_properties.skillPoints -= 1;
 			BoostRegen += 1;
+			btn_BoostRegen.text = "Boost Regen " + Std.string(BoostRegen) + "/5";
 		}
 	}
 	public function upgrade_BoostAgi() : Void 
 	{
-		if (_properties.skillPoints >= 1)
+		if (_properties.skillPoints >= 1 && b_BoostAgi)
 		{
 			_properties.skillPoints -= 1;
 			BoostAgi += 1;
+			btn_BoostAgi.text = "Boost Agi " + Std.string(BoostAgi) + "/5";
 		}
 	}
 	public function upgrade_BoostExp() : Void 
 	{
-		if (_properties.skillPoints >= 1)
+		if (_properties.skillPoints >= 1 && b_BoostExp)
 		{
 			_properties.skillPoints -= 1;
 			BoostExp += 1;
+			btn_BoostExp.text = "Boost Exp " + Std.string(BoostExp) + "/5";
 		}
 	}
 	
@@ -330,6 +424,53 @@ class SkillTree extends FlxSpriteGroup
 	
 	public function CheckButtons() : Void 
 	{
+		
+		if (b_PowerArmor)
+		{
+			btn_PowerArmor.set_color(FlxColor.RED);
+		}
+		else
+		{
+			btn_PowerArmor.set_color(FlxColor.GRAY);
+		}
+		
+		if (b_PowerBall)
+		{
+			btn_PowerBall.set_color(FlxColor.RED);
+		}
+		else
+		{
+			btn_PowerBall.set_color(FlxColor.GRAY);
+		}
+		
+		if (b_PowerHit)
+		{
+			btn_PowerHit.set_color(FlxColor.RED);
+		}
+		else
+		{
+			btn_PowerHit.set_color(FlxColor.GRAY);
+		}
+		
+		if (b_PowerShield)
+		{
+			btn_PowerShield.set_color(FlxColor.RED);
+		}
+		else
+		{
+			btn_PowerShield.set_color(FlxColor.GRAY);
+		}
+		
+		if (b_PowerShoot)
+		{
+			btn_PowerShoot.set_color(FlxColor.RED);
+		}
+		else
+		{
+			btn_PowerShoot.set_color(FlxColor.GRAY);
+		}
+		
+		
 		if (b_NaniteArmor)
 		{
 			btn_NaniteArmor.set_color(FlxColor.RED);
