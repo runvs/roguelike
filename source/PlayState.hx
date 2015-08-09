@@ -159,6 +159,9 @@ class PlayState extends FlxState
 				});
 				
 				FlxG.collide(level.map.walls, player);
+				FlxG.collide(level._grpShields, level._grpEnemies);
+				FlxG.collide(level._grpShields, level._grpParticles);
+				FlxG.collide(level._grpShields, player);
 			
 				FlxG.collide(level._grpEnemies, level.map.walls, Enemy.handleWallCollision);
 				for (enemy in level._grpEnemies)
@@ -210,6 +213,13 @@ class PlayState extends FlxState
 					var my : Float = FlxG.mouse.y;
 					var p : Particle  = new Particle(player.x, player.y, mx, my, true, skillz.PowerBall, this);
 					level._grpParticles.add(p);
+				}
+				if (player.attackShield)
+				{
+					var mx : Float = FlxG.mouse.x;
+					var my : Float = FlxG.mouse.y;
+					var s : Shield = new Shield(mx, my, skillz.PowerShield);
+					level._grpShields.add(s);
 				}
 			}
 		

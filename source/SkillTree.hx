@@ -48,8 +48,8 @@ class SkillTree extends FlxSpriteGroup
 		
 		PowerHit = 0;
 		PowerShoot = 0;
-		PowerShield = 0;
-		PowerBall  = 5;
+		PowerShield = 2;
+		PowerBall  = 0;
 		PowerArmor = 0;
 		
 		NaniteArmor = 0;

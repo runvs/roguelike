@@ -26,7 +26,7 @@ class Player extends Creature
 	public var attack : Bool;
 	public var attackPowerShoot : Bool;
 	public var attackPowerBall : Bool;
-	
+	public var attackShield : Bool;
 	private var skill_PowerHit : FlxText;
 	private var skill_PowerShoot : FlxText;
 	private var skill_PowerShield : FlxText;
@@ -141,6 +141,7 @@ class Player extends Creature
 		attack = false;
 		attackPowerShoot = false;
 		attackPowerBall = false;
+		attackShield = false;
 		acceleration.set(0, 0);
 		getInput();
 		super.update();
@@ -377,6 +378,7 @@ class Player extends Creature
 	{
 		attackPowerShoot = false;
 		attackPowerBall = false;
+		attackShield = false; 
 		if (FlxG.keys.justPressed.ONE)
 		{
 			if (FlxColorUtil.getRed(skill_PowerHit.color) == FlxColorUtil.getRed(FlxColor.RED))
@@ -400,7 +402,7 @@ class Player extends Creature
 			if (FlxColorUtil.getRed(skill_PowerShield.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.useSkillPowerShield();
-				// TODO spawn Shield and so on
+				attackShield = true;
 				skillz.payMP(GameProperties.Skills_PowerShieldMPCost);
 			}
 		}

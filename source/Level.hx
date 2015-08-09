@@ -22,6 +22,7 @@ class Level extends FlxObject
 	public var Exit : Tile;
 	
 	public var _grpParticles : FlxTypedGroup<Particle>;
+	public var _grpShields : FlxTypedGroup<Shield>;
 	
 
 	public function new(state:PlayState, sX:Int, sY:Int, level:Int, worldLevel : Int)
@@ -37,6 +38,7 @@ class Level extends FlxObject
 		scrollFactor.set();
 		
 		_grpParticles = new FlxTypedGroup<Particle>();
+		_grpShields = new FlxTypedGroup<Shield>();
 	}
 	
 	private function initializeLevel(sizeX:Int, sizeY:Int):Void
@@ -231,7 +233,9 @@ class Level extends FlxObject
 		map.update();
 
 		_grpEnemies.update();
+		_grpShields.update();
 		_grpParticles.update();
+		
 		//_grpEnemies.forEachAlive(checkEnemyVision);
 	}
 
@@ -240,6 +244,7 @@ class Level extends FlxObject
 		super.draw();
 		map.draw();
 		_grpEnemies.draw();
+		_grpShields.draw();
 		_grpParticles.draw();
 	}
 	
@@ -260,6 +265,12 @@ class Level extends FlxObject
 		});
 		_grpParticles = newPart;
 		
+		var newShields : FlxTypedGroup<Shield> = new FlxTypedGroup<Shield>();
+		_grpShields.forEach(function(s:Shield) : Void
+		{
+			if (s.alive) { newShields.add(s); } else { s.destroy(); }
+		});
+		_grpShields = newShields;
 	}
 	
 }
