@@ -19,6 +19,8 @@ class Enemy extends Creature
 	
 	private var walkTarget : FlxObject;
 	
+	private var attackTimer : Float;
+	
 	public var properties : EnemyPropeties;
 	public var doRandomWalk:Bool;
 
@@ -39,6 +41,8 @@ class Enemy extends Creature
 		//this.origin.set();
 		//this.scale.set(2, 2);
 		//this.updateHitbox();
+		
+		attackTimer = 0.5;
 		
 		doRandomWalk = true;
 		randomwalkTimer = 1.5;
@@ -113,7 +117,7 @@ class Enemy extends Creature
 		}
 	}
 	
-	public function walkTowards(obj:FlxObject):Void
+	public function walkTowards(obj:FlxObject) : Void
 	{
 		walkTarget = obj;
 	}
@@ -131,5 +135,10 @@ class Enemy extends Creature
 	public static function handleWallCollision(enemy:Enemy, wall:FlxObject):Void
 	{
 		enemy.randomWalkDirection = (enemy.randomWalkDirection + 2) % 4;
+	}
+	
+	public static function handlePlayerCollision(player:Player, enemy:Enemy):Void
+	{
+		player.properties.takeDamage(enemy.properties.baseDamage);
 	}
 }
