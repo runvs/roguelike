@@ -31,6 +31,7 @@ class PlayState extends FlxState
 		player.x = 100;
 		player.y = 100;
 		skillz = new SkillTree(player.properties);
+		player.setSkills(skillz);
 		
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
 		//FlxG.camera.setBounds(0, 0, level.map.width, level.map.height);
@@ -62,7 +63,7 @@ class PlayState extends FlxState
 			cleanUp();
 			level.update();
 			player.update();
-			player.updateHud(skillz);
+			player.updateHud();
 			FlxG.collide(player, level.map.walls);
 			FlxG.collide(level._grpEnemies, level.map.walls);
 			FlxG.collide(level._grpEnemies, level.map.walls);

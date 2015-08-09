@@ -11,7 +11,8 @@ class GameProperties
 	public static var Skills_Level2 : Int = 5;
 	public static var Skills_Level3 : Int = 10;
 	
-	public static var Skills_NaniteHealth_FactorPerLevel : Float = 0.05;
+	public static var Skills_NaniteHealth_FactorPerLevel : Float = 0.09;
+	public static var Skills_NaniteHealth_OffsetPerLevel : Int = 6;
 	
 	public static var Skills_NaniteArmor_FactorPerLevel : Float = 0.05;
 	
@@ -47,4 +48,26 @@ class GameProperties
 	public static var Player_VelocityDecay : Float = 800;
 	public static var Player_Speed : Float = 1000;
 	public static var Player_AttackSpeed : Float = 0.25;
+	public static var Player_experienceLevelUpBase : Int = 50;
+	public static var Player_experienceLevelUpFactor : Float = 1.125;
+	
+	public static function floatToStringPrecision(n:Float, prec:Int)
+	{
+		n = Math.round(n * Math.pow(10, prec));
+		var str = ''+n;
+		var len = str.length;
+		if (len <= prec)
+		{
+			while (len < prec)
+			{
+				str = '0'+str;
+				len++;
+			}
+			return '0.'+str;
+		}
+		else
+		{
+			return str.substr(0, str.length-prec) + '.'+str.substr(str.length-prec);
+		}
+	}
 }

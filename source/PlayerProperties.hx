@@ -12,10 +12,9 @@ class PlayerProperties
 	{
 		level = 0;
 		experience = 0;
-		experienceLevelUp = 100;
+		experienceLevelUp = GameProperties.Player_experienceLevelUpBase;
 		experienceFactor = 0;
 		skillPoints = 0;
-		attributePoints = 0;
 		
 		St = 5;
 		Ag = 5;
@@ -23,32 +22,43 @@ class PlayerProperties
 		Wi = 5;
 		Lk = 5;
 		baseHP = 30;
-		itemHP = 0;
 		skillHP = 0;
 		currentHP = baseHP;
 		
 		skillRegenTimerMax = skillRegenTimer = 0.5;
 		
-		baseMP = 0;
+		baseMP = 30;
+		currentMP = baseMP;
+		
 	
 		baseDamage = 3;
-		itemDamage = 0;
+
 		skillDamage = 0;
 		skillPowerHitDamage = 0;
 		
 		baseDefense= 0;
-		itemDefense= 0;
 		skillDefense= 0;
 		skillPowerArmorDefense= 0;
 		baseHitChance = 0;
+		
 		gainXP(50000);
 	}
 	
 	public function update():Void 
 	{
 		CheckLevelUp();
+		ReCalculateDerivedValues();
 		
 		updateHPRegen();
+		
+		if (currentHP > getHP())
+		{
+			currentHP = getHP();
+		}
+		if (currentMP > baseMP)
+		{
+			currentMP = baseMP;
+		}
 		
 	}
 
@@ -56,7 +66,6 @@ class PlayerProperties
 	public var experienceLevelUp : Int;
 	public var level: Int;
 	public var skillPoints : Int;
-	public var attributePoints : Int;
 	
 	public var St : Int;
 	public var Ag : Int;
@@ -65,14 +74,17 @@ class PlayerProperties
 	public var Lk : Int;
 	
 	public var skillAg : Int;
+	public function getAg () : Int
+	{
+		return Ag + skillAg;
+	}
 	
 	public var currentHP : Int;
 	public var baseHP : Int;
-	public var itemHP : Int;
 	public var skillHP : Int;
 	public function getHP () : Int
 	{
-		return baseHP + itemHP + skillHP;
+		return baseHP + skillHP;
 	}
 	
 	public var skillRegenTimerMax : Float;
@@ -81,14 +93,14 @@ class PlayerProperties
 	
 	
 	public var baseMP : Int;
+	public var currentMP : Int;
 	
 	public var baseDamage : Int;
-	public var itemDamage : Int;
 	public var skillDamage : Int;
 	public var skillPowerHitDamage :Int ;
 	public function getDamage () : Int 
 	{
-		var val : Int = Math.round(baseDamage + itemDamage + skillDamage + skillPowerHitDamage);
+		var val : Int = Math.round(baseDamage  + skillDamage + skillPowerHitDamage);
 		return  val;
 	}
 	
@@ -96,12 +108,11 @@ class PlayerProperties
 	
 	
 	public var baseDefense : Float;
-	public var itemDefense : Float;
 	public var skillDefense : Float;
 	public var skillPowerArmorDefense : Float;
 	public function getDefense () : Float 
 	{
-		var val : Float = baseDefense + itemDefense + skillDefense + skillPowerArmorDefense;
+		var val : Float = baseDefense  + skillDefense + skillPowerArmorDefense;
 		if (val > 0.9)
 		{
 			val = 0.9 + (val - 0.9 * 0.05); 
@@ -127,10 +138,25 @@ class PlayerProperties
 		{
 			level += 1;
 			skillPoints += 1;
-			attributePoints += 5;
-			experienceLevelUp = Std.int(experienceLevelUp * 1.75);
+			St += 1;
+			Ag += 1;
+			En += 1;
+			Wi += 1;
+			Lk += 1;
+			
+			
+			experienceLevelUp = Std.int(experienceLevelUp * GameProperties.Player_experienceLevelUpFactor);
 		}
 	}
+	
+	function ReCalculateDerivedValues() : Void 
+	{
+		baseHP = 20 + En * 2;
+		baseMP = 5 + Wi * 3;
+		baseDamage = 2 + (St + 1) * 2;
+		baseDefense = 0 + (0.005 * Ag + 0.0025* Lk);
+	}
+	
 	
 	function Heal(inc: Int):Void 
 	{

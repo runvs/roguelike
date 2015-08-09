@@ -137,11 +137,12 @@ class SkillTree extends FlxSpriteGroup
 		add(btn_BoostAgi);
 		add(btn_BoostExp);
 		
-		text_Skillpoints = new FlxText(200, 10, 100, "");
+		text_Skillpoints = new FlxText(40, 50, 400, "");
 		text_Skillpoints.scale.set(1.5, 1.5);
 		add(text_Skillpoints);
 		
 		this.scrollFactor.set();
+		x = 100;
 	}
 	
 	public function upgrade_PowerShoot() : Void 
@@ -536,6 +537,9 @@ class SkillTree extends FlxSpriteGroup
 		{
 			super.draw();
 		}
+		
+		
+		
 	}
 	
 	override public function update () : Void 
@@ -543,7 +547,24 @@ class SkillTree extends FlxSpriteGroup
 		if (showMe)
 		{
 			super.update();
-			text_Skillpoints.text = "Exp: " + Std.string(_properties.experience) + "/" + Std.string(_properties.experienceLevelUp)  +  "\nSkillpoints: " + Std.string(_properties.skillPoints);
+			text_Skillpoints.text = "Level:\t\t" + Std.string(_properties.level) + 
+			"\nExp:\t\t" + Std.string(_properties.experience) + "/" + Std.string(_properties.experienceLevelUp)  +  "\nSkillpoints: " + Std.string(_properties.skillPoints) + "\n\n";
+		
+			text_Skillpoints.text = text_Skillpoints.text + "  St:\t\t" + Std.string(_properties.St) + "\n" ;
+			text_Skillpoints.text = text_Skillpoints.text + "  Ag:\t\t" + Std.string(_properties.getAg()) + " = " + Std.string(_properties.Ag) + " + " + Std.string(_properties.skillAg) + "\n" ;
+			text_Skillpoints.text = text_Skillpoints.text + "  En:\t\t" + Std.string(_properties.En) + "\n" ;
+			text_Skillpoints.text = text_Skillpoints.text + "  Wi:\t\t" + Std.string(_properties.Wi) + "\n" ;
+			text_Skillpoints.text = text_Skillpoints.text + "  Lk:\t\t" + Std.string(_properties.Lk) + "\n\n" ;
+			
+			text_Skillpoints.text = text_Skillpoints.text + "HP:\t\t\t" + Std.string(_properties.currentHP) + " / " + Std.string(_properties.getHP()) + "\n";
+			text_Skillpoints.text = text_Skillpoints.text + "HP Max:\t" + Std.string(_properties.getHP()) + " = " + Std.string(_properties.baseHP) + " + "  + Std.string(_properties.skillHP) + "\n";
+			text_Skillpoints.text = text_Skillpoints.text + "MP:\t\t\t" + Std.string(_properties.currentMP) + " / " + Std.string(_properties.baseMP) + "\n\n";
+			
+			text_Skillpoints.text = text_Skillpoints.text + "Damage:\t" + GameProperties.floatToStringPrecision(_properties.getDamage(), 2) + 
+			" = " + GameProperties.floatToStringPrecision(_properties.baseDamage , 2) + " + " + GameProperties.floatToStringPrecision((_properties.skillDamage + _properties.skillPowerHitDamage), 2) + "\n" ;
+			
+			text_Skillpoints.text = text_Skillpoints.text + "Defence:\t" + GameProperties.floatToStringPrecision(_properties.getDefense(), 2) + 
+			" = " + GameProperties.floatToStringPrecision(_properties.baseDefense ,2)+ " + " + GameProperties.floatToStringPrecision((_properties.skillPowerArmorDefense + _properties.skillDefense),2) + "\n" ;
 		}
 		ActivateDeactivateLevelUpSkills();
 		calculateSkillBoni();
@@ -557,6 +578,7 @@ class SkillTree extends FlxSpriteGroup
 		cooldown_PowerShoot -= FlxG.elapsed;
 		cooldown_PowerShield -= FlxG.elapsed;
 		cooldown_PowerHit -= FlxG.elapsed;
+		//trace(cooldown_PowerHit);
 		cooldown_PowerBall -= FlxG.elapsed;
 		cooldown_PowerArmor -= FlxG.elapsed;
 		cooldown_BoostRegen -= FlxG.elapsed;
@@ -645,7 +667,8 @@ class SkillTree extends FlxSpriteGroup
 	{
 		var incfactor : Float = NaniteHealth * GameProperties.Skills_NaniteHealth_FactorPerLevel;
 		var incHP :Float = _properties.baseHP * incfactor;
-		_properties.skillHP = Std.int(incHP);
+		var offs : Int = NaniteHealth * GameProperties.Skills_NaniteHealth_OffsetPerLevel;
+		_properties.skillHP = Std.int(incHP) + offs;
 	}
 	
 	function calculateSkillNaniteArmor():Void 
@@ -658,7 +681,7 @@ class SkillTree extends FlxSpriteGroup
 	{
 		var incD : Int = NaniteWeapon * GameProperties.Skills_NaniteWeapon_DamagePerLevel;
 		var incF : Float = NaniteWeapon * GameProperties.Skills_NaniteWeapon_FactorPerLevel;
-		incD += Std.int(incF * (_properties.baseDamage + 0.25 * _properties.itemDamage));
+		incD += Std.int(incF * (_properties.baseDamage));
 		_properties.skillDamage = incD;
 	}
 	
@@ -706,12 +729,20 @@ class SkillTree extends FlxSpriteGroup
 		{
 			_properties.experienceFactor = BoostExp *  GameProperties.Skills_BoostExp_FactorPerLevel;
 		}
+		else
+		{
+			_properties.experienceFactor =  0;
+		}
 	}
 	function calculateSkillBoostAgi(): Void 
 	{
 		if (active_BoostAgi && lifeTime_BoostAgi >= 0)
 		{
 			_properties.skillAg = BoostAgi * GameProperties.Skills_BoostAgi_OffsetPerLevel;
+		}
+		else
+		{
+			_properties.skillAg = 0;
 		}
 	}
 	

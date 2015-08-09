@@ -33,6 +33,8 @@ class Player extends Creature
 	private var skill_BoostAgi : FlxText;
 	private var skill_BoostExp : FlxText;
 	
+	var skillz : SkillTree;
+	
 	public function new() 
 	{
 		super();
@@ -67,6 +69,11 @@ class Player extends Creature
 		skill_BoostExp    = new FlxText(200, FlxG.height - 10, 200, "Boost Exp [8]");
 		skill_BoostExp.scrollFactor.set();
 		
+	}
+	
+	public function setSkills (sk : SkillTree)
+	{
+		skillz = sk;
 	}
 	
 	override public function draw()
@@ -124,7 +131,7 @@ class Player extends Creature
 		
 	}
 	
-	public function updateHud(skillz : SkillTree) : Void 
+	public function updateHud() : Void 
 	{
 		if (skillz.PowerHit == 0)
 		{
@@ -244,6 +251,26 @@ class Player extends Creature
 	private function getInput () : Void 
 	{
 		
+		getInputMovement();
+		
+		getInputAttack();
+		
+		getInputSkills();
+		
+	}
+
+	
+	private function doAttack () : Void 
+	{
+		if (attacTimer  <= 0)
+		{
+			attacTimer = GameProperties.Player_AttackSpeed;
+			
+		}
+	}
+	
+	function getInputMovement():Void 
+	{
 		var left : Bool = false;
 		var right : Bool = false;
 		
@@ -286,25 +313,87 @@ class Player extends Creature
 		{
 			// do nothing, since both or no key is pressed
 		}
-		
+	}
+	
+	function getInputAttack():Void 
+	{
 		attack = false;
 		if (FlxG.mouse.justPressed)
 		{
 			attack = true;
+			if (skillz.active_PowerHit)
+			{
+				skillz.useSkillPowerHit();
+			}
 		}
 		if (attack)
 		{
 			doAttack();
 		}
 	}
-
 	
-	private function doAttack () : Void 
+	function getInputSkills():Void 
 	{
-		if (attacTimer  <= 0)
+		if (FlxG.keys.justPressed.ONE)
 		{
-			attacTimer = GameProperties.Player_AttackSpeed;
-			
+			trace("One");
+			if (FlxColorUtil.getRed(skill_PowerHit.color) == FlxColorUtil.getRed(FlxColor.RED))
+			{
+				trace("active");
+				skillz.activateSkillPowerHit();
+			}
+		}
+		if (FlxG.keys.justPressed.TWO)
+		{
+			if (FlxColorUtil.getRed(skill_PowerShoot.color) == FlxColorUtil.getRed(FlxColor.RED))
+			{
+				skillz.useSkillPowerShoot();
+				// TODO spawn Particle and so on
+			}
+		}
+		if (FlxG.keys.justPressed.THREE)
+		{
+			if (FlxColorUtil.getRed(skill_PowerShield.color) == FlxColorUtil.getRed(FlxColor.RED))
+			{
+				skillz.useSkillPowerShield();
+				// TODO spawn Shield and so on
+			}
+		}
+		if (FlxG.keys.justPressed.FOUR)
+		{
+			if (FlxColorUtil.getRed(skill_PowerBall.color) == FlxColorUtil.getRed(FlxColor.RED))
+			{
+				skillz.useSkillPowerBall();
+				// TODO spawn Ball and so on
+			}
+		}
+		if (FlxG.keys.justPressed.FIVE)
+		{
+			if (FlxColorUtil.getRed(skill_PowerArmor.color) == FlxColorUtil.getRed(FlxColor.RED))
+			{
+				skillz.useSkillPowerArmor();
+			}
+		}
+		if (FlxG.keys.justPressed.SIX)
+		{
+			if (FlxColorUtil.getRed(skill_BoostRegen.color) == FlxColorUtil.getRed(FlxColor.RED))
+			{
+				skillz.activateSkillBoostRegen();
+			}
+		}
+		if (FlxG.keys.justPressed.SEVEN)
+		{
+			if (FlxColorUtil.getRed(skill_BoostAgi.color) == FlxColorUtil.getRed(FlxColor.RED))
+			{
+				skillz.activateSkillBoostAgi();
+			}
+		}
+		if (FlxG.keys.justPressed.EIGHT)
+		{
+			if (FlxColorUtil.getRed(skill_BoostExp.color) == FlxColorUtil.getRed(FlxColor.RED))
+			{
+				skillz.activateSkillBoostExp();
+			}
 		}
 	}
 	
