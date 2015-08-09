@@ -131,7 +131,7 @@ class Enemy extends Creature
 	public function TakeDamage ( d : Int ) : Void 
 	{
 		properties.currentHP -= d;
-		trace ("take damage " + Std.string(d) + " newHP " + Std.string(properties.currentHP));
+		//trace ("take damage " + Std.string(d) + " newHP " + Std.string(properties.currentHP));
 		if (properties.currentHP <= 0)
 		{
 			alive = false;

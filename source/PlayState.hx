@@ -218,7 +218,7 @@ class PlayState extends FlxState
 	
 	public function spawnPowerBallExplosion(p : Particle)
 	{
-		trace ("PBE");
+		//trace ("PBE");
 		var l : Int = p._level + 3;
 		var d : Float = 360.0 / l;
 		var dir : FlxVector = new FlxVector(1, 1);

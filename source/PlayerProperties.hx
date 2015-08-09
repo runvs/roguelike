@@ -209,7 +209,7 @@ class PlayerProperties
 	{
 		var reducedDamage = Math.round(damage * (1 - getDefense()));
 		
-		trace("Took " + reducedDamage + " damage!");
+		//trace("Took " + reducedDamage + " damage!");
 		
 		currentHP -= reducedDamage;
 	}

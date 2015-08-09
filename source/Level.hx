@@ -1,8 +1,10 @@
 import flixel.FlxObject;
 import flixel.group.FlxTypedGroup;
+import flixel.system.FlxVersion;
 import flixel.tile.FlxTile;
 import flixel.util.FlxAngle;
 import flixel.util.FlxPoint;
+import flixel.util.FlxVector;
 
 class Level extends FlxObject
 {
@@ -62,6 +64,17 @@ class Level extends FlxObject
 
 		
 		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, _level - 1, _worldLevel);
+		
+		
+		
+		_grpEnemies.forEach(function(e:Enemy) 
+		{
+			var dir : FlxVector = new FlxVector(e.x - StartPos.x, e.y - StartPos.y);
+			if (dir.length <= 1.5 * GameProperties.Enemy_AggroRadius)
+			{
+				e.alive = false;
+			}
+		});
 		
 
 		//var forbiddenList:Array<Int> = new Array<Int>();

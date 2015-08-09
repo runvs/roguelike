@@ -50,7 +50,7 @@ class Particle extends FlxSprite
 	
 	public function hit()
 	{
-		trace("hit");
+		//trace("hit");
 		if (_type)
 		{
 			_state.spawnPowerBallExplosion(this);

@@ -4,7 +4,7 @@ class ExitGenerator
 
 	public static function generateExitsForMap(map: MyTileMap): MyTileMap
 	{
-		trace ("generate exits");
+		//trace ("generate exits");
 		var EXIT_DOWN_ID = 7;
 		
 		var exitDownPosition:flixel.util.FlxPoint = new flixel.util.FlxPoint();
