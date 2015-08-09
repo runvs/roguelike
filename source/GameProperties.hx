@@ -29,7 +29,7 @@ class GameProperties
 	public static var Skills_PowerShoot_CoolDown : Float = 5;
 	public static var Skills_PowerShootMPCost : Int = 5; 
 	public static var Skills_PowerShootSpeed : Float = 200;
-	public static var SkillsPowerShootDamagePerLevel : Int = 3;
+	public static var Skills_PowerShootDamagePerLevel : Int = 3;
 	
 	public static var Skills_PowerShield_CoolDown : Float = 5;
 	public static var Skills_PowerShieldMPCost : Int = 5; 
