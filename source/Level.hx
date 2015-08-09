@@ -10,6 +10,7 @@ class Level extends FlxObject
 {
 	
 	public var _grpEnemies:flixel.group.FlxTypedGroup<Enemy>;
+	public var _grpDeadEnemies:flixel.group.FlxTypedGroup<Enemy>;
 
 	public var map : MyTileMap;
 	//public var _state:PlayState;
@@ -66,17 +67,22 @@ class Level extends FlxObject
 
 		
 		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, _level - 1, _worldLevel);
+		_grpDeadEnemies = new FlxTypedGroup<Enemy>();
 		
 		
-		
+		var ne : FlxTypedGroup<Enemy>= new FlxTypedGroup<Enemy>();
 		_grpEnemies.forEach(function(e:Enemy) 
 		{
 			var dir : FlxVector = new FlxVector(e.x - StartPos.x, e.y - StartPos.y);
 			if (dir.length <= 1.5 * GameProperties.Enemy_AggroRadius)
 			{
-				e.alive = false;
+			}
+			else
+			{
+				ne.add(e);
 			}
 		});
+		_grpEnemies = ne;
 		
 
 		//var forbiddenList:Array<Int> = new Array<Int>();
@@ -232,6 +238,7 @@ class Level extends FlxObject
 		super.update();
 		map.update();
 
+		_grpDeadEnemies.update();
 		_grpEnemies.update();
 		_grpShields.update();
 		_grpParticles.update();
@@ -243,7 +250,9 @@ class Level extends FlxObject
 	{
 		super.draw();
 		map.draw();
+		_grpDeadEnemies.draw();
 		_grpEnemies.draw();
+		
 		_grpShields.draw();
 		_grpParticles.draw();
 	}
@@ -254,7 +263,7 @@ class Level extends FlxObject
 		
 		_grpEnemies.forEach(function (e: Enemy ) : Void 
 		{
-			if (e.alive) { newEnemies.add(e); } else { e.destroy(); }
+			if (e.alive) { newEnemies.add(e); } else { _grpDeadEnemies.add(e); }
 		});
 		_grpEnemies = newEnemies;
 		

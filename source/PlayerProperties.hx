@@ -189,7 +189,7 @@ class PlayerProperties
 		baseHP = 20 + En * 2;
 		baseMP = 5 + Wi * 3;
 		baseDamage = 1 + (St + 1);
-		baseDefense = 0 + (0.005 * Ag + 0.0025* Lk);
+		baseDefense = 0 + (0.006 * Ag + 0.0025* Lk);
 	}
 	
 	

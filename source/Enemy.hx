@@ -36,7 +36,8 @@ class Enemy extends Creature
 		loadGraphic(AssetPaths.Enemy__png, true, 32, 32);
 		this.animation.add("idle", [0, 1, 2, 3, 4],FlxRandom.intRanged(4,6));
 		this.animation.add("walk", [5, 6, 7, 8], 7);
-		this.animation.play("idle", false, FlxRandom.intRanged(0,3));
+		this.animation.play("idle", false, FlxRandom.intRanged(0, 3));
+		this.animation.add("dead", [9], 30, true);
 		
 		//this.offset.set();
 		//this.origin.set();
@@ -54,9 +55,16 @@ class Enemy extends Creature
 	
 	override  public function update ()
 	{
-		acceleration.set(0, 0);
-		doKIStuff();
-		
+		if (alive)
+		{
+			acceleration.set(0, 0);
+			doKIStuff();
+
+		}
+		else
+		{
+			animation.play("dead", true);
+		}
 		super.update();
 	}
 	
@@ -135,6 +143,10 @@ class Enemy extends Creature
 		if (properties.currentHP <= 0)
 		{
 			alive = false;
+			active = false;
+			animation.play("dead", true);
+			this.velocity.set();
+			acceleration.set();
 		}
 	}
 	

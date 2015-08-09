@@ -25,9 +25,12 @@ class Creature extends FlxSprite
 	
 	override public function update()
 	{
-		updateHitbox();
+		if (alive)
+		{
+			updateHitbox();
+			doMovement();
+		}
 		super.update();
-		doMovement();
 	}
 	
 	
