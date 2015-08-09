@@ -44,7 +44,7 @@ class Tile extends FlxSprite
 			trace("exit created");
 			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GREEN);
 		}
-		else if (t == 8)
+		else if (t == 8)	// ceiling
 		{
 			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(1.0,14,16,16));
 		}

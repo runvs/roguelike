@@ -4,7 +4,7 @@ class StartFinder
 {
 	public static function findPosition(tree:flixel.group.FlxTypedGroup<Leaf>): FlxPoint
 	{
-		var p  : FlxPoint;
+		var p  : FlxPoint = null;
 
 		//so dirty...
 		var listOfRooms:Array<Leaf> = new Array<Leaf>();
@@ -14,7 +14,7 @@ class StartFinder
 		{
 			//get current room
 			var room:Leaf = currentLeaf;
-			if(room.room != null)
+			if(room != null && room.room != null)
 			{
 				//put the roomtype value into the "map"
 				listOfRooms.push(room);
@@ -22,7 +22,7 @@ class StartFinder
 		}
 			
 		
-		var index : Int = FlxRandom.intRanged(0, listOfRooms.length);
+		var index : Int = FlxRandom.intRanged(0, listOfRooms.length-1);
 		var tmpRoom:flixel.util.FlxRect = listOfRooms[index].room;
 		
 		//spawn

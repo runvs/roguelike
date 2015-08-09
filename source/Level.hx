@@ -50,6 +50,7 @@ class Level extends FlxObject
 		
 		// create boundaries
 		TileReplacement();
+		RemoveSingleWallTiles();
 		createBoundaries();
 		
 
@@ -64,7 +65,7 @@ class Level extends FlxObject
 	function createBoundaries():Void 
 	{
 		for (j in 0...sizeY )
-		{
+		{			
 			var t : Tile = new Tile( 0 , j , 8);
 			map.walls.add(t);
 			t = new Tile((sizeX ) , j , 8);
@@ -72,11 +73,51 @@ class Level extends FlxObject
 		}
 		for (i in 0...sizeX )
 		{
-			var t : Tile = new Tile( i, 0 , 8);
-			map.walls.add(t);
-			t = new Tile(i, (sizeY) , 8);
+			if (getFloor(i, 1) != null)
+			{
+				var t : Tile = new Tile( i, 0 , 0);
+				map.walls.add(t);
+			}
+			else
+			{
+				var t : Tile = new Tile( i, 0 , 8);
+				map.walls.add(t);
+			}
+			var t = new Tile(i, (sizeY) , 8);
 			map.walls.add(t);
 		}
+	}
+	
+	function RemoveSingleWallTiles() : Void
+	{
+		var newWalls : FlxTypedGroup<Tile> = new FlxTypedGroup<Tile>();
+		
+		map.walls.forEach(function (t:Tile) : Void 
+		{
+			if ( t.type == 0)	// tile is a "wall"
+			{
+				var posX : Int = t.tx;
+				var posY : Int = t.ty;
+				
+				if (getWall(posX, posY-1) == null)
+				{
+					var newTile : Tile = new Tile(posX, posY, 3);
+					map.floor.add(newTile);
+					t.destroy();
+				}
+				else
+				{
+					newWalls.add(t);
+				}
+				
+			}
+			else
+			{
+				newWalls.add(t);
+			}
+		});
+		
+		map.walls = newWalls;
 	}
 	
 	function TileReplacement() : Void 

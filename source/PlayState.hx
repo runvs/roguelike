@@ -93,6 +93,25 @@ class PlayState extends FlxState
 		}	
 	}
 	
+	function ChangeLevel():Void 
+	{
+		if ( !switching)
+		{
+			if (FlxG.overlap(player, level.Exit)) 
+			{
+				switching = true;
+				FlxTween.tween(_overlay, { alpha:1 } );
+				var t : FlxTimer = new FlxTimer(1, function (t:FlxTimer) 
+				{
+					level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, 1);
+					switching = false;
+					player.setPosition(level.StartPos.x, level.StartPos.y);
+					FlxTween.tween(_overlay, { alpha:0 } );
+				});
+			}
+		}
+	}
+	
 	/**
 	 * Function that is called once every frame.
 	 */
@@ -126,18 +145,7 @@ class PlayState extends FlxState
 				
 				FlxG.collide(player, level._grpEnemies);
 				
-				if ( !switching)
-				{
-					if (FlxG.overlap(player, level.Exit)) 
-					{
-						switching = true;
-						var t : FlxTimer = new FlxTimer(1, function (t:FlxTimer) 
-						{
-							level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, 1);
-							switching = false;
-						});
-					}
-				}
+				ChangeLevel();
 				
 				if (player.attack)
 				{
