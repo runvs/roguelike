@@ -183,7 +183,7 @@ class PlayState extends FlxState
 							e.TakeDamage(player.properties.getDamage());
 							if (e.alive == false)
 							{
-								player.properties.gainXP(120);
+								player.properties.gainXP(GameProperties.Enemy_BaseXP);
 							}
 						}
 					});

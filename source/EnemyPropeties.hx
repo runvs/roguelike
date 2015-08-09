@@ -10,7 +10,7 @@ class EnemyPropeties
 	public function new(l : Int) 
 	{
 		level = l;
-		currentHP = baseHP = 5 * (level +1);
+		currentHP = baseHP = 6 * (level +1);
 	}
 	
 	public var level : Int;

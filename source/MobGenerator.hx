@@ -1,6 +1,6 @@
 class MobGenerator 
 {
-	public static function generateMobsFromTree(tree:flixel.group.FlxTypedGroup<Leaf>, ?initialChance:Float = 50, level : Int):flixel.group.FlxTypedGroup<Enemy>
+	public static function generateMobsFromTree(tree:flixel.group.FlxTypedGroup<Leaf>, level : Int):flixel.group.FlxTypedGroup<Enemy>
 	{
 		var listOfEmenies:flixel.group.FlxTypedGroup<Enemy> = new flixel.group.FlxTypedGroup<Enemy>();
 
@@ -22,7 +22,11 @@ class MobGenerator
 		for(roomIndex in 0 ... listOfRooms.length)
 		{
 			var tmpRoom:flixel.util.FlxRect = listOfRooms[roomIndex];
-			var chance:Float = initialChance;
+			var chance:Float = (level +3) * 8;
+			if (chance > 100)
+			{
+				chance = 100;
+			}
 
 			//we have a room, do we even spawn an enemy?
 			if(flixel.util.FlxRandom.chanceRoll(chance))

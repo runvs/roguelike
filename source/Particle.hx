@@ -18,9 +18,14 @@ class Particle extends FlxSprite
 		super(X, Y);
 		this.makeGraphic(16, 16, FlxColor.CRIMSON);
 		
+		this.origin.set(8, 8);
+		
+		
 		var dir : FlxVector = new FlxVector(tx - X, ty - Y);
 		dir = dir.normalize();
 		dir = dir.scale(GameProperties.Skills_PowerShootSpeed * Math.sqrt(level*2));
+		
+		this.angle = dir.degrees;
 		
 		//acceleration.set(dir.x*10, dir.y*10);
 		//maxVelocity.set (dir.x, dir.y);

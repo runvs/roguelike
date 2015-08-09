@@ -58,7 +58,8 @@ class Level extends FlxObject
 		createBoundaries();
 		
 
-		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, (_level == 0) ? 0 : 50, _level - 1);
+		
+		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, _level - 1);
 		
 
 		//var forbiddenList:Array<Int> = new Array<Int>();

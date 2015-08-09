@@ -61,11 +61,11 @@ class GameProperties
 	public static var Player_VelocityDecay : Float = 800;
 	public static var Player_Speed : Float = 1000;
 	public static var Player_AttackSpeed : Float = 0.25;
-	public static var Player_experienceLevelUpBase : Int = 50;
-	public static var Player_experienceLevelUpFactor : Float = 1.125;
+	public static var Player_experienceLevelUpBase : Int = 40;
+	public static var Player_experienceLevelUpFactor : Float = 1.2;
 	
 	public static var Enemy_AggroRadius : Int = TileSize * 4;
-	
+	public static var Enemy_BaseXP : Int = 14;
 	
 	public static function floatToStringPrecision(n:Float, prec:Int)
 	{
