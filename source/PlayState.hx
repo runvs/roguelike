@@ -21,6 +21,7 @@ class PlayState extends FlxState
 	var player : Player;
 	
 	var skillz : SkillTree;
+	private var _ending : Bool;
 	
 	private var _vignette : FlxSprite;
 	private var _overlay : FlxSprite;
@@ -31,6 +32,9 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		super.create();
+		
+		_ending = false;
+		
 		level = new Level(this, 100, 30, 1);
 		player = new Player();
 		player.x = 100;
@@ -74,6 +78,18 @@ class PlayState extends FlxState
 		super.destroy();
 	}
 
+	
+	private function endGame() : Void 
+	{
+		if (!_ending)
+		{
+			FlxGameJolt.addScore("Main", _score);
+			_ending = true;
+			FlxG.camera.fade(FlxColor.BLACK, 1.0, false, function () : Void { FlxG.switchState(new MenuState()); } );
+			//FlxGameJolt.fetchScore(
+		}	
+	}
+	
 	/**
 	 * Function that is called once every frame.
 	 */
@@ -81,41 +97,50 @@ class PlayState extends FlxState
 	{
 		_overlay.update();
 		skillz.update();
-		if (!skillz.showMe)
+		
+		if (!_ending)
 		{
-			super.update();
-			cleanUp();
-			level.update();
-			player.update();
-			player.updateHud();
-			FlxG.collide(player, level.map.walls);
-			FlxG.collide(level._grpEnemies, level.map.walls);
-			FlxG.collide(level._grpEnemies, level.map.walls);
-			
-			FlxG.collide(player, level._grpEnemies);
-			
-			if (player.attack)
+			if (!player.alive)
 			{
-				trace("attack");
-				var r : FlxRect = player.getAttackRect();
-				
-				level._grpEnemies.forEach(function (e:Enemy) 
-				{
-					var enemyRect : FlxRect = new FlxRect (e.x, e.y, e.width, e.height);
-					if (r.overlaps(enemyRect))
-					{
-						trace("hit");
-						e.TakeDamage(player.properties.getDamage());
-						if (e.alive == false)
-						{
-							player.properties.gainXP(120);
-						}
-					}
-				});
+				endGame();
 			}
+			
+			
+			if (!skillz.showMe)
+			{
+				super.update();
+				cleanUp();
+				level.update();
+				player.update();
+				player.updateHud();
+				FlxG.collide(player, level.map.walls);
+				FlxG.collide(level._grpEnemies, level.map.walls);
+				FlxG.collide(level._grpEnemies, level.map.walls);
+				
+				FlxG.collide(player, level._grpEnemies);
+				
+				if (player.attack)
+				{
+					trace("attack");
+					var r : FlxRect = player.getAttackRect();
+					
+					level._grpEnemies.forEach(function (e:Enemy) 
+					{
+						var enemyRect : FlxRect = new FlxRect (e.x, e.y, e.width, e.height);
+						if (r.overlaps(enemyRect))
+						{
+							trace("hit");
+							e.TakeDamage(player.properties.getDamage());
+							if (e.alive == false)
+							{
+								player.properties.gainXP(120);
+							}
+						}
+					});
+				}
+			}
+		
 		}
-		
-		
 	}
 	
 	override public function draw(): Void
