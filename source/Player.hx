@@ -359,7 +359,7 @@ class Player extends Creature
 	function getInputAttack():Void 
 	{
 		attack = false;
-		if (FlxG.mouse.justPressed)
+		if (FlxG.mouse.justPressed || FlxG.keys.anyJustPressed(["SPACE"]))
 		{
 			attack = true;
 			if (skillz.active_PowerHit)
