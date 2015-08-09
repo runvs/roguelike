@@ -11,8 +11,8 @@ class GameProperties
 	public static var WorldSizeInTilesy : Int = 24;
 	public static var Skills_Level1 : Int = 1;
 	
-	public static var Skills_Level2 : Int = 5;
-	public static var Skills_Level3 : Int = 10;
+	public static var Skills_Level2 : Int = 10;
+	public static var Skills_Level3 : Int = 20;
 	
 	// Tier 1
 	public static var Skills_NaniteArmor_FactorPerLevel : Float = 0.05;
