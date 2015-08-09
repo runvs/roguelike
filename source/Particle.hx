@@ -40,7 +40,7 @@ class Particle extends FlxSprite
 		
 		if (type)
 		{
-			damage = Std.int(1 + GameProperties.SkillsPowerShootDamagePerLevel * level);
+			damage = Std.int(1 + GameProperties.Skills_PowerShootDamagePerLevel * level);
 		}
 		else 
 		{
