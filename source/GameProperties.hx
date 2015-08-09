@@ -55,9 +55,9 @@ class GameProperties
 	public static var Skills_BoostRegenMPCost : Int = 8; 
 	
 	// Tier 2
-	public static var Skills_BoostAgi_Cooldown : Float = 30;
+	public static var Skills_BoostAgi_Cooldown : Float = 20;
 	public static var Skills_BoostAgi_LifeTime : Float = 10;
-	public static var Skills_BoostAgi_OffsetPerLevel : Int = 5;
+	public static var Skills_BoostAgi_OffsetPerLevel : Int = 9;
 	public static var Skills_BoostAgiMPCost : Int = 5; 
 	
 	// Tier 3

@@ -57,8 +57,8 @@ class SkillTree extends FlxSpriteGroup
 		NaniteWeapon = 0;
 		
 		BoostRegen = 0;
-		BoostAgi = 0;
-		BoostExp = 1;
+		BoostAgi = 1;
+		BoostExp = 0;
 		
 		b_PowerHit = false;
 		b_PowerShoot = false;

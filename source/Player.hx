@@ -106,14 +106,14 @@ class Player extends Creature
 		
 		effectFGRed = new FlxSprite();
 		effectBGRed = new FlxSprite();
-		effectBGRed.loadGraphic(AssetPaths.Shield__png, true, 32, 32);
-		effectFGRed.loadGraphic(AssetPaths.Shield__png, true, 32, 32);
+		effectBGRed.loadGraphic(AssetPaths.Spell_Agi__png, true, 32, 32);
+		effectFGRed.loadGraphic(AssetPaths.Spell_Agi__png, true, 32, 32);
 		
-		//effectBGRed.animation.add("idle", [0], 30, true);
-		//effectBGRed.animation.add("cast", [1,2,3,4,5], 30, true);
-		//
-		//effectFGRed.animation.add("idle", [0], 30, true);
-		//effectFGRed.animation.add("cast", [6, 7, 8, 9], 30, true);
+		effectBGRed.animation.add("idle", [9], 30, true);
+		effectBGRed.animation.add("cast", [9, 0,1,2,3,9], 30, false);
+		effectBGRed.animation.play("idle");
+		effectFGRed.animation.add("idle", [9], 30, true);
+		effectFGRed.animation.add("cast", [4,5,6,7,8], 10, true);
 		
 		
 		
@@ -155,7 +155,7 @@ class Player extends Creature
 	{
 		effectBGYellow.draw();
 		effectBGGreen.draw();
-		//effectBGRed.draw();
+		effectBGRed.draw();
 		super.draw();
 		targetbox.draw();
 		effectFGYellow.draw();
