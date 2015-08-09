@@ -1,4 +1,5 @@
 package;
+import flixel.FlxG;
 
 /**
  * ...
@@ -26,6 +27,8 @@ class PlayerProperties
 		skillHP = 0;
 		currentHP = baseHP;
 		
+		skillRegenTimerMax = skillRegenTimer = 0.5;
+		
 		baseMP = 0;
 	
 		baseDamage = 3;
@@ -40,6 +43,14 @@ class PlayerProperties
 		baseHitChance = 0;
 		gainXP(50000);
 	}
+	
+	public function update():Void 
+	{
+		CheckLevelUp();
+		
+		updateHPRegen();
+		
+	}
 
 	public var experience : Int;
 	public var experienceLevelUp : Int;
@@ -53,6 +64,8 @@ class PlayerProperties
 	public var Wi : Int;
 	public var Lk : Int;
 	
+	public var skillAg : Int;
+	
 	public var currentHP : Int;
 	public var baseHP : Int;
 	public var itemHP : Int;
@@ -61,6 +74,11 @@ class PlayerProperties
 	{
 		return baseHP + itemHP + skillHP;
 	}
+	
+	public var skillRegenTimerMax : Float;
+	public var skillRegenTimer : Float;
+	public var skillRegenGain : Int;
+	
 	
 	public var baseMP : Int;
 	
@@ -111,6 +129,26 @@ class PlayerProperties
 			skillPoints += 1;
 			attributePoints += 5;
 			experienceLevelUp = Std.int(experienceLevelUp * 1.75);
+		}
+	}
+	
+	function Heal(inc: Int):Void 
+	{
+		currentHP += inc;
+		if (currentHP >= getHP())
+		{
+			currentHP = getHP();
+		}
+	}
+	
+	function updateHPRegen():Void 
+	{
+		skillRegenTimer -= FlxG.elapsed;
+		if (skillRegenTimer <= 0)
+		{
+			skillRegenTimer += skillRegenTimerMax;
+			
+			Heal(skillRegenGain);
 		}
 	}
 	

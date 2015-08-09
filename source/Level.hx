@@ -25,13 +25,33 @@ class Level extends FlxObject
 
 		map = new MyTileMap();
 		map = MapGenerator.generateMapFromTree(mapAsTree);
-
+		
+		// create boundaries
+		createBoundaries();
 
 		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, (_level == 0) ? 0 : 50, _level-1);
 
 		//var forbiddenList:Array<Int> = new Array<Int>();
 		//forbiddenList.push(0);
 		//map = ExitGenerator.generateExitsForMap(map, forbiddenList);
+	}
+	
+	function createBoundaries():Void 
+	{
+		for (j in 0...sizeY )
+		{
+			var t : Tile = new Tile( 0 * GameProperties.TileSize, j * GameProperties.TileSize, 0);
+			map.walls.add(t);
+			t = new Tile((sizeX ) * GameProperties.TileSize, j * GameProperties.TileSize, 0);
+			map.walls.add(t);
+		}
+		for (i in 0...sizeX )
+		{
+			var t : Tile = new Tile( i * GameProperties.TileSize, 0 * GameProperties.TileSize, 0);
+			map.walls.add(t);
+			t = new Tile(i * GameProperties.TileSize, (sizeY) * GameProperties.TileSize, 0);
+			map.walls.add(t);
+		}
 	}
 
 	public override function update():Void

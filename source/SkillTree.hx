@@ -137,7 +137,8 @@ class SkillTree extends FlxSpriteGroup
 		add(btn_BoostAgi);
 		add(btn_BoostExp);
 		
-		text_Skillpoints = new FlxText(200, 30, 100, "");
+		text_Skillpoints = new FlxText(200, 10, 100, "");
+		text_Skillpoints.scale.set(1.5, 1.5);
 		add(text_Skillpoints);
 		
 		this.scrollFactor.set();
@@ -635,6 +636,8 @@ class SkillTree extends FlxSpriteGroup
 		calculateSkillPowerHit();
 		calculateSkillPowerArmor();
 		
+		calculateSkillBoostRegen();
+		calculateSkillBoostAgi();
 		calculateSkillBoostExp();
 	}
 	
@@ -684,6 +687,19 @@ class SkillTree extends FlxSpriteGroup
 		}
 	}
 	
+	function calculateSkillBoostRegen () : Void 
+	{
+		if (active_BoostRegen && lifeTime_BoostRegen >= 0)
+		{
+			_properties.skillRegenGain = BoostRegen * GameProperties.Skills_BoostRegen_GainPerTickPerLevel;
+			_properties.skillRegenTimer = 0;	// instant heal
+		}
+		else
+		{
+			_properties.skillRegenGain = 0;
+		}
+	}
+	
 	function calculateSkillBoostExp() : Void 
 	{
 		if (active_BoostExp && lifeTime_BoostExp >= 0)
@@ -691,6 +707,15 @@ class SkillTree extends FlxSpriteGroup
 			_properties.experienceFactor = BoostExp *  GameProperties.Skills_BoostExp_FactorPerLevel;
 		}
 	}
+	function calculateSkillBoostAgi(): Void 
+	{
+		if (active_BoostAgi && lifeTime_BoostAgi >= 0)
+		{
+			_properties.skillAg = BoostAgi * GameProperties.Skills_BoostAgi_OffsetPerLevel;
+		}
+	}
+	
+	
 	
 	function CheckSkillLifeTime():Void 
 	{
@@ -709,6 +734,15 @@ class SkillTree extends FlxSpriteGroup
 			if (lifeTime_BoostRegen <= 0)
 			{
 				active_BoostRegen = false;
+			}
+		}
+		
+		if (lifeTime_BoostAgi >= 0 && active_BoostAgi)
+		{
+			lifeTime_BoostAgi -= FlxG.elapsed;
+			if (lifeTime_BoostAgi <= 0)
+			{
+				active_BoostAgi = false;
 			}
 		}
 		

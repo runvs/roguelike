@@ -33,9 +33,11 @@ class GameProperties
 	
 	public static var Skills_BoostRegen_CoolDown : Float = 20;
 	public static var Skills_BoostRegen_LifeTime : Float = 5;
+	public static var Skills_BoostRegen_GainPerTickPerLevel : Int = 3;
 	
 	public static var Skills_BoostAgi_Cooldown : Float = 30;
 	public static var Skills_BoostAgi_LifeTime : Float = 10;
+	public static var Skills_BoostAgi_OffsetPerLevel : Int = 5;
 	
 	public static var Skills_BoostExp_Cooldown : Float = 40;
 	public static var Skills_BoostExp_LifeTime : Float = 20;
