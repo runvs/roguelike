@@ -61,7 +61,10 @@ class Enemy extends Creature
 	
 	private function doKIStuff()
 	{
-		attackTimer -= FlxG.elapsed;
+		if (attackTimer > 0)
+		{
+			attackTimer -= FlxG.elapsed;
+		}
 		
 		if (doRandomWalk)
 		{			
