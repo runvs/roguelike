@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
 import flixel.util.FlxPoint;
@@ -55,7 +56,7 @@ class Enemy extends Creature
 		randomwalkTimer -= FlxG.elapsed;
 		if (randomwalkTimer <= 0)
 		{
-			randomwalkTimer = 4;
+			randomwalkTimer = FlxRandom.floatRanged(2, 5);
 			randomWalkDirection = FlxRandom.intRanged(0, 3);
 		}
 		
@@ -89,4 +90,8 @@ class Enemy extends Creature
 		}
 	}
 	
+	public static function handleWallCollision(enemy:Enemy, wall:FlxObject)
+	{
+		enemy.randomWalkDirection = (enemy.randomWalkDirection + 2) % 4;
+	}
 }

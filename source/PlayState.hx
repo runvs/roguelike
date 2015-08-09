@@ -115,8 +115,7 @@ class PlayState extends FlxState
 				{
 					trace ("fuck you collision");
 				}
-				FlxG.collide(level._grpEnemies, level.map.walls);
-				FlxG.collide(level._grpEnemies, level.map.walls);
+				FlxG.collide(level._grpEnemies, level.map.walls, Enemy.handleWallCollision);
 				
 				FlxG.collide(player, level._grpEnemies);
 				
