@@ -18,6 +18,7 @@ class Enemy extends Creature
 	private var randomWalkDirection : Int;
 	
 	public var properties : EnemyPropeties;
+	public var doRandomWalk:Bool;
 
 
 	public function new() 
@@ -37,6 +38,7 @@ class Enemy extends Creature
 		//this.scale.set(2, 2);
 		//this.updateHitbox();
 		
+		doRandomWalk = true;
 		randomwalkTimer = 1.5;
 		randomWalkDirection = FlxRandom.intRanged(0, 3);
 		this.drag = new FlxPoint( GameProperties.Player_VelocityDecay, GameProperties.Player_VelocityDecay);
@@ -53,32 +55,38 @@ class Enemy extends Creature
 	
 	private function doKIStuff()
 	{
-		randomwalkTimer -= FlxG.elapsed;
-		if (randomwalkTimer <= 0)
-		{
-			randomwalkTimer = FlxRandom.floatRanged(2, 5);
-			randomWalkDirection = FlxRandom.intRanged(0, 3);
+		if (doRandomWalk)
+		{			
+			randomwalkTimer -= FlxG.elapsed;
+			if (randomwalkTimer <= 0)
+			{
+				randomwalkTimer = FlxRandom.floatRanged(2, 5);
+				randomWalkDirection = FlxRandom.intRanged(0, 3);
+			}
+			
+			if (randomWalkDirection == 0)
+			{
+				moveDown();
+			}
+			else if (randomWalkDirection == 1)
+			{
+				moveLeft();
+			}
+			else if (randomWalkDirection == 2)
+			{
+				moveUp();
+			}
+			else 
+			{
+				moveRight();
+			}
 		}
-		
-		if (randomWalkDirection == 0)
-		{
-			moveDown();
-		}
-		else if (randomWalkDirection == 1)
-		{
-			moveLeft();
-		}
-		else if (randomWalkDirection == 2)
-		{
-			moveUp();
-		}
-		else 
-		{
-			moveRight();
-		}
-		
 	}
 	
+	public function walkTowards(obj:FlxObject):Void
+	{
+		//trace('Aggro!');
+	}
 	
 	public function TakeDamage ( d : Int ) : Void 
 	{
@@ -90,7 +98,7 @@ class Enemy extends Creature
 		}
 	}
 	
-	public static function handleWallCollision(enemy:Enemy, wall:FlxObject)
+	public static function handleWallCollision(enemy:Enemy, wall:FlxObject):Void
 	{
 		enemy.randomWalkDirection = (enemy.randomWalkDirection + 2) % 4;
 	}

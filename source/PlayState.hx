@@ -142,6 +142,21 @@ class PlayState extends FlxState
 					trace ("fuck you collision");
 				}
 				FlxG.collide(level._grpEnemies, level.map.walls, Enemy.handleWallCollision);
+				for (enemy in level._grpEnemies)
+				{
+					var xx:Float = enemy.x - player.x;
+					var yy:Float = enemy.y - player.y;
+					var distance:Float = Math.sqrt(xx * xx + yy * yy);
+					
+					if (distance <= GameProperties.Enemy_AggroRadius) {
+						enemy.doRandomWalk = false;
+						enemy.walkTowards(player);
+					}
+					else
+					{
+						enemy.doRandomWalk = true;
+					}
+				}
 				
 				FlxG.collide(player, level._grpEnemies);
 				
