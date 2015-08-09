@@ -65,16 +65,16 @@ class Level extends FlxObject
 	{
 		for (j in 0...sizeY )
 		{
-			var t : Tile = new Tile( 0 , j , 0);
+			var t : Tile = new Tile( 0 , j , 8);
 			map.walls.add(t);
-			t = new Tile((sizeX ) , j , 0);
+			t = new Tile((sizeX ) , j , 8);
 			map.walls.add(t);
 		}
 		for (i in 0...sizeX )
 		{
-			var t : Tile = new Tile( i, 0 , 0);
+			var t : Tile = new Tile( i, 0 , 8);
 			map.walls.add(t);
-			t = new Tile(i, (sizeY) , 0);
+			t = new Tile(i, (sizeY) , 8);
 			map.walls.add(t);
 		}
 	}
@@ -85,6 +85,7 @@ class Level extends FlxObject
 		
 		map.walls.forEach(function (t:Tile) : Void 
 		{
+			// count neighbours
 			var N : Int = 0;
 			map.floor.forEach(function(ft:Tile) : Void
 			{
@@ -97,11 +98,13 @@ class Level extends FlxObject
 				
 			});
 			
+			// get position
+			var posX : Int = t.tx;
+			var posY : Int = t.ty;
+			
+			// if one or more neighbours
 			if (N != 0)
 			{
-				
-				var posX : Int = t.tx;
-				var posY : Int = t.ty;
 				if (getFloor(posX, posY+1) != null)
 				{
 					newWalls.add(t);
@@ -113,8 +116,10 @@ class Level extends FlxObject
 					t.destroy();
 				}
 			}
-			else
+			else //if zero neighbours
 			{
+				var tnew : Tile = new Tile(posX, posY, 8);
+				newWalls.add(tnew);
 				t.destroy();
 			}
 		});

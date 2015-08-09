@@ -46,7 +46,7 @@ class Tile extends FlxSprite
 		}
 		else if (t == 8)
 		{
-			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GRAY);
+			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(1.0,14,16,16));
 		}
 		this.updateHitbox();
 	}
