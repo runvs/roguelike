@@ -62,6 +62,7 @@ class PlayState extends FlxState
 			cleanUp();
 			level.update();
 			player.update();
+			player.updateHud(skillz);
 			FlxG.collide(player, level.map.walls);
 			FlxG.collide(level._grpEnemies, level.map.walls);
 			FlxG.collide(level._grpEnemies, level.map.walls);
@@ -96,7 +97,15 @@ class PlayState extends FlxState
 	{
 		level.draw();
 		player.draw();
-		skillz.draw();
+		if (!skillz.showMe)
+		{
+			player.drawHud();
+		}
+		else
+		{
+			skillz.draw();
+		}
+		
 		super.draw();
 	}
 }

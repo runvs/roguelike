@@ -2,6 +2,8 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.text.FlxText;
+import flixel.util.FlxColor;
 import flixel.util.FlxColorUtil;
 import flixel.util.FlxPoint;
 import flixel.util.FlxRect;
@@ -22,6 +24,15 @@ class Player extends Creature
 	
 	public var attack : Bool;
 	
+	private var skill_PowerHit : FlxText;
+	private var skill_PowerShoot : FlxText;
+	private var skill_PowerShield : FlxText;
+	private var skill_PowerBall : FlxText;
+	private var skill_PowerArmor : FlxText;
+	private var skill_BoostRegen : FlxText;
+	private var skill_BoostAgi : FlxText;
+	private var skill_BoostExp : FlxText;
+	
 	public function new() 
 	{
 		super();
@@ -36,12 +47,48 @@ class Player extends Creature
 		targetbox = new FlxSprite();
 		targetbox.makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(0.5, 100, 200, 200));
 		targetboxRect = new FlxRect(x, y, GameProperties.TileSize, GameProperties.TileSize);
+		
+		// hud stuff
+		
+		skill_PowerHit    = new FlxText(200, FlxG.height - 80, 200, "Power Hit [1]");
+		skill_PowerHit.scrollFactor.set();
+		skill_PowerShoot  = new FlxText(200, FlxG.height - 70, 200, "Power Shoot [2]" );
+		skill_PowerShoot.scrollFactor.set();
+		skill_PowerShield = new FlxText(200, FlxG.height - 60, 200, "Power Shield [3]");
+		skill_PowerShield.scrollFactor.set();
+		skill_PowerBall   = new FlxText(200, FlxG.height - 50, 200, "Power Ball [4]");
+		skill_PowerBall.scrollFactor.set();
+		skill_PowerArmor  = new FlxText(200, FlxG.height - 40, 200, "Power Armor [5]");
+		skill_PowerArmor.scrollFactor.set();
+		skill_BoostRegen  = new FlxText(200, FlxG.height - 30, 200, "Boost Regen [6]");
+		skill_BoostRegen.scrollFactor.set();
+		skill_BoostAgi    = new FlxText(200, FlxG.height - 20, 200, "Boost Agi [7]");
+		skill_BoostAgi.scrollFactor.set();
+		skill_BoostExp    = new FlxText(200, FlxG.height - 10, 200, "Boost Exp [8]");
+		skill_BoostExp.scrollFactor.set();
+		
 	}
 	
 	override public function draw()
 	{
 		super.draw();
 		targetbox.draw();
+	}
+	
+	public function drawHud() : Void 
+	{
+		// TODO health and mana bar
+		
+		// skill Buttons
+		skill_PowerHit.draw();
+		skill_PowerShoot.draw();
+		skill_PowerShield.draw();
+		skill_PowerBall.draw();
+		skill_PowerArmor.draw();
+		skill_BoostRegen.draw();
+		skill_BoostAgi.draw();
+		skill_BoostExp.draw();
+		
 	}
 	
 	override public function update()
@@ -74,6 +121,124 @@ class Player extends Creature
 		}
 		
 		targetbox.setPosition(targetboxRect.x, targetboxRect.y);
+		
+	}
+	
+	public function updateHud(skillz : SkillTree) : Void 
+	{
+		if (skillz.PowerHit == 0)
+		{
+			skill_PowerHit.color = FlxColor.BLACK;
+		}
+		else if (skillz.cooldown_PowerHit >= 0)
+		{
+			skill_PowerHit.color = FlxColor.GRAY;
+		}
+		else
+		{
+			skill_PowerHit.color = FlxColor.RED;
+		}
+		
+		if (skillz.PowerShoot == 0)
+		{
+			skill_PowerShoot.color = FlxColor.BLACK;
+		}
+		else if (skillz.cooldown_PowerShoot >= 0)
+		{
+			skill_PowerShoot.color = FlxColor.GRAY;
+		}
+		else
+		{
+			skill_PowerShoot.color = FlxColor.RED;
+		}
+		
+		if (skillz.PowerShield == 0)
+		{
+			skill_PowerShield.color = FlxColor.BLACK;
+		}
+		else if (skillz.cooldown_PowerShield >= 0)
+		{
+			skill_PowerShield.color = FlxColor.GRAY;
+		}
+		else
+		{
+			skill_PowerShield.color = FlxColor.RED;
+		}
+		
+		if (skillz.PowerBall == 0)
+		{
+			skill_PowerBall.color = FlxColor.BLACK;
+		}
+		else if (skillz.cooldown_PowerBall >= 0)
+		{
+			skill_PowerBall.color = FlxColor.GRAY;
+		}
+		else
+		{
+			skill_PowerBall.color = FlxColor.RED;
+		}
+		
+		if (skillz.PowerArmor == 0)
+		{
+			skill_PowerArmor.color = FlxColor.BLACK;
+		}
+		else if (skillz.cooldown_PowerArmor >= 0)
+		{
+			skill_PowerArmor.color = FlxColor.GRAY;
+		}
+		else
+		{
+			skill_PowerArmor.color = FlxColor.RED;
+		}
+		
+		if (skillz.BoostRegen == 0)
+		{
+			skill_BoostRegen.color = FlxColor.BLACK;
+		}
+		else if (skillz.cooldown_BoostRegen >= 0)
+		{
+			skill_BoostRegen.color = FlxColor.GRAY;
+		}
+		else
+		{
+			skill_BoostRegen.color = FlxColor.RED;
+		}
+		
+		if (skillz.BoostAgi == 0)
+		{
+			skill_BoostAgi.color = FlxColor.BLACK;
+		}
+		else if (skillz.cooldown_BoostAgi >= 0)
+		{
+			skill_BoostAgi.color = FlxColor.GRAY;
+		}
+		else
+		{
+			skill_BoostAgi.color = FlxColor.RED;
+		}
+		
+		if (skillz.BoostExp == 0)
+		{
+			skill_BoostExp.color = FlxColor.BLACK;
+		}
+		else if (skillz.cooldown_BoostExp >= 0)
+		{
+			skill_BoostExp.color = FlxColor.GRAY;
+		}
+		else
+		{
+			skill_BoostExp.color = FlxColor.RED;
+		}
+		
+		skill_PowerHit.update();
+		skill_PowerShoot.update();
+		skill_PowerShield.update();
+		skill_PowerBall.update();
+		skill_PowerArmor.update();
+		skill_BoostRegen.update();
+		skill_BoostAgi.update();
+		skill_BoostExp.update();
+		
 	}
 	
 	private function getInput () : Void 

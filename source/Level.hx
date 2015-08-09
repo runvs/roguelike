@@ -10,12 +10,16 @@ class Level extends FlxObject
 	public var map : MyTileMap;
 	public var _state:PlayState;
 	private var _level : Int;
+	private var sizeX: Int;
+	private var sizeY: Int;
 
-	public function new(state:PlayState, sizeX:Int, sizeY:Int, level:Int)
+	public function new(state:PlayState, sX:Int, sY:Int, level:Int)
 	{
 		super();
 		_level = level;
 		_state = state;
+		sizeX = sX;
+		sizeY = sY;
 		initializeLevel(sizeX, sizeY);
 	}
 	
@@ -58,9 +62,7 @@ class Level extends FlxObject
 	{	
 		super.update();
 		map.update();
-		
-		//flixel.FlxG.collide(_grpEnemies, map);
-		
+
 		_grpEnemies.update();
 		//_grpEnemies.forEachAlive(checkEnemyVision);
 	}
