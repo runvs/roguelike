@@ -42,6 +42,15 @@ class Player extends Creature
 	
 	var skillz : SkillTree;
 	
+	var effectFGRed : FlxSprite;
+	var effectBGRed : FlxSprite;
+	
+	var effectFGGreen : FlxSprite;
+	var effectBGGreen : FlxSprite;
+	
+	var effectFGYellow : FlxSprite;
+	var effectBGYellow : FlxSprite;
+	
 	public function new() 
 	{
 		super();
@@ -94,6 +103,47 @@ class Player extends Creature
 		ExpBar = new HudBar( 300, FlxG.height - 30 -10, FlxG.width - 600, 30, false);
 		ExpBar.color = FlxColor.GOLDEN;
 		
+		effectFGRed = new FlxSprite();
+		effectBGRed = new FlxSprite();
+		effectBGRed.loadGraphic(AssetPaths.Shield__png, true, 32, 32);
+		effectFGRed.loadGraphic(AssetPaths.Shield__png, true, 32, 32);
+		
+		effectBGRed.animation.add("idle", [0], 30, true);
+		effectBGRed.animation.add("cast", [1,2,3,4,5], 30, true);
+		
+		effectFGRed.animation.add("idle", [0], 30, true);
+		effectFGRed.animation.add("cast", [6, 7, 8, 9], 30, true);
+		
+		
+		
+		effectFGGreen = new FlxSprite();
+		effectBGGreen = new FlxSprite();
+		effectBGGreen.loadGraphic(AssetPaths.Shield__png, true, 32, 32);
+		
+		effectFGGreen.loadGraphic(AssetPaths.Shield__png, true, 32, 32);
+		
+		effectBGGreen.animation.add("idle", [0], 30, true);
+		effectBGGreen.animation.add("cast", [1,2,3,4,5], 30, true);
+		
+		effectFGGreen.animation.add("idle", [0], 30, true);
+		effectFGGreen.animation.add("cast", [6, 7, 8, 9], 30, true);
+		
+		
+		
+		effectFGYellow = new FlxSprite();
+		effectBGYellow = new FlxSprite();
+		
+		effectBGYellow.loadGraphic(AssetPaths.Shield__png, true, 32, 32);
+		effectFGYellow.loadGraphic(AssetPaths.Shield__png, true, 32, 32);
+		
+		effectBGYellow.animation.add("idle", [0], 30, true);
+		effectBGYellow.animation.add("cast", [1,2,3,4,5], 30, true);
+		
+		effectFGYellow.animation.add("idle", [0], 30, true);
+		effectFGYellow.animation.add("cast", [6, 7, 8, 9], 30, true);
+		
+		
+		
 	}
 	
 	public function setSkills (sk : SkillTree)
@@ -103,8 +153,10 @@ class Player extends Creature
 	
 	override public function draw()
 	{
+		effectBGRed.draw();
 		super.draw();
 		targetbox.draw();
+		effectFGRed.draw();
 	}
 	
 	public function drawHud() : Void 
@@ -129,6 +181,12 @@ class Player extends Creature
 		{
 			alive = false;
 		}
+		
+		
+		effectFGRed.setPosition(x, y);
+		effectFGRed.update();
+		effectBGRed.setPosition(x, y);
+		effectBGRed.update();
 		
 		HPBar.health = properties.currentHP / properties.getHP();
 		HPBar.update();
@@ -294,10 +352,10 @@ class Player extends Creature
 	{
 		
 		getInputMovement();
-		
 		getInputAttack();
-		
 		getInputSkills();
+		
+		EffectAnimations();
 		
 	}
 
@@ -385,7 +443,6 @@ class Player extends Creature
 			{
 				skillz.activateSkillPowerHit();
 				skillz.payMP(GameProperties.Skills_PowerHitMPCost);
-				this.animation.play("taunt", true);
 			}
 		}
 		if (FlxG.keys.justPressed.TWO)
@@ -395,6 +452,7 @@ class Player extends Creature
 				attackPowerShoot = true;
 				skillz.useSkillPowerShoot();
 				skillz.payMP(GameProperties.Skills_PowerShootMPCost);
+
 			}
 		}
 		if (FlxG.keys.justPressed.THREE)
@@ -429,6 +487,7 @@ class Player extends Creature
 			{
 				skillz.activateSkillBoostRegen();
 				skillz.payMP(GameProperties.Skills_BoostRegenMPCost);
+				effectBGGreen.animation.play("cast", true);
 			}
 		}
 		if (FlxG.keys.justPressed.SEVEN)
@@ -437,6 +496,7 @@ class Player extends Creature
 			{
 				skillz.activateSkillBoostAgi();
 				skillz.payMP(GameProperties.Skills_BoostAgiMPCost);
+				effectBGRed.animation.play("cast", true);
 			}
 		}
 		if (FlxG.keys.justPressed.EIGHT)
@@ -445,7 +505,49 @@ class Player extends Creature
 			{
 				skillz.activateSkillBoostExp();
 				skillz.payMP(GameProperties.Skills_BoostExpMPCost);
+				effectBGYellow.animation.play("cast", true);
 			}
+		}
+	}
+	
+	function EffectAnimations():Void 
+	{
+		effectBGRed.animation.play("idle", false);
+		effectBGGreen.animation.play("idle", false);
+		effectBGYellow.animation.play("idle", false);
+		
+		if (skillz.active_BoostAgi)
+		{
+			effectFGRed.animation.play("cast", false);
+			effectFGRed.alpha = 1;
+		}
+		else 
+		{
+			effectFGRed.animation.play("idle", false);
+			effectFGRed.alpha = 0;
+		}
+		
+		
+		if (skillz.active_BoostExp)
+		{
+			effectFGYellow.animation.play("cast", false);
+			effectFGYellow.alpha = 1;
+		}
+		else 
+		{
+			effectFGYellow.animation.play("idle", false);
+			effectFGYellow.alpha = 0;
+		}
+		
+		if (skillz.active_BoostRegen)
+		{
+			effectFGGreen.animation.play("cast", false);
+			effectFGGreen.alpha = 1;
+		}
+		else 
+		{
+			effectFGGreen.animation.play("idle", false);
+			effectFGGreen.alpha = 0;
 		}
 	}
 	
