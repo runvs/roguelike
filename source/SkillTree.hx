@@ -668,11 +668,9 @@ class SkillTree extends FlxSpriteGroup
 			showMe = ! showMe;
 		}
 		
-		
 		cooldown_PowerShoot -= FlxG.elapsed;
 		cooldown_PowerShield -= FlxG.elapsed;
 		cooldown_PowerHit -= FlxG.elapsed;
-		//trace(cooldown_PowerHit);
 		cooldown_PowerBall -= FlxG.elapsed;
 		cooldown_PowerArmor -= FlxG.elapsed;
 		cooldown_BoostRegen -= FlxG.elapsed;

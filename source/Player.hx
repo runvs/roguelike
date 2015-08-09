@@ -100,10 +100,16 @@ class Player extends Creature
 	
 	override public function update()
 	{
+		if (properties.currentHP <= 0)
+		{
+			alive = false;
+		}
+		
 		attack = false;
 		acceleration.set(0, 0);
 		getInput();
 		super.update();
+		
 		
 		properties.update();
 		var f : EFacing = getLastFacing();

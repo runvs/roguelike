@@ -5,7 +5,9 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
+import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
+import flixel.util.FlxColor;
 import flixel.util.FlxMath;
 import flixel.util.FlxRect;
 
@@ -19,6 +21,9 @@ class PlayState extends FlxState
 	var player : Player;
 	
 	var skillz : SkillTree;
+	
+	private var _vignette : FlxSprite;
+	private var _overlay : FlxSprite;
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -35,6 +40,23 @@ class PlayState extends FlxState
 		
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
 		//FlxG.camera.setBounds(0, 0, level.map.width, level.map.height);
+		
+		
+		
+		// overlay and vignette stuff
+		
+		 _vignette = new FlxSprite(); 
+		_vignette.loadGraphic(AssetPaths.vignette__png, false, 800, 600);
+		_vignette.origin.set();
+		_vignette.offset.set();
+		_vignette.scale.set(1.28, 1.28);
+		_vignette.alpha = 0.5;
+		_vignette.scrollFactor.set();
+		
+		_overlay  = new FlxSprite();
+		_overlay.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		FlxTween.tween(_overlay, { alpha:0 }, 0.5);
+		_overlay.scrollFactor.set();
 	}
 	
 	public function cleanUp ()  : Void 
@@ -57,6 +79,8 @@ class PlayState extends FlxState
 	 */
 	override public function update():Void
 	{
+		_overlay.update();
+		skillz.update();
 		if (!skillz.showMe)
 		{
 			super.update();
@@ -91,7 +115,7 @@ class PlayState extends FlxState
 			}
 		}
 		
-		skillz.update();
+		
 	}
 	
 	override public function draw(): Void
@@ -106,6 +130,9 @@ class PlayState extends FlxState
 		{
 			skillz.draw();
 		}
+		
+		_vignette.draw();
+		_overlay.draw();
 		
 		super.draw();
 	}

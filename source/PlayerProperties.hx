@@ -27,6 +27,8 @@ class PlayerProperties
 		
 		skillRegenTimerMax = skillRegenTimer = 0.5;
 		
+		MPRegenTimer = MPRegenTimerMax = 5;
+		
 		baseMP = 30;
 		currentMP = baseMP;
 		
@@ -50,6 +52,7 @@ class PlayerProperties
 		ReCalculateDerivedValues();
 		
 		updateHPRegen();
+		updateMPRegen();
 		
 		if (currentHP > getHP())
 		{
@@ -95,6 +98,10 @@ class PlayerProperties
 	
 	public var baseMP : Int;
 	public var currentMP : Int;
+	
+	public var MPRegenTimer :Float ;
+	public var MPRegenTimerMax : Float;
+	
 	
 	public var baseDamage : Int;
 	public var skillDamage : Int;
@@ -170,6 +177,16 @@ class PlayerProperties
 			skillRegenTimer += skillRegenTimerMax;
 			
 			Heal(skillRegenGain);
+		}
+	}
+	
+	function updateMPRegen() : Void 
+	{
+		MPRegenTimer -= FlxG.elapsed;
+		if (MPRegenTimer <= 0)
+		{
+			MPRegenTimer = MPRegenTimerMax;
+			currentMP += 1;
 		}
 	}
 	
