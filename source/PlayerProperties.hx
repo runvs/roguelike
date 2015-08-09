@@ -203,7 +203,7 @@ class PlayerProperties
 	
 	public function takeDamage(damage:Float) : Void
 	{
-		var reducedDamage = Std.int(damage * getDefense());
+		var reducedDamage = Math.round(damage * getDefense());
 		
 		trace("Took " + reducedDamage + " damage!");
 		

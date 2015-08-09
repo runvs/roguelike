@@ -11,10 +11,13 @@ class Creature extends FlxSprite
 {
 
 	private var lastFacing : EFacing;
+	
+	private var accelFactor : Float ;
 
 	public function new() 
 	{
 		super();
+		accelFactor = 1.0;
 		lastFacing = EFacing.Left;
 		setFacingFlip(FlxObject.LEFT, false, false);
 		setFacingFlip(FlxObject.RIGHT, true, false);
@@ -30,22 +33,22 @@ class Creature extends FlxSprite
 	
 	public function moveLeft() : Void 
 	{
-		acceleration.x = -GameProperties.Player_Speed;
+		acceleration.x = -GameProperties.Player_Speed * accelFactor;
 	}
 	
 	public function moveRight() : Void 
 	{
-		acceleration.x = GameProperties.Player_Speed;
+		acceleration.x = GameProperties.Player_Speed * accelFactor;
 	}
 	
 	private function moveUp() : Void 
 	{
-		acceleration.y = -GameProperties.Player_Speed;
+		acceleration.y = -GameProperties.Player_Speed * accelFactor;
 	}
 	
 	private function moveDown() : Void 
 	{
-		acceleration.y = GameProperties.Player_Speed;
+		acceleration.y = GameProperties.Player_Speed * accelFactor;
 	}
 	
 	function doMovement():Void 

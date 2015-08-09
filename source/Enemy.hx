@@ -30,6 +30,7 @@ class Enemy extends Creature
 		super();
 		
 		properties = new EnemyPropeties( l );
+		accelFactor = 0.9;
 		
 		//makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.RED);
 		loadGraphic(AssetPaths.Enemy__png, true, 32, 32);
