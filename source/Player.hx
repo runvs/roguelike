@@ -118,15 +118,14 @@ class Player extends Creature
 		
 		effectFGGreen = new FlxSprite();
 		effectBGGreen = new FlxSprite();
-		effectBGGreen.loadGraphic(AssetPaths.Shield__png, true, 32, 32);
+		effectBGGreen.loadGraphic(AssetPaths.Spell_Heal__png, true, 32, 32);
+		effectFGGreen.loadGraphic(AssetPaths.Spell_Heal__png, true, 32, 32);
 		
-		effectFGGreen.loadGraphic(AssetPaths.Shield__png, true, 32, 32);
-		
-		effectBGGreen.animation.add("idle", [0], 30, true);
-		effectBGGreen.animation.add("cast", [1,2,3,4,5], 30, true);
-		
-		effectFGGreen.animation.add("idle", [0], 30, true);
-		effectFGGreen.animation.add("cast", [6, 7, 8, 9], 30, true);
+		effectBGGreen.animation.add("idle", [9], 30, true);
+		effectBGGreen.animation.add("cast", [9, 0,1,2,3,9], 30, false);
+		effectBGGreen.animation.play("idle");
+		effectFGGreen.animation.add("idle", [9], 30, true);
+		effectFGGreen.animation.add("cast", [4,5,6,7,8], 10, true);
 		
 		
 		
@@ -153,10 +152,10 @@ class Player extends Creature
 	
 	override public function draw()
 	{
-		effectBGRed.draw();
+		effectBGGreen.draw();
 		super.draw();
 		targetbox.draw();
-		effectFGRed.draw();
+		effectFGGreen.draw();
 	}
 	
 	public function drawHud() : Void 
@@ -187,6 +186,11 @@ class Player extends Creature
 		effectFGRed.update();
 		effectBGRed.setPosition(x, y);
 		effectBGRed.update();
+		
+		effectFGGreen.setPosition(x, y);
+		effectFGGreen.update();
+		effectBGGreen.setPosition(x, y);
+		effectBGGreen.update();
 		
 		HPBar.health = properties.currentHP / properties.getHP();
 		HPBar.update();
@@ -513,7 +517,7 @@ class Player extends Creature
 	function EffectAnimations():Void 
 	{
 		effectBGRed.animation.play("idle", false);
-		effectBGGreen.animation.play("idle", false);
+		//effectBGGreen.animation.play("idle", false);
 		effectBGYellow.animation.play("idle", false);
 		
 		if (skillz.active_BoostAgi)
