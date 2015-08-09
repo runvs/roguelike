@@ -103,7 +103,7 @@ class PlayState extends FlxState
 				FlxTween.tween(_overlay, { alpha:1 } );
 				var t : FlxTimer = new FlxTimer(1, function (t:FlxTimer) 
 				{
-					level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, 1);
+					level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, player.properties.level);
 					switching = false;
 					player.setPosition(level.StartPos.x, level.StartPos.y);
 					FlxTween.tween(_overlay, { alpha:0 } );

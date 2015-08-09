@@ -18,6 +18,8 @@ class Level extends FlxObject
 	public var StartPos : FlxPoint;
 	public var Exit : Tile;
 	
+	public var _grpParticles : FlxTypedGroup<Particle>;
+	
 
 	public function new(state:PlayState, sX:Int, sY:Int, level:Int)
 	{
@@ -29,6 +31,8 @@ class Level extends FlxObject
 		initializeLevel(sizeX, sizeY);
 		
 		scrollFactor.set();
+		
+		_grpParticles = new FlxTypedGroup<Particle>();
 	}
 	
 	private function initializeLevel(sizeX:Int, sizeY:Int):Void
@@ -211,6 +215,7 @@ class Level extends FlxObject
 		map.update();
 
 		_grpEnemies.update();
+		_grpParticles.update();
 		//_grpEnemies.forEachAlive(checkEnemyVision);
 	}
 
@@ -219,6 +224,7 @@ class Level extends FlxObject
 		super.draw();
 		map.draw();
 		_grpEnemies.draw();
+		_grpParticles.draw();
 	}
 	
 	public function cleanUp () : Void 
@@ -230,6 +236,14 @@ class Level extends FlxObject
 			if (e.alive) { newEnemies.add(e); } else { e.destroy(); }
 		});
 		_grpEnemies = newEnemies;
+		
+		var newPart : FlxTypedGroup<Particle> = new FlxTypedGroup<Particle>();
+		_grpParticles.forEach(function(p:Particle) : Void
+		{
+			if (p.alive) { newPart.add(p); } else { p.destroy(); }
+		});
+		_grpParticles = newPart;
+		
 	}
 	
 }
