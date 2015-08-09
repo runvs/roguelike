@@ -49,7 +49,7 @@ class SkillTree extends FlxSpriteGroup
 		PowerHit = 0;
 		PowerShoot = 0;
 		PowerShield = 0;
-		PowerBall  = 0;
+		PowerBall  = 1;
 		PowerArmor = 0;
 		
 		NaniteArmor = 0;
@@ -704,7 +704,7 @@ class SkillTree extends FlxSpriteGroup
 	
 	public function useSkillPowerBall() : Void 
 	{
-		cooldown_PowerShield = GameProperties.Skills_PowerBall_CoolDown;
+		cooldown_PowerBall = GameProperties.Skills_PowerBall_CoolDown;
 	}
 	
 	public function useSkillPowerArmor() : Void 

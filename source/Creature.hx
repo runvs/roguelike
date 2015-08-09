@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxObject;
 import flixel.FlxSprite;
 
 /**
@@ -10,11 +11,13 @@ class Creature extends FlxSprite
 {
 
 	private var lastFacing : EFacing;
-	
+
 	public function new() 
 	{
 		super();
 		lastFacing = EFacing.Left;
+		setFacingFlip(FlxObject.LEFT, false, false);
+		setFacingFlip(FlxObject.RIGHT, true, false);
 	}
 	
 	override public function update()
@@ -56,24 +59,28 @@ class Creature extends FlxSprite
 			{
 				if (vx > 0)
 				{
-					// walk right animation
+					this.animation.play("walk");
 					lastFacing = EFacing.Right;
+					facing = FlxObject.RIGHT;
 				}
 				else
 				{
-					// walk left animation
+					this.animation.play("walk");
 					lastFacing = EFacing.Left;
+					facing = FlxObject.LEFT;
 				}
 			}
 			else
 			{
 				if (vy > 0)
 				{
+					this.animation.play("walk");
 					// walk down animation
 					lastFacing = EFacing.Down;
 				}
 				else
 				{
+					this.animation.play("walk");
 					// walk up animation
 					lastFacing = EFacing.Up;
 				}
@@ -82,6 +89,7 @@ class Creature extends FlxSprite
 		else
 		{
 			// idle animation
+			this.animation.play("idle");
 		}
 	}
 	

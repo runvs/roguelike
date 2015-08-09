@@ -25,6 +25,7 @@ class Player extends Creature
 	
 	public var attack : Bool;
 	public var attackPowerShoot : Bool;
+	public var attackPowerBall : Bool;
 	
 	private var skill_PowerHit : FlxText;
 	private var skill_PowerShoot : FlxText;
@@ -49,8 +50,8 @@ class Player extends Creature
 		
 		//this.makeGraphic(GameProperties.TileSize, GameProperties.TileSize);
 		this.loadGraphic(AssetPaths.Player__png, true, 32, 32);
-		this.animation.add("idle", [0, 1], 5, true);
-		this.animation.add("walk", [4, 5, 6, 7],5, true);
+		this.animation.add("idle", [0, 1], 3, true);
+		this.animation.add("walk", [4, 5, 6, 7],6, true);
 		this.animation.add("attack", [12, 13], 5, false);
 		this.animation.add("taunt", [12, 13], 5, false);
 		this.animation.play("idle");
@@ -107,9 +108,7 @@ class Player extends Creature
 	}
 	
 	public function drawHud() : Void 
-	{
-		// TODO health and mana bar
-		
+	{		
 		// skill Buttons
 		skill_PowerHit.draw();
 		skill_PowerShoot.draw();
@@ -141,7 +140,7 @@ class Player extends Creature
 		
 		attack = false;
 		attackPowerShoot = false;
-		
+		attackPowerBall = false;
 		acceleration.set(0, 0);
 		getInput();
 		super.update();
@@ -377,14 +376,14 @@ class Player extends Creature
 	function getInputSkills():Void 
 	{
 		attackPowerShoot = false;
+		attackPowerBall = false;
 		if (FlxG.keys.justPressed.ONE)
 		{
-			trace("One");
 			if (FlxColorUtil.getRed(skill_PowerHit.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
-				trace("active");
 				skillz.activateSkillPowerHit();
 				skillz.payMP(GameProperties.Skills_PowerHitMPCost);
+				this.animation.play("taunt", true);
 			}
 		}
 		if (FlxG.keys.justPressed.TWO)
@@ -394,7 +393,6 @@ class Player extends Creature
 				attackPowerShoot = true;
 				skillz.useSkillPowerShoot();
 				skillz.payMP(GameProperties.Skills_PowerShootMPCost);
-				// TODO spawn Particle and so on
 			}
 		}
 		if (FlxG.keys.justPressed.THREE)
@@ -411,7 +409,7 @@ class Player extends Creature
 			if (FlxColorUtil.getRed(skill_PowerBall.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.useSkillPowerBall();
-				// TODO spawn Ball and so on
+				attackPowerBall = true;
 				skillz.payMP(GameProperties.Skills_PowerBallMPCost);
 			}
 		}

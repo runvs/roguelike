@@ -12,11 +12,15 @@ class Particle extends FlxSprite
 {
 	var _type : Bool;
 	public var damage : Int;
+	private var _state : PlayState;
+	public var _level : Int;
 
-	public function new(X:Float=0, Y:Float=0, tx : Float, ty : Float,  type : Bool, level) 
+	public function new(X:Float=0, Y:Float=0, tx : Float, ty : Float,  type : Bool, level: Int, state : PlayState) 
 	{
 		super(X, Y);
-		//this.makeGraphic(16, 16, FlxColor.CRIMSON);
+		_state = state;
+		_level = level;
+		_type  = type;
 		this.loadGraphic(AssetPaths.Projectile__png, true, 16, 16);
 		this.animation.add("normal", [0, 1, 2], 4);
 		this.animation.play("normal");
@@ -46,15 +50,16 @@ class Particle extends FlxSprite
 	
 	public function hit()
 	{
-		alive = false;
+		trace("hit");
 		if (_type)
 		{
-			
+			_state.spawnPowerBallExplosion(this);
 		}
 		else
 		{
 			
 		}
+		alive = false;
 	}
 	
 }

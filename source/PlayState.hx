@@ -13,6 +13,7 @@ import flixel.util.FlxMath;
 import flixel.util.FlxPoint;
 import flixel.util.FlxRect;
 import flixel.util.FlxTimer;
+import flixel.util.FlxVector;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -192,11 +193,33 @@ class PlayState extends FlxState
 				{
 					var mx : Float = FlxG.mouse.x;
 					var my : Float = FlxG.mouse.y;
-					var p : Particle  = new Particle(player.x, player.y, mx, my, false, skillz.PowerShoot);
+					var p : Particle  = new Particle(player.x, player.y, mx, my, false, skillz.PowerShoot, this);
+					level._grpParticles.add(p);
+				}
+				if (player.attackPowerBall)
+				{
+					var mx : Float = FlxG.mouse.x;
+					var my : Float = FlxG.mouse.y;
+					var p : Particle  = new Particle(player.x, player.y, mx, my, true, skillz.PowerBall, this);
 					level._grpParticles.add(p);
 				}
 			}
 		
+		}
+	}
+	
+	public function spawnPowerBallExplosion(p : Particle)
+	{
+		trace ("PBE");
+		var l : Int = p._level + 3;
+		var d : Float = 360.0 / l;
+		var dir : FlxVector = new FlxVector(1, 1);
+		for (i in 0...l)
+		{
+			
+			dir.rotateByDegrees(d);
+			var p2 : Particle = new Particle(p.x, p.y, p.x + dir.x, p.y + dir.y, false, p._level, this);
+			level._grpParticles.add(p2);
 		}
 	}
 	
