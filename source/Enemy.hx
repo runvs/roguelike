@@ -42,7 +42,7 @@ class Enemy extends Creature
 		//this.scale.set(2, 2);
 		//this.updateHitbox();
 		
-		attackTimer = 0.5;
+		attackTimer = GameProperties.Enemy_AttackTimer;
 		
 		doRandomWalk = true;
 		randomwalkTimer = 1.5;
@@ -61,6 +61,8 @@ class Enemy extends Creature
 	
 	private function doKIStuff()
 	{
+		attackTimer -= FlxG.elapsed;
+		
 		if (doRandomWalk)
 		{			
 			randomwalkTimer -= FlxG.elapsed;
@@ -139,6 +141,11 @@ class Enemy extends Creature
 	
 	public static function handlePlayerCollision(player:Player, enemy:Enemy):Void
 	{
-		player.properties.takeDamage(enemy.properties.baseDamage);
+		if (enemy.attackTimer <= 0.0)
+		{
+			player.properties.takeDamage(enemy.properties.baseDamage);
+			
+			enemy.attackTimer += GameProperties.Enemy_AttackTimer;
+		}
 	}
 }
