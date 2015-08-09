@@ -5,13 +5,19 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
+import flixel.util.FlxColor;
 import flixel.util.FlxMath;
 
+using flixel.util.FlxSpriteUtil;
 /**
  * A FlxState which can be used for the game's menu.
  */
 class MenuState extends FlxState
 {
+	
+	var t: FlxText;
+	var t2: FlxText;
+	var t3 : FlxText;
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -24,6 +30,23 @@ class MenuState extends FlxState
 		#else
 		FlxG.sound.playMusic(AssetPaths.roguelike_ost__ogg, 1.0, true);
 		#end
+		
+		t = new FlxText(0, 0, 1024, "Roguelike");
+		t.screenCenter();
+		t.setFormat(40, FlxColor.WHITE,"center");
+		add(t);
+		
+		t2 = new FlxText(0, 0, 1024, "Press Space or Return to start");
+		t2.screenCenter();
+		t2.setFormat(20, FlxColor.WHITE,"center");
+		t2.y += 100;
+		add(t2);
+		
+		t3 = new FlxText(0, 0, 1024, "A Game by\n  Lisa Malvareth Zumblick \nand\n  Simon Laguna Weis\n\nVisit us at https://runvs.io\n\nCreated August 2015");
+		t3.screenCenter();
+		t3.setFormat(10, FlxColor.WHITE,"left");
+		t3.y = FlxG.height - t3.height - 20;
+		add(t3);
 	}
 	
 	/**
@@ -41,6 +64,10 @@ class MenuState extends FlxState
 	override public function update():Void
 	{
 		super.update();
-		FlxG.switchState(new PlayState());
+		
+		if (FlxG.keys.anyJustPressed(["Space", "Return"]))
+		{
+			FlxG.switchState(new PlayState());
+		}
 	}	
 }

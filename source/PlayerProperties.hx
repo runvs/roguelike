@@ -44,7 +44,7 @@ class PlayerProperties
 		skillPowerArmorDefense= 0;
 		baseHitChance = 0;
 		
-		gainXP(50000);
+		//gainXP(50000);
 	}
 	
 	public function update():Void 
