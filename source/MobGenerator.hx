@@ -36,7 +36,7 @@ class MobGenerator
 				var x:Int = flixel.util.FlxRandom.intRanged(cast tmpRoom.left + 1, cast tmpRoom.right - 1) * GameProperties.TileSize;
 				var y:Int = flixel.util.FlxRandom.intRanged(cast tmpRoom.top + 1, cast tmpRoom.bottom - 1) * GameProperties.TileSize;
 				//trace(x + "; " + y);
-				var e:Enemy = new Enemy();
+				var e:Enemy = new Enemy(level);
 				e.setPosition(x, y);
 				listOfEmenies.add(e);
 				//increase chance for next spawn

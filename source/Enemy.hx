@@ -25,11 +25,11 @@ class Enemy extends Creature
 	public var doRandomWalk:Bool;
 
 
-	public function new() 
+	public function new(l:Int) 
 	{
 		super();
 		
-		properties = new EnemyPropeties( 1 );
+		properties = new EnemyPropeties( l );
 		
 		//makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.RED);
 		loadGraphic(AssetPaths.Enemy__png, true, 32, 32);

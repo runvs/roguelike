@@ -52,6 +52,7 @@ class Player extends Creature
 		this.animation.add("idle", [0, 1], 5, true);
 		this.animation.add("walk", [4, 5, 6, 7],5, true);
 		this.animation.add("attack", [12, 13], 5, false);
+		this.animation.add("taunt", [12, 13], 5, false);
 		this.animation.play("idle");
 		
 		//this.scale.set(2,2
