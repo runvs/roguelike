@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
+import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.util.FlxColorUtil;
 import flixel.util.FlxPoint;
@@ -32,6 +33,9 @@ class Player extends Creature
 	private var skill_BoostRegen : FlxText;
 	private var skill_BoostAgi : FlxText;
 	private var skill_BoostExp : FlxText;
+	
+	private var HPBar : HudBar;
+	private var MPBar : HudBar;
 	
 	var skillz : SkillTree;
 	
@@ -69,6 +73,11 @@ class Player extends Creature
 		skill_BoostExp    = new FlxText(200, FlxG.height - 10, 200, "Boost Exp [8]");
 		skill_BoostExp.scrollFactor.set();
 		
+		HPBar = new HudBar(100, FlxG.height - 100, 30, 100);
+		HPBar.color = FlxColor.RED;
+		MPBar = new HudBar(FlxG.width - 100, FlxG.height - 100, 30, 100);
+		MPBar.color = FlxColor.BLUE;
+		
 	}
 	
 	public function setSkills (sk : SkillTree)
@@ -95,7 +104,8 @@ class Player extends Creature
 		skill_BoostRegen.draw();
 		skill_BoostAgi.draw();
 		skill_BoostExp.draw();
-		
+		HPBar.draw();
+		MPBar.draw();
 	}
 	
 	override public function update()
@@ -104,6 +114,11 @@ class Player extends Creature
 		{
 			alive = false;
 		}
+		
+		HPBar.health = properties.currentHP / properties.getHP();
+		HPBar.update();
+		MPBar.health = properties.currentMP / properties.baseMP;
+		MPBar.update();
 		
 		attack = false;
 		acceleration.set(0, 0);

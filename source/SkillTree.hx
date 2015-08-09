@@ -133,19 +133,19 @@ class SkillTree extends FlxSpriteGroup
 		btn_BoostExp.scale.set(1, 1.5);
 		btn_BoostExp.updateHitbox();
 		
-		btn_St = new FlxButton(-60, 85, "St", upgradeSt);
+		btn_St = new FlxButton(-60, 85, "Str", upgradeSt);
 		btn_St.scale.set(1, 0.9);
 		btn_St.updateHitbox();
-		btn_Ag = new FlxButton(-60, 100, "Ag", upgradeAg);
+		btn_Ag = new FlxButton(-60, 100, "Agi", upgradeAg);
 		btn_Ag.scale.set(1, 0.9);
 		btn_Ag.updateHitbox();
-		btn_En = new FlxButton(-60, 115, "En", upgradeEn);
+		btn_En = new FlxButton(-60, 115, "End", upgradeEn);
 		btn_En.scale.set(1, 0.9);
 		btn_En.updateHitbox();
-		btn_Wi = new FlxButton(-60, 130, "Wi", upgradeWi);
+		btn_Wi = new FlxButton(-60, 130, "Wil", upgradeWi);
 		btn_Wi.scale.set(1, 0.9);
 		btn_Wi.updateHitbox();
-		btn_Lk = new FlxButton(-60, 145, "Lk", upgradeLk);
+		btn_Lk = new FlxButton(-60, 145, "Luk", upgradeLk);
 		btn_Lk.scale.set(1, 0.9);
 		btn_Lk.updateHitbox();
 		

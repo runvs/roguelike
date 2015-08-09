@@ -145,6 +145,9 @@ class PlayState extends FlxState
 	{
 		level.draw();
 		player.draw();
+		
+		
+		_vignette.draw();
 		if (!skillz.showMe)
 		{
 			player.drawHud();
@@ -153,8 +156,6 @@ class PlayState extends FlxState
 		{
 			skillz.draw();
 		}
-		
-		_vignette.draw();
 		_overlay.draw();
 		
 		super.draw();
