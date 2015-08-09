@@ -92,11 +92,11 @@ class PlayerProperties
 	public function increaseWI() : Void 
 	{
 		var h : Float = currentMP;
-		var hm : Float = baseMP();
+		var hm : Float = baseMP;
 		
 		Wi += 1;
 		ReCalculateDerivedValues();
-		var f : Float = getMP() / hm;
+		var f : Float = baseMP / hm;
 		currentMP = Math.round(f * h);
 	}
 	
