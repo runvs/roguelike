@@ -16,7 +16,10 @@ class Particle extends FlxSprite
 	public function new(X:Float=0, Y:Float=0, tx : Float, ty : Float,  type : Bool, level) 
 	{
 		super(X, Y);
-		this.makeGraphic(16, 16, FlxColor.CRIMSON);
+		//this.makeGraphic(16, 16, FlxColor.CRIMSON);
+		this.loadGraphic(AssetPaths.Projectile__png, true, 16, 16);
+		this.animation.add("normal", [0, 1, 2], 4);
+		this.animation.play("normal");
 		
 		this.origin.set(8, 8);
 		
