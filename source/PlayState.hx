@@ -136,11 +136,18 @@ class PlayState extends FlxState
 				level.update();
 				player.update();
 				player.updateHud();
-				FlxG.collide(level.map.walls, player);
-				if (FlxG.overlap(level.map.walls, player))
+				FlxG.collide(level.map.walls, level._grpParticles, function(t:Tile, p:Particle)
 				{
-					trace ("fuck you collision");
-				}
+					p.hit();
+				});
+				FlxG.collide(level._grpEnemies, level._grpParticles, function(e:Enemy , p:Particle)
+				{
+					e.TakeDamage(p.damage);
+					p.hit();
+				});
+				
+				FlxG.collide(level.map.walls, player);
+			
 				FlxG.collide(level._grpEnemies, level.map.walls, Enemy.handleWallCollision);
 				for (enemy in level._grpEnemies)
 				{
@@ -183,8 +190,10 @@ class PlayState extends FlxState
 				}
 				if (player.attackPowerShoot)
 				{
-					var x : Float = FlxG.mouse.x;
-					var y : Float = FlxG.mouse.y;
+					var mx : Float = FlxG.mouse.x;
+					var my : Float = FlxG.mouse.y;
+					var p : Particle  = new Particle(player.x, player.y, mx, my, false, skillz.PowerShoot);
+					level._grpParticles.add(p);
 				}
 			}
 		
