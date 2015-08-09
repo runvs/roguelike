@@ -807,7 +807,7 @@ class SkillTree extends FlxSpriteGroup
 		if (active_BoostRegen && lifeTime_BoostRegen >= 0)
 		{
 			_properties.skillRegenGain = BoostRegen * GameProperties.Skills_BoostRegen_GainPerTickPerLevel;
-			_properties.skillRegenTimer = 0;	// instant heal
+			//_properties.skillRegenTimer = 0;	// instant heal
 		}
 		else
 		{

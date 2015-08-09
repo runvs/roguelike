@@ -22,6 +22,7 @@ class PlayState extends FlxState
 {
 	
 	var level : Level;
+	var levelNumber : Int;
 	var player : Player;
 	
 	var skillz : SkillTree;
@@ -41,8 +42,9 @@ class PlayState extends FlxState
 		
 		_ending = false;
 		switching = false;
+		levelNumber = 1;
 		
-		level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, 1);
+		level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, 1, levelNumber);
 		player = new Player();
 		player.setPosition(level.StartPos.x, level.StartPos.y);
 		
@@ -104,7 +106,8 @@ class PlayState extends FlxState
 				FlxTween.tween(_overlay, { alpha:1 } );
 				var t : FlxTimer = new FlxTimer(1, function (t:FlxTimer) 
 				{
-					level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, player.properties.level);
+					levelNumber++;
+					level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, player.properties.level, levelNumber);
 					switching = false;
 					player.setPosition(level.StartPos.x, level.StartPos.y);
 					FlxTween.tween(_overlay, { alpha:0 } );
@@ -133,6 +136,14 @@ class PlayState extends FlxState
 			if (!skillz.showMe)
 			{
 				super.update();
+				
+				level._grpEnemies.forEach(function(e:Enemy) 
+				{
+					if (e.alive == false)
+					{
+						player.properties.gainXP(GameProperties.Enemy_BaseXP);
+					}
+				});
 				cleanUp();
 				level.update();
 				player.update();
@@ -182,10 +193,7 @@ class PlayState extends FlxState
 						{
 							//trace("hit");
 							e.TakeDamage(player.properties.getDamage());
-							if (e.alive == false)
-							{
-								player.properties.gainXP(GameProperties.Enemy_BaseXP);
-							}
+						
 						}
 					});
 				}

@@ -12,6 +12,7 @@ class Level extends FlxObject
 	public var map : MyTileMap;
 	//public var _state:PlayState;
 	private var _level : Int;
+	private var _worldLevel : Int;
 	public var sizeX: Int;
 	public var sizeY: Int;
 	
@@ -21,10 +22,11 @@ class Level extends FlxObject
 	public var _grpParticles : FlxTypedGroup<Particle>;
 	
 
-	public function new(state:PlayState, sX:Int, sY:Int, level:Int)
+	public function new(state:PlayState, sX:Int, sY:Int, level:Int, worldLevel : Int)
 	{
 		super();
 		_level = level;
+		_worldLevel = worldLevel;
 		//_state = state;
 		sizeX = sX;
 		sizeY = sY;
@@ -59,7 +61,7 @@ class Level extends FlxObject
 		
 
 		
-		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, _level - 1);
+		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, _level - 1, _worldLevel);
 		
 
 		//var forbiddenList:Array<Int> = new Array<Int>();

@@ -182,12 +182,16 @@ class PlayerProperties
 	
 	function updateHPRegen():Void 
 	{
-		skillRegenTimer -= FlxG.elapsed;
-		if (skillRegenTimer <= 0)
+		trace (skillRegenTimer);
+		trace ("g "  + skillRegenGain);
+		if (skillRegenTimer < 0)
 		{
-			skillRegenTimer += skillRegenTimerMax;
-			
+			skillRegenTimer = skillRegenTimerMax;
 			Heal(skillRegenGain);
+		}
+		else
+		{
+			skillRegenTimer -= FlxG.elapsed;
 		}
 	}
 	

@@ -1,10 +1,12 @@
 import flixel.util.FlxRandom;
 class MobGenerator 
 {
-	public static function generateMobsFromTree(tree:flixel.group.FlxTypedGroup<Leaf>, level : Int):flixel.group.FlxTypedGroup<Enemy>
+	public static function generateMobsFromTree(tree:flixel.group.FlxTypedGroup<Leaf>, PlayerLlevel : Int, WorldLevel : Int):flixel.group.FlxTypedGroup<Enemy>
 	{
 		var listOfEmenies:flixel.group.FlxTypedGroup<Enemy> = new flixel.group.FlxTypedGroup<Enemy>();
 
+		var level : Int = PlayerLlevel + WorldLevel;
+		
 		//so dirty...
 		var listOfRooms:Array<flixel.util.FlxRect> = new Array<flixel.util.FlxRect>();
 		
