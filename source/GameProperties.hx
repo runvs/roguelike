@@ -62,6 +62,8 @@ class GameProperties
 	public static var Player_experienceLevelUpBase : Int = 50;
 	public static var Player_experienceLevelUpFactor : Float = 1.125;
 	
+	public static var Enemy_AggroRadius : Int = TileSize * 4;
+	
 	
 	public static function floatToStringPrecision(n:Float, prec:Int)
 	{
