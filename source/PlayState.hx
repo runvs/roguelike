@@ -149,7 +149,7 @@ class PlayState extends FlxState
 				
 				if (player.attack)
 				{
-					trace("attack");
+					//trace("attack");
 					var r : FlxRect = player.getAttackRect();
 					
 					level._grpEnemies.forEach(function (e:Enemy) 
@@ -157,7 +157,7 @@ class PlayState extends FlxState
 						var enemyRect : FlxRect = new FlxRect (e.x, e.y, e.width, e.height);
 						if (r.overlaps(enemyRect))
 						{
-							trace("hit");
+							//trace("hit");
 							e.TakeDamage(player.properties.getDamage());
 							if (e.alive == false)
 							{
@@ -165,6 +165,11 @@ class PlayState extends FlxState
 							}
 						}
 					});
+				}
+				if (player.attackPowerShoot)
+				{
+					var x : Float = FlxG.mouse.x;
+					var y : Float = FlxG.mouse.y;
 				}
 			}
 		

@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
@@ -42,11 +43,12 @@ class Tile extends FlxSprite
 		else if (t == 7)	// exit
 		{
 			trace("exit created");
-			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GREEN);
+			//makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GREEN);
+			loadGraphic(AssetPaths.Staircase__png, false , 32, 32);
 		}
 		else if (t == 8)	// ceiling
 		{
-			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(1.0,14,16,16));
+			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(1.0, 14, 16, 16));
 		}
 		this.updateHitbox();
 	}

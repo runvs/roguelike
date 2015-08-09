@@ -24,6 +24,7 @@ class Player extends Creature
 	private var targetboxRect : FlxRect;
 	
 	public var attack : Bool;
+	public var attackPowerShoot : Bool;
 	
 	private var skill_PowerHit : FlxText;
 	private var skill_PowerShoot : FlxText;
@@ -138,6 +139,8 @@ class Player extends Creature
 		ExpBar.update();
 		
 		attack = false;
+		attackPowerShoot = false;
+		
 		acceleration.set(0, 0);
 		getInput();
 		super.update();
@@ -372,6 +375,7 @@ class Player extends Creature
 	
 	function getInputSkills():Void 
 	{
+		attackPowerShoot = false;
 		if (FlxG.keys.justPressed.ONE)
 		{
 			trace("One");
@@ -386,6 +390,7 @@ class Player extends Creature
 		{
 			if (FlxColorUtil.getRed(skill_PowerShoot.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
+				attackPowerShoot = true;
 				skillz.useSkillPowerShoot();
 				skillz.payMP(GameProperties.Skills_PowerShootMPCost);
 				// TODO spawn Particle and so on
