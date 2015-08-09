@@ -39,20 +39,20 @@ class MapGenerator
 		}
 
 		// set a random room as a cantine
-		var canteenAdded:Bool = false;
-		while(canteenAdded == false)
-		{
-			for(i in 0...listOfRooms.length)
-			{
-				var spawnCanteen:Bool = flixel.util.FlxRandom.chanceRoll(10);
-				if(spawnCanteen)
-				{
-					listOfTypes[i] = 2;
-					canteenAdded = true;
-					break;
-				}
-			}
-		}
+		//var canteenAdded:Bool = false;
+		//while(canteenAdded == false)
+		//{
+			//for(i in 0...listOfRooms.length)
+			//{
+				//var spawnCanteen:Bool = flixel.util.FlxRandom.chanceRoll(10);
+				//if(spawnCanteen)
+				//{
+					//listOfTypes[i] = 2;
+					//canteenAdded = true;
+					//break;
+				//}
+			//}
+		//}
 
 		
 		
@@ -95,7 +95,7 @@ class MapGenerator
 				}
 
 				//mapString.add(Std.string(type));
-				var t : Tile = new Tile(x*GameProperties.TileSize, y*GameProperties.TileSize, type);
+				var t : Tile = new Tile(x, y, type);
 				if (t.passable == true)
 				{
 					finalMap.floor.add(t);

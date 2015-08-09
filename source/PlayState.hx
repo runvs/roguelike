@@ -5,12 +5,14 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.text.FlxText;
+import flixel.tile.FlxTile;
 import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
 import flixel.util.FlxMath;
 import flixel.util.FlxPoint;
 import flixel.util.FlxRect;
+import flixel.util.FlxTimer;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -27,6 +29,8 @@ class PlayState extends FlxState
 	private var _vignette : FlxSprite;
 	private var _overlay : FlxSprite;
 	
+	private var switching : Bool;
+	
 	/**
 	 * Function that is called up when to state is created to set it up. 
 	 */
@@ -35,8 +39,9 @@ class PlayState extends FlxState
 		super.create();
 		
 		_ending = false;
+		switching = false;
 		
-		level = new Level(this, 32, 24, 1);
+		level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, 1);
 		player = new Player();
 		player.setPosition(level.StartPos.x, level.StartPos.y);
 		
@@ -96,7 +101,9 @@ class PlayState extends FlxState
 		_overlay.update();
 		skillz.update();
 		
-		if (!_ending)
+		
+		
+		if (!_ending && !switching )
 		{
 			if (!player.alive)
 			{
@@ -118,6 +125,19 @@ class PlayState extends FlxState
 				FlxG.collide(level._grpEnemies, level.map.walls, Enemy.handleWallCollision);
 				
 				FlxG.collide(player, level._grpEnemies);
+				
+				if ( !switching)
+				{
+					if (FlxG.overlap(player, level.Exit)) 
+					{
+						switching = true;
+						var t : FlxTimer = new FlxTimer(1, function (t:FlxTimer) 
+						{
+							level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, 1);
+							switching = false;
+						});
+					}
+				}
 				
 				if (player.attack)
 				{

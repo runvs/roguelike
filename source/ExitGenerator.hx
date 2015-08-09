@@ -9,7 +9,7 @@ class ExitGenerator
 		
 		var exitDownPosition:flixel.util.FlxPoint = new flixel.util.FlxPoint();
 		var told : Tile = map.floor.getRandom(0, map.floor.length-1 );
-		var tnew : Tile = new Tile(told.x, told.y, EXIT_DOWN_ID);
+		var tnew : Tile = new Tile(told.tx, told.ty, EXIT_DOWN_ID);
 		
 		map.floor.replace(told, tnew);
 
