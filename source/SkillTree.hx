@@ -286,7 +286,10 @@ class SkillTree extends FlxSpriteGroup
 	public var cooldown_BoostExp: Float;
 	
 	public var lifeTime_PowerArmor : Float; 
+	
 	public var lifeTime_BoostRegen : Float;
+	public var lifeTime_BoostAgi : Float;
+	public var lifeTime_BoostExp : Float;
 	
 	private var b_PowerHit : Bool;
 	private var b_PowerShoot : Bool;
@@ -605,7 +608,23 @@ class SkillTree extends FlxSpriteGroup
 		cooldown_BoostRegen = GameProperties.Skills_BoostRegen_CoolDown;
 		lifeTime_BoostRegen = GameProperties.Skills_BoostRegen_LifeTime;
 	}
+	
+	public function activateSkillBoostAgi() : Void 
+	{
+		active_BoostAgi = true;
+		cooldown_BoostAgi = GameProperties.Skills_BoostAgi_Cooldown;
+		lifeTime_BoostAgi = GameProperties.Skills_BoostAgi_LifeTime;
+	}
+	
+	public function activateSkillBoostExp() : Void 
+	{
+		active_BoostExp = true;
+		cooldown_BoostExp = GameProperties.Skills_BoostExp_Cooldown;
+		lifeTime_BoostExp= GameProperties.Skills_BoostExp_LifeTime;
+	}
+	
 
+	
 	
 	private function calculateSkillBoni() : Void 
 	{
@@ -613,8 +632,10 @@ class SkillTree extends FlxSpriteGroup
 		calculateSkillNaniteArmor();
 		calculateSkillNaniteDamage();
 	
-		
+		calculateSkillPowerHit();
 		calculateSkillPowerArmor();
+		
+		calculateSkillBoostExp();
 	}
 	
 	function calculateSkillNaniteHealth():Void 
@@ -652,7 +673,7 @@ class SkillTree extends FlxSpriteGroup
 	
 	function calculateSkillPowerArmor():Void 
 	{
-		calculateSkillPowerHit();
+		
 		if (active_PowerArmor && lifeTime_PowerArmor >= 0)
 		{
 			_properties.skillPowerArmorDefense = PowerArmor * GameProperties.Skills_PowerArmor_DefensePerLevel;
@@ -660,6 +681,14 @@ class SkillTree extends FlxSpriteGroup
 		else 
 		{
 			_properties.skillPowerArmorDefense = 0;
+		}
+	}
+	
+	function calculateSkillBoostExp() : Void 
+	{
+		if (active_BoostExp && lifeTime_BoostExp >= 0)
+		{
+			_properties.experienceFactor = BoostExp *  GameProperties.Skills_BoostExp_FactorPerLevel;
 		}
 	}
 	
@@ -680,6 +709,15 @@ class SkillTree extends FlxSpriteGroup
 			if (lifeTime_BoostRegen <= 0)
 			{
 				active_BoostRegen = false;
+			}
+		}
+		
+		if (lifeTime_BoostExp >= 0 && active_BoostExp)
+		{
+			lifeTime_BoostExp -= FlxG.elapsed;
+			if (lifeTime_BoostExp <= 0)
+			{
+				active_BoostExp = false;
 			}
 		}
 	}
