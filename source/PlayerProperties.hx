@@ -66,6 +66,7 @@ class PlayerProperties
 	public var experienceLevelUp : Int;
 	public var level: Int;
 	public var skillPoints : Int;
+	public var attributePoints : Int;
 	
 	public var St : Int;
 	public var Ag : Int;
@@ -138,18 +139,12 @@ class PlayerProperties
 		{
 			level += 1;
 			skillPoints += 1;
-			St += 1;
-			Ag += 1;
-			En += 1;
-			Wi += 1;
-			Lk += 1;
-			
-			
+			attributePoints += 3;
 			experienceLevelUp = Std.int(experienceLevelUp * GameProperties.Player_experienceLevelUpFactor);
 		}
 	}
 	
-	function ReCalculateDerivedValues() : Void 
+	public function ReCalculateDerivedValues() : Void 
 	{
 		baseHP = 20 + En * 2;
 		baseMP = 5 + Wi * 3;
