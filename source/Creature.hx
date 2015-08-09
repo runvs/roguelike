@@ -33,21 +33,25 @@ class Creature extends FlxSprite
 	
 	public function moveLeft() : Void 
 	{
+		lastFacing = EFacing.Left;
 		acceleration.x = -GameProperties.Player_Speed * accelFactor;
 	}
 	
 	public function moveRight() : Void 
 	{
+		lastFacing = EFacing.Right;
 		acceleration.x = GameProperties.Player_Speed * accelFactor;
 	}
 	
 	private function moveUp() : Void 
 	{
+		lastFacing = EFacing.Up;
 		acceleration.y = -GameProperties.Player_Speed * accelFactor;
 	}
 	
 	private function moveDown() : Void 
 	{
+		lastFacing = EFacing.Down;
 		acceleration.y = GameProperties.Player_Speed * accelFactor;
 	}
 	
@@ -63,13 +67,11 @@ class Creature extends FlxSprite
 				if (vx > 0)
 				{
 					this.animation.play("walk");
-					lastFacing = EFacing.Right;
 					facing = FlxObject.RIGHT;
 				}
 				else
 				{
 					this.animation.play("walk");
-					lastFacing = EFacing.Left;
 					facing = FlxObject.LEFT;
 				}
 			}
@@ -79,13 +81,11 @@ class Creature extends FlxSprite
 				{
 					this.animation.play("walk");
 					// walk down animation
-					lastFacing = EFacing.Down;
 				}
 				else
 				{
 					this.animation.play("walk");
 					// walk up animation
-					lastFacing = EFacing.Up;
 				}
 			}
 		}
