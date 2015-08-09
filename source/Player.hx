@@ -46,7 +46,17 @@ class Player extends Creature
 		
 		properties = new PlayerProperties();
 		
-		this.makeGraphic(GameProperties.TileSize, GameProperties.TileSize);
+		//this.makeGraphic(GameProperties.TileSize, GameProperties.TileSize);
+		this.loadGraphic(AssetPaths.Player__png, true, 32, 32);
+		this.animation.add("idle", [0, 1], 5, true);
+		this.animation.add("walk", [4, 5, 6, 7],5, true);
+		this.animation.add("attack", [12, 13], 5, false);
+		this.animation.play("idle");
+		
+		//this.scale.set(2,2
+		this.width = 25;
+		this.updateHitbox();
+		
 		this.updateHitbox();
 		this.drag = new FlxPoint( GameProperties.Player_VelocityDecay, GameProperties.Player_VelocityDecay);
 		this.maxVelocity = new FlxPoint(GameProperties.Player_MaxSpeed,  GameProperties.Player_MaxSpeed);

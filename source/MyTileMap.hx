@@ -18,11 +18,12 @@ class MyTileMap extends FlxObject
 		super();
 		floor = new FlxTypedGroup<Tile>();
 		walls = new FlxTypedGroup<Tile>();
+		scrollFactor.set();
 	}
 	
-		override public function update()
+	override public function update()
 	{
-		super.update();
+		//super.update();
 		floor.update();
 		walls.update();
 	}

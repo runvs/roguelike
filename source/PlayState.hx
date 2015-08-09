@@ -36,7 +36,7 @@ class PlayState extends FlxState
 		
 		_ending = false;
 		
-		level = new Level(this, 100, 30, 1);
+		level = new Level(this, 32, 24, 1);
 		player = new Player();
 		player.setPosition(level.StartPos.x, level.StartPos.y);
 		
@@ -44,11 +44,8 @@ class PlayState extends FlxState
 		player.setSkills(skillz);
 		
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
-		//FlxG.camera.focusOn(new FlxPoint(player.x, player.y));
 		
 		FlxG.camera.setBounds(0, 0, level.sizeX*GameProperties.TileSize, level.sizeY*GameProperties.TileSize);
-		
-		
 		
 		// overlay and vignette stuff
 		
@@ -70,7 +67,6 @@ class PlayState extends FlxState
 	{
 		level.cleanUp();
 	}
-	
 	
 	/**
 	 * Function that is called when this state is destroyed - you might want to 
@@ -114,7 +110,11 @@ class PlayState extends FlxState
 				level.update();
 				player.update();
 				player.updateHud();
-				FlxG.collide(player, level.map.walls);
+				FlxG.collide(level.map.walls, player);
+				if (FlxG.overlap(level.map.walls, player))
+				{
+					trace ("fuck you collision");
+				}
 				FlxG.collide(level._grpEnemies, level.map.walls);
 				FlxG.collide(level._grpEnemies, level.map.walls);
 				

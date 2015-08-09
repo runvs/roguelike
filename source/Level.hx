@@ -26,6 +26,8 @@ class Level extends FlxObject
 		sizeX = sX;
 		sizeY = sY;
 		initializeLevel(sizeX, sizeY);
+		
+		scrollFactor.set();
 	}
 	
 	private function initializeLevel(sizeX:Int, sizeY:Int):Void
@@ -68,6 +70,7 @@ class Level extends FlxObject
 
 	public override function update():Void
 	{	
+		
 		super.update();
 		map.update();
 

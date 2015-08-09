@@ -31,10 +31,10 @@ class Enemy extends Creature
 		this.animation.add("walk", [5, 6, 7, 8]);
 		this.animation.play("idle", false, FlxRandom.intRanged(0,3));
 		
-		this.offset.set();
-		this.origin.set();
-		this.scale.set(2, 2);
-		this.updateHitbox();
+		//this.offset.set();
+		//this.origin.set();
+		//this.scale.set(2, 2);
+		//this.updateHitbox();
 		
 		randomwalkTimer = 1.5;
 		randomWalkDirection = FlxRandom.intRanged(0, 3);
