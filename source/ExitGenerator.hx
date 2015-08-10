@@ -4,12 +4,9 @@ class ExitGenerator
 
 	public static function generateExitsForMap(map: MyTileMap): MyTileMap
 	{
-		//trace ("generate exits");
-		var EXIT_DOWN_ID = 7;
-		
 		var exitDownPosition:flixel.util.FlxPoint = new flixel.util.FlxPoint();
 		var told : Tile = map.floor.getRandom(0, map.floor.length-1 );
-		var tnew : Tile = new Tile(told.tx, told.ty, EXIT_DOWN_ID);
+		var tnew : Tile = new Tile(told.tx, told.ty, TileType.Exit);
 		
 		map.floor.replace(told, tnew);
 

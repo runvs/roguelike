@@ -12,7 +12,7 @@ class MapGenerator
 		//so dirty...
 		var listOfHalls:Array<flixel.util.FlxRect> = new Array<flixel.util.FlxRect>();
 		var listOfRooms:Array<flixel.util.FlxRect> = new Array<flixel.util.FlxRect>();
-		var listOfTypes:Array<Int> = new Array<Int>();
+		var listOfTypes:Array<TileType> = new Array<TileType>();
 		
 		//iterate over all leafes
 		for(currentLeaf in tree)
@@ -22,7 +22,7 @@ class MapGenerator
 			if(room != null)
 			{
 				//roll type for room
-				var roomType:Int = 3; //always type one - we will manually add a canteen (2) later
+				var roomType:TileType = TileType.Floor; //always type one - we will manually add a canteen (2) later
 				//put the roomtype value into the "map"
 				listOfRooms.push(room);
 				listOfTypes.push(roomType);
@@ -67,7 +67,7 @@ class MapGenerator
 			for(x in 0 ... tree.members[0].width)
 			{
 				//check every room :(
-				var type:Int = 0;
+				var type:TileType = TileType.Wall;
 				//trace(x + ","+y);
 				for(roomIndex in 0 ... listOfRooms.length)
 				{
@@ -86,9 +86,9 @@ class MapGenerator
 				{
 					if(isInHall(x, y, tmpHall))
 					{
-						if(type == 0)
+						if(type == TileType.Wall)
 						{
-							type = 3;
+							type = TileType.Floor;
 						}
 						break;
 					}

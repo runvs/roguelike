@@ -53,7 +53,7 @@ class Level extends FlxObject
 		
 		map.floor.forEach(function (t:Tile) : Void
 		{
-			if (t.type == 7)
+			if (t.type == TileType.Exit)
 			{
 				Exit = t;
 			}
@@ -94,24 +94,24 @@ class Level extends FlxObject
 	{
 		for (j in 0...sizeY )
 		{			
-			var t : Tile = new Tile( 0 , j , 8);
+			var t : Tile = new Tile( 0 , j , TileType.Ceiling);
 			map.walls.add(t);
-			t = new Tile((sizeX ) , j , 8);
+			t = new Tile((sizeX ) , j , TileType.Ceiling);
 			map.walls.add(t);
 		}
 		for (i in 0...sizeX )
 		{
 			if (getFloor(i, 1) != null)
 			{
-				var t : Tile = new Tile( i, 0 , 0);
+				var t : Tile = new Tile( i, 0 , TileType.Wall);
 				map.walls.add(t);
 			}
 			else
 			{
-				var t : Tile = new Tile( i, 0 , 8);
+				var t : Tile = new Tile( i, 0 , TileType.Ceiling);
 				map.walls.add(t);
 			}
-			var t = new Tile(i, (sizeY) , 8);
+			var t = new Tile(i, (sizeY) , TileType.Ceiling);
 			map.walls.add(t);
 		}
 	}
@@ -122,14 +122,14 @@ class Level extends FlxObject
 		
 		map.walls.forEach(function (t:Tile) : Void 
 		{
-			if ( t.type == 0)	// tile is a "wall"
+			if ( t.type == TileType.Wall)	// tile is a "wall"
 			{
 				var posX : Int = t.tx;
 				var posY : Int = t.ty;
 				
 				if (getWall(posX, posY-1) == null)
 				{
-					var newTile : Tile = new Tile(posX, posY, 3);
+					var newTile : Tile = new Tile(posX, posY, TileType.Floor);
 					map.floor.add(newTile);
 					t.destroy();
 				}
@@ -180,14 +180,14 @@ class Level extends FlxObject
 				}
 				else
 				{
-					var tnew : Tile = new Tile(posX, posY, 8);
+					var tnew : Tile = new Tile(posX, posY, TileType.Ceiling);
 					newWalls.add(tnew);
 					t.destroy();
 				}
 			}
 			else //if zero neighbours
 			{
-				var tnew : Tile = new Tile(posX, posY, 8);
+				var tnew : Tile = new Tile(posX, posY, TileType.Ceiling);
 				newWalls.add(tnew);
 				t.destroy();
 			}
@@ -242,8 +242,6 @@ class Level extends FlxObject
 		_grpEnemies.update();
 		_grpShields.update();
 		_grpParticles.update();
-		
-		//_grpEnemies.forEachAlive(checkEnemyVision);
 	}
 
 	public override function draw():Void
