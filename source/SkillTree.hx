@@ -656,6 +656,8 @@ class SkillTree extends FlxSpriteGroup
 			text_Skillpoints.text = text_Skillpoints.text + "HP Max:\t" + Std.string(_properties.getHP()) + " = " + Std.string(_properties.baseHP) + " + "  + Std.string(_properties.skillHP) + "\n";
 			text_Skillpoints.text = text_Skillpoints.text + "MP:\t\t\t" + Std.string(_properties.currentMP) + " / " + Std.string(_properties.baseMP) + "\n\n";
 			
+			text_Skillpoints.text = text_Skillpoints.text + "Movespeed:\t\t" + GameProperties.floatToStringPrecision(_properties.getMoveSpeedFactor(),2) + "\n\n";
+			
 			text_Skillpoints.text = text_Skillpoints.text + "Damage:\t" + Std.string(_properties.getDamage()) + 
 			" = " + Std.string(_properties.baseDamage) + " + " + Std.string(_properties.skillDamage + _properties.skillPowerHitDamage) + "\n" ;
 			

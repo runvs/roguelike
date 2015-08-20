@@ -238,6 +238,10 @@ class PlayerProperties
 	
 	public var baseHitChance : Float;
 	
+	public function getMoveSpeedFactor () : Float 
+	{
+		return 1.0 + (Ag-5) / 90.0;
+	}
 
 	
 	
