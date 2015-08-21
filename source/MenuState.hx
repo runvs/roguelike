@@ -25,6 +25,8 @@ class MenuState extends FlxState
 	{
 		super.create();
 		
+		//FloodfillTester.SelfTest();
+		
 		#if flash
 		FlxG.sound.playMusic(AssetPaths.roguelike_ost__mp3, 1.0, true);
 		#else

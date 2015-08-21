@@ -19,7 +19,8 @@ class Level extends FlxObject
 	public var sizeX: Int;
 	public var sizeY: Int;
 	
-	public var StartPos : FlxPoint;
+	private var StartPos : FlxPoint;
+	
 	public var Exit : Tile;
 	
 	public var _grpParticles : FlxTypedGroup<Particle>;
@@ -59,7 +60,6 @@ class Level extends FlxObject
 			}
 		});
 		
-		// create boundaries
 		TileReplacement();
 		RemoveSingleWallTiles();
 		createBoundaries();
@@ -197,24 +197,26 @@ class Level extends FlxObject
 	}
 	
 	
-	function getFloor(x:Int, y:Int) : Tile
+	public function getFloor(x:Int, y:Int) : Tile
 	{
 		var tf : Tile = null;
 		if (x > 0 && x  < sizeX && y > 0 && y < sizeY)
 		{
-			map.floor.forEach(function(t:Tile)
+			for (i in 0...map.floor.length)
 			{
+				var t:Tile = map.floor.members[i];
 				if (t.tx == x && t.ty == y)
 				{
 					tf = t;
+					break;
 				}
-			});
+			}
 		}
 		return tf;
 			
 	}
 	
-	function getWall(x:Int, y:Int) : Tile
+	public function getWall(x:Int, y:Int) : Tile
 	{
 		var tf : Tile = null;
 		if (x > 0 && x  < sizeX && y > 0 && y < sizeY)
@@ -279,5 +281,8 @@ class Level extends FlxObject
 		});
 		_grpShields = newShields;
 	}
+	
+	public function getPlayerStartingPosition () : FlxPoint { return new FlxPoint(StartPos.x * GameProperties.TileSize, StartPos.y * GameProperties.TileSize); };
+	public function getStartingPositionInTiles () : FlxPoint { return new FlxPoint(StartPos.x , StartPos.y); };
 	
 }

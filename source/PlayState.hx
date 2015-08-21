@@ -44,9 +44,11 @@ class PlayState extends FlxState
 		switching = false;
 		levelNumber = 1;
 		
-		level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, 1, levelNumber);
+		
+		
+		CreateNewLevel(1);
 		player = new Player();
-		player.setPosition(level.StartPos.x, level.StartPos.y);
+		player.setPosition(level.getPlayerStartingPosition() .x, level.getPlayerStartingPosition().y);
 		
 		skillz = new SkillTree(player.properties);
 		player.setSkills(skillz);
@@ -107,13 +109,27 @@ class PlayState extends FlxState
 				var t : FlxTimer = new FlxTimer(1, function (t:FlxTimer) 
 				{
 					levelNumber++;
-					level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, player.properties.level, levelNumber);
+					//level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, player.properties.level, levelNumber);
+					CreateNewLevel(player.properties.level);
 					switching = false;
-					player.setPosition(level.StartPos.x, level.StartPos.y);
+					player.setPosition(level.getPlayerStartingPosition().x, level.getPlayerStartingPosition().y);
 					FlxTween.tween(_overlay, { alpha:0 } );
 				});
 			}
 		}
+	}
+	
+	function CreateNewLevel(playerLevel:Int):Void 
+	{
+		trace("create new Level");
+		level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, playerLevel, levelNumber);
+		//while (!FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty))
+		//{
+		//	level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, playerLevel, levelNumber);
+		//}
+		trace ("testing floodfill");
+		//var result : Bool = FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty);
+		//trace (result);
 	}
 	
 	/**
