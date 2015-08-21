@@ -128,13 +128,13 @@ class PlayState extends FlxState
 	{
 		trace("create new Level");
 		level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, playerLevel, levelNumber);
-		//while (!FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty))
-		//{
-		//	level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, playerLevel, levelNumber);
-		//}
-		trace ("testing floodfill");
-		var result : Bool = FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty);
-		trace (result);
+		while (!FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty))
+		{
+			level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, playerLevel, levelNumber);
+		}
+		//trace ("testing floodfill");
+		//var result : Bool = FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty);
+		//trace (result);
 	}
 	
 	/**
