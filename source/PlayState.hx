@@ -54,7 +54,6 @@ class PlayState extends FlxState
 		player.setSkills(skillz);
 		
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
-		
 		FlxG.camera.setBounds(0, 0, level.sizeX*GameProperties.TileSize, level.sizeY*GameProperties.TileSize);
 		
 		// overlay and vignette stuff
@@ -69,7 +68,13 @@ class PlayState extends FlxState
 		
 		_overlay  = new FlxSprite();
 		_overlay.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		
+		#if FLX_NO_DEBUG
 		FlxTween.tween(_overlay, { alpha:0 }, 0.5);
+		#else
+		_overlay.alpha = 0;
+		#end
+		
 		_overlay.scrollFactor.set();
 	}
 	
@@ -128,8 +133,8 @@ class PlayState extends FlxState
 		//	level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, playerLevel, levelNumber);
 		//}
 		trace ("testing floodfill");
-		//var result : Bool = FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty);
-		//trace (result);
+		var result : Bool = FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty);
+		trace (result);
 	}
 	
 	/**
@@ -184,9 +189,9 @@ class PlayState extends FlxState
 				{
 					var xx:Float = enemy.x - player.x;
 					var yy:Float = enemy.y - player.y;
-					var distance:Float = Math.sqrt(xx * xx + yy * yy);
+					var distance:Float = xx * xx + yy * yy;
 					
-					if (distance <= GameProperties.Enemy_AggroRadius) {
+					if (distance <= GameProperties.Enemy_AggroRadius*GameProperties.Enemy_AggroRadius) {
 						enemy.doRandomWalk = false;
 						enemy.walkTowards(player);
 					}
