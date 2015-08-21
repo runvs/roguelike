@@ -71,7 +71,7 @@ class Player extends Creature
 		
 		this.updateHitbox();
 		this.drag = new FlxPoint( GameProperties.Player_VelocityDecay, GameProperties.Player_VelocityDecay);
-		this.maxVelocity = new FlxPoint(GameProperties.Player_MaxSpeed,  GameProperties.Player_MaxSpeed);
+		
 		attacTimer = 0;
 		targetbox = new FlxSprite();
 		targetbox.makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(0.5, 100, 200, 200));
@@ -181,6 +181,7 @@ class Player extends Creature
 	
 	override public function update()
 	{
+		this.maxVelocity = new FlxPoint(GameProperties.Player_MaxSpeed * properties.getMoveSpeedFactor() ,  GameProperties.Player_MaxSpeed * properties.getMoveSpeedFactor());
 		if (properties.currentHP <= 0)
 		{
 			alive = false;

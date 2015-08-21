@@ -83,11 +83,6 @@ class Level extends FlxObject
 			}
 		});
 		_grpEnemies = ne;
-		
-
-		//var forbiddenList:Array<Int> = new Array<Int>();
-		//forbiddenList.push(0);
-		//map = ExitGenerator.generateExitsForMap(map, forbiddenList);
 	}
 	
 	function createBoundaries():Void 
