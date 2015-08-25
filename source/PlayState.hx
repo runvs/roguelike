@@ -124,17 +124,17 @@ class PlayState extends FlxState
 		}
 	}
 	
+	// This Method will create a new Level and check if there is a distinctive path from the player's starting position to the map's exit
 	function CreateNewLevel(playerLevel:Int):Void 
 	{
+		FlxG.worldBounds.set(GameProperties.World_SizeInTilesX*GameProperties.TileSize, GameProperties.World_SizeInTilesY * GameProperties.TileSize);
+		
 		trace("create new Level");
-		level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, playerLevel, levelNumber);
+		level = new Level(this, GameProperties.World_SizeInTilesX, GameProperties.World_SizeInTilesY, playerLevel, levelNumber);
 		while (!FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty))
 		{
-			level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, playerLevel, levelNumber);
+			level = new Level(this, GameProperties.World_SizeInTilesX, GameProperties.World_SizeInTilesY, playerLevel, levelNumber);
 		}
-		//trace ("testing floodfill");
-		//var result : Bool = FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty);
-		//trace (result);
 	}
 	
 	/**

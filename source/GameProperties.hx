@@ -7,8 +7,9 @@ package;
 class GameProperties
 {	
 	public static var TileSize : Int = 32;
-	public static var WorldSizeInTilesx : Int = 32;
-	public static var WorldSizeInTilesy : Int = 24;
+	public static var World_SizeInTilesX : Int = 50;
+	public static var World_SizeInTilesY : Int = 24;
+	
 	public static var Skills_Level1 : Int = 1;
 	
 	public static var Skills_Level2 : Int = 10;

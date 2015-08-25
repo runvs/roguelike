@@ -64,12 +64,8 @@ class Player extends Creature
 		this.animation.add("attack", [12, 13], 5, false);
 		this.animation.add("taunt", [12, 13], 5, false);
 		this.animation.play("idle");
-		
-		//this.scale.set(2,2
-		this.width = 25;
-		this.updateHitbox();
-		
-		this.updateHitbox();
+
+	
 		this.drag = new FlxPoint( GameProperties.Player_VelocityDecay, GameProperties.Player_VelocityDecay);
 		
 		attacTimer = 0;
