@@ -39,11 +39,6 @@ class Enemy extends Creature
 		this.animation.play("idle", false, FlxRandom.intRanged(0, 3));
 		this.animation.add("dead", [9], 30, true);
 		
-		//this.offset.set();
-		//this.origin.set();
-		//this.scale.set(2, 2);
-		//this.updateHitbox();
-		
 		attackTimer = GameProperties.Enemy_AttackTimer;
 		
 		doRandomWalk = true;

@@ -62,8 +62,8 @@ class PlayState extends FlxState
 		_vignette.loadGraphic(AssetPaths.vignette__png, false, 800, 600);
 		_vignette.origin.set();
 		_vignette.offset.set();
-		_vignette.scale.set(1.28, 1.28);
-		_vignette.alpha = 0.5;
+		_vignette.scale.set(FlxG.width/_vignette.width, FlxG.height/_vignette.height);
+		_vignette.alpha = 0.75;
 		_vignette.scrollFactor.set();
 		
 		_overlay  = new FlxSprite();
