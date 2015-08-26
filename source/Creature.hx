@@ -28,7 +28,7 @@ class Creature extends FlxSprite
 		if (alive)
 		{
 			updateHitbox();
-			doMovement();
+			doAnimationStuff();
 		}
 		super.update();
 	}
@@ -58,7 +58,7 @@ class Creature extends FlxSprite
 		acceleration.y = GameProperties.Player_Speed * accelFactor;
 	}
 	
-	function doMovement():Void 
+	function doAnimationStuff():Void 
 	{
 		var vx : Float = velocity.x;
 		var vy : Float = velocity.y;
