@@ -96,7 +96,7 @@ class FloodfillTester
 		
 		// test 1,1 -> 2,1 ==>> true
 		{
-			var level = new Level(null, 6, 6, 1, 1);
+			var level = new Level(6, 6, 1, 1);
 			level.map.floor = new FlxTypedGroup<Tile>();
 			var t1 : Tile  = new Tile(1, 1, TileType.Floor);
 			var t2 : Tile  = new Tile(2, 1, TileType.Floor);
@@ -108,7 +108,7 @@ class FloodfillTester
 		
 		// test 1,1 -> 1,2 ==>> true
 		{
-			var level = new Level(null, 6, 6, 1, 1);
+			var level = new Level( 6, 6, 1, 1);
 			level.map.floor = new FlxTypedGroup<Tile>();
 			var t1 : Tile  = new Tile(1, 1, TileType.Floor);
 			var t2 : Tile  = new Tile(1, 2, TileType.Floor);
@@ -120,7 +120,7 @@ class FloodfillTester
 		
 		// test 1,2 -> 1,1 ==>> true
 		{
-			var level = new Level(null, 6, 6, 1, 1);
+			var level = new Level(6, 6, 1, 1);
 			level.map.floor = new FlxTypedGroup<Tile>();
 			var t1 : Tile  = new Tile(1, 1, TileType.Floor);
 			var t2 : Tile  = new Tile(1, 2, TileType.Floor);
@@ -133,7 +133,7 @@ class FloodfillTester
 		
 		// test 1,1 -> 2,1 -> 2,2 ->3,2 ==>> true
 		{
-			var level = new Level(null, 6, 6, 1, 1);
+			var level = new Level(6, 6, 1, 1);
 			level.map.floor = new FlxTypedGroup<Tile>();
 			var t1 : Tile  = new Tile(1, 1, TileType.Floor);
 			var t2 : Tile  = new Tile(2, 1, TileType.Floor);
@@ -149,7 +149,7 @@ class FloodfillTester
 		
 		// test 1,1 -> 2,1 -> 3,1 ->4,1 ==>> true
 		{
-			var level = new Level(null, 6, 6, 1, 1);
+			var level = new Level(6, 6, 1, 1);
 			level.map.floor = new FlxTypedGroup<Tile>();
 			var t1 : Tile  = new Tile(1, 1, TileType.Floor);
 			var t2 : Tile  = new Tile(2, 1, TileType.Floor);
@@ -169,7 +169,7 @@ class FloodfillTester
 		
 		// test 1,1 -> ... -> 79,1 ==>> true
 		{
-			var level = new Level(null, 81, 3, 1, 1);
+			var level = new Level(81, 3, 1, 1);
 			level.map.floor = new FlxTypedGroup<Tile>();
 			for (i in 0...80)
 			{
@@ -184,7 +184,7 @@ class FloodfillTester
 		
 		// test 1,1 -> ... -> 29,1 with adjactant Tile line ==>> true
 		{
-			var level = new Level(null, 31, 5, 1, 1);
+			var level = new Level(31, 5, 1, 1);
 			level.map.floor = new FlxTypedGroup<Tile>();
 			for (i in 1...30)
 			{
@@ -208,7 +208,7 @@ class FloodfillTester
 		
 		// test when not connected ==>> false
 		{
-			var level = new Level(null, 6, 6, 1, 1);
+			var level = new Level(6, 6, 1, 1);
 			level.map.floor = new FlxTypedGroup<Tile>();
 			var t1 : Tile  = new Tile(1, 1, TileType.Floor);
 			var t2 : Tile  = new Tile(3, 1, TileType.Floor);
@@ -220,7 +220,7 @@ class FloodfillTester
 		
 		// test when start tile not in floors ==>> false
 		{
-			var level = new Level(null, 6, 6, 1, 1);
+			var level = new Level(6, 6, 1, 1);
 			level.map.floor = new FlxTypedGroup<Tile>();
 			var t1 : Tile  = new Tile(1, 1, TileType.Floor);
 			var t2 : Tile  = new Tile(2, 1, TileType.Floor);

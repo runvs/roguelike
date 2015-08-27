@@ -130,10 +130,10 @@ class PlayState extends FlxState
 		FlxG.worldBounds.set(GameProperties.World_SizeInTilesX*GameProperties.TileSize, GameProperties.World_SizeInTilesY * GameProperties.TileSize);
 		
 		trace("create new Level");
-		level = new Level(this, GameProperties.World_SizeInTilesX, GameProperties.World_SizeInTilesY, playerLevel, levelNumber);
+		level = new Level(GameProperties.World_SizeInTilesX, GameProperties.World_SizeInTilesY, playerLevel, levelNumber);
 		while (!FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty))
 		{
-			level = new Level(this, GameProperties.World_SizeInTilesX, GameProperties.World_SizeInTilesY, playerLevel, levelNumber);
+			level = new Level(GameProperties.World_SizeInTilesX, GameProperties.World_SizeInTilesY, playerLevel, levelNumber);
 		}
 	}
 	

@@ -13,7 +13,6 @@ class Level extends FlxObject
 	public var _grpDeadEnemies:flixel.group.FlxTypedGroup<Enemy>;
 
 	public var map : MyTileMap;
-	//public var _state:PlayState;
 	private var _level : Int;
 	private var _worldLevel : Int;
 	public var sizeX: Int;
@@ -27,12 +26,11 @@ class Level extends FlxObject
 	public var _grpShields : FlxTypedGroup<Shield>;
 	
 
-	public function new(state:PlayState, sX:Int, sY:Int, level:Int, worldLevel : Int)
+	public function new(sX:Int, sY:Int, level:Int, worldLevel : Int)
 	{
 		super();
 		_level = level;
 		_worldLevel = worldLevel;
-		//_state = state;
 		sizeX = sX;
 		sizeY = sY;
 		initializeLevel(sizeX, sizeY);
