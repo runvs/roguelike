@@ -62,6 +62,22 @@ class Level extends FlxObject
 		RemoveSingleWallTiles();
 		createBoundaries();
 		
+		
+		// create Shadows
+		map.walls.forEach(function (t:Tile) : Void 
+		{
+			var tx = t.tx;
+			var ty = t.ty;
+			
+			var tf : Tile = getFloor(tx, ty - 1);
+			if (tf != null)
+			{
+				t.setShadow();
+			}
+		});
+		
+		
+		
 
 		
 		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, _level - 1, _worldLevel);
@@ -248,6 +264,8 @@ class Level extends FlxObject
 		
 		_grpShields.draw();
 		_grpParticles.draw();
+		
+		map.walls.forEach(function (t:Tile):Void { t.drawShadow(); } );
 	}
 	
 	public function cleanUp () : Void 

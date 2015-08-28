@@ -18,21 +18,25 @@ class Tile extends FlxSprite
 	public var ty : Int;
 	
 	public var type : TileType;
+	
+	private var shadowSprite : FlxSprite;
 
 	public function new(X:Int=0, Y:Int=0, t: TileType) 
 	{
+		super(X * GameProperties.TileSize, Y * GameProperties.TileSize);
+		
 		tx = X;
 		ty = Y;
 		
-		super(X*GameProperties.TileSize, Y * GameProperties.TileSize);
 		passable = true;
 		immovable = true;
 		
 		type = t;
 		
+		shadowSprite = null;
+		
 		if (t == TileType.Wall)	// Wall Tile
 		{
-			//makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GRAY);
 			loadGraphic(AssetPaths.Background_Wall__png, false, 32, 32);
 			passable = false;
 		}
@@ -42,8 +46,6 @@ class Tile extends FlxSprite
 		}
 		else if (t == TileType.Exit)	// exit
 		{
-			//trace("exit created");
-			//makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.GREEN);
 			loadGraphic(AssetPaths.Staircase__png, false , 32, 32);
 		}
 		else if (t == TileType.Ceiling)	// ceiling
@@ -51,6 +53,22 @@ class Tile extends FlxSprite
 			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(1.0, 14, 16, 16));
 		}
 		this.updateHitbox();
+	}
+	
+	public function setShadow() : Void 
+	{
+		shadowSprite = new FlxSprite();
+		shadowSprite.makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(0.5, 20, 20, 20));
+		shadowSprite.offset.set(0, GameProperties.TileSize);
+		shadowSprite.setPosition(x, y);
+	}
+	
+	public function drawShadow() : Void 
+	{
+		if (shadowSprite != null)
+		{
+			shadowSprite.draw();
+		}
 	}
 	
 }

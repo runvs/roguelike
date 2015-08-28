@@ -145,8 +145,6 @@ class PlayState extends FlxState
 		_overlay.update();
 		skillz.update();
 		
-		
-		
 		if (!_ending && !switching )
 		{
 			if (!player.alive)
