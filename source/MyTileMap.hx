@@ -34,4 +34,9 @@ class MyTileMap extends FlxObject
 		floor.draw();
 		walls.draw();
 	}
+	
+	public function drawShadows()
+	{
+		walls.forEach(function (t:Tile):Void { t.drawShadow(); } );
+	}
 }

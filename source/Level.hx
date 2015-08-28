@@ -1,5 +1,6 @@
 import flixel.FlxObject;
 import flixel.group.FlxTypedGroup;
+import flixel.system.debug.Window;
 import flixel.system.FlxVersion;
 import flixel.tile.FlxTile;
 import flixel.util.FlxAngle;
@@ -63,18 +64,7 @@ class Level extends FlxObject
 		createBoundaries();
 		
 		
-		// create Shadows
-		map.walls.forEach(function (t:Tile) : Void 
-		{
-			var tx = t.tx;
-			var ty = t.ty;
-			
-			var tf : Tile = getFloor(tx, ty - 1);
-			if (tf != null)
-			{
-				t.setShadow();
-			}
-		});
+		CreateShadows();
 		
 		
 		
@@ -205,6 +195,53 @@ class Level extends FlxObject
 		map.walls = newWalls;
 	}
 	
+	function CreateShadows():Void 	// can also be used to recalculate shadows if the map changed
+	{
+		// create Shadows
+		map.walls.forEach(function (t:Tile) : Void 
+		{
+			var tx = t.tx;
+			var ty = t.ty;
+			
+			var tftop : Tile = getFloor(tx, ty - 1);
+			var tfright : Tile = getFloor(tx + 1, ty);
+			var tfdiag : Tile = getFloor(tx + 1, ty - 1);
+			var twdiag : Tile = getWall(tx + 1, ty - 1);
+			
+			if (tftop != null && tfright != null && tfdiag != null)
+			{
+				t.setShadow(ShadowType.NorthEast);
+			}
+			else if (tftop != null && tfright != null &&  (tfdiag == null || twdiag != null))
+			{
+				t.setShadow(ShadowType.NorthCroppedEastCropped);
+			}
+			else if (tftop == null && tfright != null )
+			{
+				if (tfdiag == null || twdiag != null)
+				{
+					t.setShadow(ShadowType.EastCropped);
+				}
+				else
+				{
+					t.setShadow(ShadowType.East);
+				}
+			}
+			else if (tftop != null && tfright == null)
+			{
+				if (tfdiag == null || twdiag != null)
+				{
+					t.setShadow(ShadowType.NorthCropped);
+				}
+				else
+				{
+					t.setShadow(ShadowType.North);
+				}
+			}
+			
+		});
+	}
+	
 	
 	public function getFloor(x:Int, y:Int) : Tile
 	{
@@ -265,8 +302,13 @@ class Level extends FlxObject
 		_grpShields.draw();
 		_grpParticles.draw();
 		
-		map.walls.forEach(function (t:Tile):Void { t.drawShadow(); } );
 	}
+	
+	public function drawShadows() : Void 
+	{
+		map.drawShadows();
+	}
+	
 	
 	public function cleanUp () : Void 
 	{
@@ -293,7 +335,7 @@ class Level extends FlxObject
 		_grpShields = newShields;
 	}
 	
-	public function getPlayerStartingPosition () : FlxPoint { return new FlxPoint(StartPos.x * GameProperties.TileSize, StartPos.y * GameProperties.TileSize); };
+	public function getPlayerStartingPosition () : FlxPoint { return new FlxPoint(StartPos.x * GameProperties.Tile_Size, StartPos.y * GameProperties.Tile_Size); };
 	public function getStartingPositionInTiles () : FlxPoint { return new FlxPoint(StartPos.x , StartPos.y); };
 	
 }

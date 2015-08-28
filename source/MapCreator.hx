@@ -51,8 +51,8 @@ class MapCreator extends FlxSpriteGroup
 			for (j in 0...sizey)
 			{				
 				var t : Int = get(i, j);
-				var s :FlxSprite = new FlxSprite(i*GameProperties.TileSize, j*GameProperties.TileSize);
-				s.makeGraphic(GameProperties.TileSize, GameProperties.TileSize, ((t != 0)? FlxColor.BLACK : FlxColor.WHITE));
+				var s :FlxSprite = new FlxSprite(i*GameProperties.Tile_Size, j*GameProperties.Tile_Size);
+				s.makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, ((t != 0)? FlxColor.BLACK : FlxColor.WHITE));
 				
 				add(s);
 			}

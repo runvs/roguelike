@@ -6,7 +6,9 @@ package;
  */
 class GameProperties
 {	
-	public static var TileSize : Int = 32;
+	public static var Tile_Size : Int = 32;
+	public static var Tiles_ShadowAlpha : Float = 0.25;
+	
 	public static var World_SizeInTilesX : Int = 50;
 	public static var World_SizeInTilesY : Int = 24;
 	
@@ -74,7 +76,7 @@ class GameProperties
 	public static var Player_experienceLevelUpBase : Int = 40;
 	public static var Player_experienceLevelUpFactor : Float = 1.2;
 	
-	public static var Enemy_AggroRadius : Int = TileSize * 4;
+	public static var Enemy_AggroRadius : Int = Tile_Size * 4;
 	public static var Enemy_AttackTimer : Float = 0.75;
 	public static var Enemy_BaseXP : Int = 14;
 	

@@ -70,8 +70,8 @@ class Player extends Creature
 		
 		attacTimer = 0;
 		targetbox = new FlxSprite();
-		targetbox.makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(0.5, 100, 200, 200));
-		targetboxRect = new FlxRect(x, y, GameProperties.TileSize, GameProperties.TileSize);
+		targetbox.makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(0.5, 100, 200, 200));
+		targetboxRect = new FlxRect(x, y, GameProperties.Tile_Size, GameProperties.Tile_Size);
 		
 		// hud stuff
 		
@@ -223,19 +223,19 @@ class Player extends Creature
 		targetboxRect.y = y;
 		if (f == EFacing.Right)
 		{
-			targetboxRect.x += GameProperties.TileSize;
+			targetboxRect.x += GameProperties.Tile_Size;
 		}
 		else if (f == EFacing.Left)
 		{
-			targetboxRect.x -= GameProperties.TileSize;
+			targetboxRect.x -= GameProperties.Tile_Size;
 		}
 		if (f == EFacing.Up)
 		{
-			targetboxRect.y -= GameProperties.TileSize;
+			targetboxRect.y -= GameProperties.Tile_Size;
 		}
 		else if (f == EFacing.Down)
 		{
-			targetboxRect.y += GameProperties.TileSize;
+			targetboxRect.y += GameProperties.Tile_Size;
 		}
 		
 		targetbox.setPosition(targetboxRect.x, targetboxRect.y);

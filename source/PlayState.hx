@@ -54,7 +54,7 @@ class PlayState extends FlxState
 		player.setSkills(skillz);
 		
 		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
-		FlxG.camera.setBounds(0, 0, level.sizeX*GameProperties.TileSize, level.sizeY*GameProperties.TileSize);
+		FlxG.camera.setBounds(0, 0, level.sizeX*GameProperties.Tile_Size, level.sizeY*GameProperties.Tile_Size);
 		
 		// overlay and vignette stuff
 		
@@ -127,7 +127,7 @@ class PlayState extends FlxState
 	// This Method will create a new Level and check if there is a distinctive path from the player's starting position to the map's exit
 	function CreateNewLevel(playerLevel:Int):Void 
 	{
-		FlxG.worldBounds.set(GameProperties.World_SizeInTilesX*GameProperties.TileSize, GameProperties.World_SizeInTilesY * GameProperties.TileSize);
+		FlxG.worldBounds.set(GameProperties.World_SizeInTilesX*GameProperties.Tile_Size, GameProperties.World_SizeInTilesY * GameProperties.Tile_Size);
 		
 		trace("create new Level");
 		level = new Level(GameProperties.World_SizeInTilesX, GameProperties.World_SizeInTilesY, playerLevel, levelNumber);
@@ -264,6 +264,8 @@ class PlayState extends FlxState
 	{
 		level.draw();
 		player.draw();
+		
+		level.drawShadows();
 		
 		
 		_vignette.draw();

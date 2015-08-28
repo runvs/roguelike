@@ -65,7 +65,7 @@ class FloodfillTester
 				return false;
 			}
 			active = active2;
-			trace (runIdx + " " + active2.length);
+			//trace (runIdx + " " + active2.length);
 		}
 		
 		return false;

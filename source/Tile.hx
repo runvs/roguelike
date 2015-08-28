@@ -19,11 +19,12 @@ class Tile extends FlxSprite
 	
 	public var type : TileType;
 	
-	private var shadowSprite : FlxSprite;
+	private var shadow_topSprite : FlxSprite;
+	private var shadow_rightSprite : FlxSprite;
 
 	public function new(X:Int=0, Y:Int=0, t: TileType) 
 	{
-		super(X * GameProperties.TileSize, Y * GameProperties.TileSize);
+		super(X * GameProperties.Tile_Size, Y * GameProperties.Tile_Size);
 		
 		tx = X;
 		ty = Y;
@@ -33,7 +34,7 @@ class Tile extends FlxSprite
 		
 		type = t;
 		
-		shadowSprite = null;
+		shadow_topSprite = null;
 		
 		if (t == TileType.Wall)	// Wall Tile
 		{
@@ -42,7 +43,7 @@ class Tile extends FlxSprite
 		}
 		else if (t == TileType.Floor)	// Floor
 		{
-			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(1,78, 96, 81));
+			makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(1,78, 96, 81));
 		}
 		else if (t == TileType.Exit)	// exit
 		{
@@ -50,24 +51,91 @@ class Tile extends FlxSprite
 		}
 		else if (t == TileType.Ceiling)	// ceiling
 		{
-			makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(1.0, 14, 16, 16));
+			makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(1.0, 14, 16, 16));
 		}
 		this.updateHitbox();
 	}
 	
-	public function setShadow() : Void 
+	public function setShadow(what:ShadowType) : Void 
 	{
-		shadowSprite = new FlxSprite();
-		shadowSprite.makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColorUtil.makeFromARGB(0.5, 20, 20, 20));
-		shadowSprite.offset.set(0, GameProperties.TileSize);
-		shadowSprite.setPosition(x, y);
+		if (what == ShadowType.Not)	// none
+		{
+			shadow_topSprite = null;
+			shadow_rightSprite = null;
+		}
+		else if (what == ShadowType.North)	// top only
+		{
+			shadow_topSprite = new FlxSprite();
+			shadow_topSprite.loadGraphic(AssetPaths.shadow_top__png, false, 48, 16);
+			shadow_topSprite.offset.set(0, 16);
+			shadow_topSprite.setPosition(x, y);
+			shadow_topSprite.alpha = GameProperties.Tiles_ShadowAlpha;
+		}
+		else if (what == ShadowType.East)	// right only
+		{
+			shadow_rightSprite = new FlxSprite();
+			shadow_rightSprite.loadGraphic(AssetPaths.shadow_right__png, false, 16, 48);
+			shadow_rightSprite.offset.set(-GameProperties.Tile_Size, 16);
+			shadow_rightSprite.setPosition(x, y);
+			shadow_rightSprite.alpha = GameProperties.Tiles_ShadowAlpha;
+		}
+		else if (what == ShadowType.NorthEast)	// top and right
+		{
+			shadow_topSprite = new FlxSprite();
+			shadow_topSprite.loadGraphic(AssetPaths.shadow_top__png, false, 48, 16);
+			shadow_topSprite.offset.set(0, 16);
+			shadow_topSprite.setPosition(x, y);
+			shadow_topSprite.alpha = GameProperties.Tiles_ShadowAlpha;
+			
+			shadow_rightSprite = new FlxSprite();
+			shadow_rightSprite.loadGraphic(AssetPaths.shadow_right__png, false, 16, 48);
+			shadow_rightSprite.offset.set(-GameProperties.Tile_Size, 16);
+			shadow_rightSprite.setPosition(x, y);
+			shadow_rightSprite.alpha = GameProperties.Tiles_ShadowAlpha;
+		}
+		else if (what == ShadowType.NorthCroppedEastCropped) // top and right but both cropped
+		{
+			shadow_topSprite = new FlxSprite();
+			shadow_topSprite.loadGraphic(AssetPaths.shadow_top_cropped__png, false, 32, 16);
+			shadow_topSprite.offset.set(0, 16);
+			shadow_topSprite.setPosition(x, y);
+			shadow_topSprite.alpha = GameProperties.Tiles_ShadowAlpha;
+			
+			shadow_rightSprite = new FlxSprite();
+			shadow_rightSprite.loadGraphic(AssetPaths.shadow_right_cropped__png, false, 16, 32);
+			shadow_rightSprite.offset.set(-GameProperties.Tile_Size, 0);
+			shadow_rightSprite.setPosition(x, y);
+			shadow_rightSprite.alpha = GameProperties.Tiles_ShadowAlpha;
+		}
+		else if (what == ShadowType.EastCropped)
+		{
+			shadow_rightSprite = new FlxSprite();
+			shadow_rightSprite.loadGraphic(AssetPaths.shadow_right_cropped__png, false, 16, 32);
+			shadow_rightSprite.offset.set(-GameProperties.Tile_Size, 0);
+			shadow_rightSprite.setPosition(x, y);
+			shadow_rightSprite.alpha = GameProperties.Tiles_ShadowAlpha;
+		}
+		else if (what == ShadowType.NorthCropped) // top and right but both cropped
+		{
+			shadow_topSprite = new FlxSprite();
+			shadow_topSprite.loadGraphic(AssetPaths.shadow_top_cropped__png, false, 32, 16);
+			shadow_topSprite.offset.set(0, 16);
+			shadow_topSprite.setPosition(x, y);
+			shadow_topSprite.alpha = GameProperties.Tiles_ShadowAlpha;
+		}
+		
 	}
 	
 	public function drawShadow() : Void 
 	{
-		if (shadowSprite != null)
+		if (shadow_topSprite != null)
 		{
-			shadowSprite.draw();
+			shadow_topSprite.draw();
+			
+		}
+		if (shadow_rightSprite != null)
+		{
+			shadow_rightSprite.draw();
 		}
 	}
 	
