@@ -19,7 +19,8 @@ class HudBar extends FlxSprite
 		x = X;
 		y = Y;
 		_vertical = vertical;
-		
+		if (w < 0) w *= -1;
+		if (h < 0) h *= -1;
 		makeGraphic(Std.int(w), Std.int(h), FlxColor.WHITE);
 		this.origin.set(0, 0);
 		this.scrollFactor.set();
