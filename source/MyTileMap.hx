@@ -35,8 +35,36 @@ class MyTileMap extends FlxObject
 		walls.draw();
 	}
 	
-	public function drawShadows()
+	public function drawVisited() : Void 
+	{
+		walls.forEach(function (t:Tile):Void { t.drawVisited(); } );
+		floor.forEach(function (t:Tile):Void { t.drawVisited(); } );
+	}
+	
+	public function drawShadows() : Void 
 	{
 		walls.forEach(function (t:Tile):Void { t.drawShadow(); } );
+	}
+	
+	public function setVisibility(playerX : Int, playerY : Int, range : Float ) : Void 
+	{
+		walls.forEach(function (t:Tile):Void { 
+			var dx = t.tx - playerX;
+			var dy = t.ty - playerY;
+			var distSquared : Float = dx * dx + dy * dy;
+			if (distSquared < range * range)
+			{
+				t.visitMe();
+			}
+		} );
+		floor.forEach(function (t:Tile):Void { 
+			var dx = t.tx - playerX;
+			var dy = t.ty - playerY;
+			var distSquared : Float = dx * dx + dy * dy;
+			if (distSquared < range * range)
+			{
+				t.visitMe();
+			}
+		} );
 	}
 }

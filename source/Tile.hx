@@ -21,39 +21,30 @@ class Tile extends FlxSprite
 	
 	private var shadow_topSprite : FlxSprite;
 	private var shadow_rightSprite : FlxSprite;
+	
+	private var visited : Bool;
+	private var visitedSprite : FlxSprite;
 
 	public function new(X:Int=0, Y:Int=0, t: TileType) 
 	{
 		super(X * GameProperties.Tile_Size, Y * GameProperties.Tile_Size);
-		
 		tx = X;
 		ty = Y;
+		type = t;
 		
 		passable = true;
 		immovable = true;
 		
-		type = t;
+
+		visited = false;
+		visitedSprite = new FlxSprite();
+		visitedSprite.makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(1.0,50,50,50));
+		visitedSprite.setPosition(x, y);
 		
+		shadow_rightSprite = null;
 		shadow_topSprite = null;
 		
-		if (t == TileType.Wall)	// Wall Tile
-		{
-			loadGraphic(AssetPaths.Background_Wall__png, false, 32, 32);
-			passable = false;
-		}
-		else if (t == TileType.Floor)	// Floor
-		{
-			makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(1,78, 96, 81));
-		}
-		else if (t == TileType.Exit)	// exit
-		{
-			loadGraphic(AssetPaths.Staircase__png, false , 32, 32);
-		}
-		else if (t == TileType.Ceiling)	// ceiling
-		{
-			makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(1.0, 14, 16, 16));
-		}
-		this.updateHitbox();
+		LoadImageByTileType();
 	}
 	
 	public function setShadow(what:ShadowType) : Void 
@@ -126,6 +117,23 @@ class Tile extends FlxSprite
 		
 	}
 	
+	public function visitMe() : Void 
+	{
+		visited = true;
+	}
+	
+	public function drawVisited() : Void 
+	{
+		if (!visited)
+		{
+			visitedSprite.draw();
+		}
+		else
+		{
+			//trace("noDraw");
+		}
+	}
+	
 	public function drawShadow() : Void 
 	{
 		if (shadow_topSprite != null)
@@ -137,6 +145,28 @@ class Tile extends FlxSprite
 		{
 			shadow_rightSprite.draw();
 		}
+	}
+	
+	function LoadImageByTileType():Void 
+	{
+		if (type == TileType.Wall)	// Wall Tile
+		{
+			loadGraphic(AssetPaths.Background_Wall__png, false, 32, 32);
+			passable = false;
+		}
+		else if (type == TileType.Floor)	// Floor
+		{
+			makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(1,78, 96, 81));
+		}
+		else if (type == TileType.Exit)	// exit
+		{
+			loadGraphic(AssetPaths.Staircase__png, false , 32, 32);
+		}
+		else if (type == TileType.Ceiling)	// ceiling
+		{
+			makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(1.0, 14, 16, 16));
+		}
+		this.updateHitbox();
 	}
 	
 }

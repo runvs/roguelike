@@ -285,6 +285,9 @@ class Level extends FlxObject
 		
 		super.update();
 		map.update();
+		
+		
+		
 
 		_grpDeadEnemies.update();
 		_grpEnemies.update();
@@ -302,6 +305,11 @@ class Level extends FlxObject
 		_grpShields.draw();
 		_grpParticles.draw();
 		
+	}
+	
+	public function drawVisited() : Void 
+	{
+		map.drawVisited();
 	}
 	
 	public function drawShadows() : Void 
