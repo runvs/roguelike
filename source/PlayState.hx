@@ -99,7 +99,6 @@ class PlayState extends FlxState
 		{
 			_ending = true;
 			FlxG.camera.fade(FlxColor.BLACK, 1.0, false, function () : Void { FlxG.switchState(new MenuState()); } );
-			//FlxGameJolt.fetchScore(
 		}	
 	}
 	
@@ -114,7 +113,6 @@ class PlayState extends FlxState
 				var t : FlxTimer = new FlxTimer(1, function (t:FlxTimer) 
 				{
 					levelNumber++;
-					//level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, player.properties.level, levelNumber);
 					CreateNewLevel(player.properties.level);
 					switching = false;
 					player.setPosition(level.getPlayerStartingPosition().x, level.getPlayerStartingPosition().y);
@@ -124,7 +122,8 @@ class PlayState extends FlxState
 		}
 	}
 	
-	// This Method will create a new Level and check if there is a distinctive path from the player's starting position to the map's exit
+	// This Method will create a new Level and do a floodfill check.
+	// if the check fails, a new level will be created
 	function CreateNewLevel(playerLevel:Int):Void 
 	{
 		FlxG.worldBounds.set(GameProperties.World_SizeInTilesX*GameProperties.Tile_Size, GameProperties.World_SizeInTilesY * GameProperties.Tile_Size);
