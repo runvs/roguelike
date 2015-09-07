@@ -2,9 +2,11 @@ package;
 
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.util.FlxColorUtil;
+import flixel.util.FlxTimer;
 
 /**
  * ...
@@ -25,6 +27,7 @@ class Tile extends FlxSprite
 	private var visited : Bool;
 	private var visitedSprite : FlxSprite;
 
+	private var distanceMap : Map<String, Float>; 
 	public function new(X:Int=0, Y:Int=0, t: TileType) 
 	{
 		super(X * GameProperties.Tile_Size, Y * GameProperties.Tile_Size);
@@ -35,7 +38,6 @@ class Tile extends FlxSprite
 		passable = true;
 		immovable = true;
 		
-
 		visited = false;
 		visitedSprite = new FlxSprite();
 		visitedSprite.makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(1.0,50,50,50));
@@ -45,7 +47,10 @@ class Tile extends FlxSprite
 		shadow_topSprite = null;
 		
 		LoadImageByTileType();
+		distanceMap = new Map<String, Float>();
 	}
+	
+	
 	
 	public function setShadow(what:ShadowType) : Void 
 	{
@@ -119,7 +124,9 @@ class Tile extends FlxSprite
 	
 	public function visitMe() : Void 
 	{
-		visited = true;
+		FlxTween.tween(visitedSprite, { alpha : 0 }, 0.5, { complete:function(t:FlxTween) { visited = true; }} );
+		//var t : FlxTimer = new FlxTimer(0.5, function(t : FlxTimer) {  visited = true;} );
+		
 	}
 	
 	public function drawVisited() : Void 
@@ -167,6 +174,11 @@ class Tile extends FlxSprite
 			makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(1.0, 14, 16, 16));
 		}
 		this.updateHitbox();
+	}
+	
+	public function setDistance (tag:String, value : Float) :Void 
+	{
+		distanceMap[tag] = value;
 	}
 	
 }

@@ -130,7 +130,11 @@ class PlayState extends FlxState
 		
 		trace("create new Level");
 		level = new Level(GameProperties.World_SizeInTilesX, GameProperties.World_SizeInTilesY, playerLevel, levelNumber);
-		while (!FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty))
+		while (!
+		FloodfillTester.Test(level,
+		level.Exit.tx, level.Exit.ty,
+		 Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y)
+		))
 		{
 			level = new Level(GameProperties.World_SizeInTilesX, GameProperties.World_SizeInTilesY, playerLevel, levelNumber);
 		}
