@@ -32,6 +32,7 @@ class PlayState extends FlxState
 	private var _overlay : FlxSprite;
 	
 	private var switching : Bool;
+	private var pathfinder :Pathfinder;
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -68,6 +69,8 @@ class PlayState extends FlxState
 		
 		_overlay  = new FlxSprite();
 		_overlay.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		
+		pathfinder = new Pathfinder();
 		
 		#if FLX_NO_DEBUG
 		FlxTween.tween(_overlay, { alpha:0 }, 0.5);
@@ -188,10 +191,14 @@ class PlayState extends FlxState
 	
 	function updateLevel():Void 
 	{
+		var px : Int = Std.int(player.x / GameProperties.Tile_Size+0.5);
+		var py : Int = Std.int(player.y / GameProperties.Tile_Size+0.5);
+		
 		level.update();
-		level.map.setVisibility(Std.int(player.x / GameProperties.Tile_Size+0.5), 
-			Std.int(player.y / GameProperties.Tile_Size+0.5), 
-			4);
+		level.map.setVisibility(px, py, 4);
+		pathfinder.setLevel (level);
+		pathfinder.setPlayerPos(px, py);
+		pathfinder.update();
 	}
 	
 	function updatePlayer():Void 
@@ -259,6 +266,7 @@ class PlayState extends FlxState
 				cleanUp();
 				
 				updateLevel();
+				
 				
 				updatePlayer();
 				

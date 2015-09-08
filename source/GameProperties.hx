@@ -12,6 +12,8 @@ class GameProperties
 	public static var World_SizeInTilesX : Int = 50;
 	public static var World_SizeInTilesY : Int = 24;
 	
+	public static var World_PathfinderTimerMax : Float = 1;
+	
 	public static var Skills_Level1 : Int = 1;
 	
 	public static var Skills_Level2 : Int = 10;
