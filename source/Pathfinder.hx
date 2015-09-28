@@ -1,5 +1,6 @@
 package;
 import flixel.FlxG;
+import flixel.FlxObject;
 
 /**
  * ...
@@ -57,4 +58,15 @@ class Pathfinder
 		FloodfillTester.Test(level, px, py, 0, 0, "player");
 	}
 	
+	public static function biLinterp(l : Level, obj : FlxObject)
+	{
+		var ox : Float = obj.x;
+		var oy : Float = obj.y;
+		
+		var otx : Int = Std.int(ox / GameProperties.Tile_Size);
+		var oty : Int = Std.int(oy / GameProperties.Tile_Size);
+		
+		var t: Tile = l.getFloor(otx, oty);
+		
+	}
 }

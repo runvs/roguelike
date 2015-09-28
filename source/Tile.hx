@@ -6,6 +6,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.util.FlxColorUtil;
+import flixel.util.FlxRandom;
 import flixel.util.FlxTimer;
 
 /**
@@ -124,9 +125,12 @@ class Tile extends FlxSprite
 	
 	public function visitMe() : Void 
 	{
-		FlxTween.tween(visitedSprite, { alpha : 0 }, 0.5, { complete:function(t:FlxTween) { visited = true; }} );
-		//var t : FlxTimer = new FlxTimer(0.5, function(t : FlxTimer) {  visited = true;} );
-		
+		var delay : Float = FlxRandom.floatRanged(0.0, 0.4);
+		var t : FlxTimer = new FlxTimer(delay, function ( t: FlxTimer)
+		{
+			FlxTween.tween(visitedSprite, { alpha : 0 }, 0.5 - delay);
+			//var t : FlxTimer = new FlxTimer(0.5, function(t : FlxTimer) {  visited = true;} );
+		});
 	}
 	
 	public function drawVisited() : Void 

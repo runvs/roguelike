@@ -231,6 +231,7 @@ class PlayerProperties
 	{
 		var reducedDamage = Math.round(damage * (1 - getDefense()));
 		
+		FlxG.camera.shake(0.0125, 0.25);
 		//trace("Took " + reducedDamage + " damage!");
 		
 		currentHP -= reducedDamage;

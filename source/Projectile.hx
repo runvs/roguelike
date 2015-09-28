@@ -8,7 +8,7 @@ import flixel.util.FlxVector;
  * ...
  * @author 
  */
-class Particle extends FlxSprite
+class Projectile extends FlxSprite
 {
 	var _type : Bool;
 	public var damage : Int;

@@ -23,7 +23,7 @@ class Level extends FlxObject
 	
 	public var Exit : Tile;
 	
-	public var _grpParticles : FlxTypedGroup<Particle>;
+	public var _grpParticles : FlxTypedGroup<Projectile>;
 	public var _grpShields : FlxTypedGroup<Shield>;
 	
 
@@ -38,7 +38,7 @@ class Level extends FlxObject
 		
 		scrollFactor.set();
 		
-		_grpParticles = new FlxTypedGroup<Particle>();
+		_grpParticles = new FlxTypedGroup<Projectile>();
 		_grpShields = new FlxTypedGroup<Shield>();
 	}
 	
@@ -328,8 +328,8 @@ class Level extends FlxObject
 		});
 		_grpEnemies = newEnemies;
 		
-		var newPart : FlxTypedGroup<Particle> = new FlxTypedGroup<Particle>();
-		_grpParticles.forEach(function(p:Particle) : Void
+		var newPart : FlxTypedGroup<Projectile> = new FlxTypedGroup<Projectile>();
+		_grpParticles.forEach(function(p:Projectile) : Void
 		{
 			if (p.alive) { newPart.add(p); } else { p.destroy(); }
 		});

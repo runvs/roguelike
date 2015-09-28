@@ -171,11 +171,11 @@ class PlayState extends FlxState
 	
 	function updateCollisions():Void 
 	{
-		FlxG.collide(level.map.walls, level._grpParticles, function(t:Tile, p:Particle)
+		FlxG.collide(level.map.walls, level._grpParticles, function(t:Tile, p:Projectile)
 		{
 			p.hit();
 		});
-		FlxG.collide(level._grpEnemies, level._grpParticles, function(e:Enemy , p:Particle)
+		FlxG.collide(level._grpEnemies, level._grpParticles, function(e:Enemy , p:Projectile)
 		{
 			e.TakeDamage(p.damage);
 			p.hit();
@@ -222,14 +222,14 @@ class PlayState extends FlxState
 		{
 			var mx : Float = FlxG.mouse.x;
 			var my : Float = FlxG.mouse.y;
-			var p : Particle  = new Particle(player.x, player.y, mx, my, false, skillz.PowerShoot, this);
+			var p : Projectile  = new Projectile(player.x, player.y, mx, my, false, skillz.PowerShoot, this);
 			level._grpParticles.add(p);
 		}
 		if (player.attackPowerBall)
 		{
 			var mx : Float = FlxG.mouse.x;
 			var my : Float = FlxG.mouse.y;
-			var p : Particle  = new Particle(player.x, player.y, mx, my, true, skillz.PowerBall, this);
+			var p : Projectile  = new Projectile(player.x, player.y, mx, my, true, skillz.PowerBall, this);
 			level._grpParticles.add(p);
 		}
 		if (player.attackShield)
@@ -278,9 +278,10 @@ class PlayState extends FlxState
 		}
 	}
 	
-	public function spawnPowerBallExplosion(p : Particle)
+	public function spawnPowerBallExplosion(p : Projectile)
 	{
 		//trace ("PBE");
+		FlxG.camera.shake(0.0125, 0.25);
 		var l : Int = p._level + 3;
 		var d : Float = 360.0 / l;
 		var dir : FlxVector = new FlxVector(1, 1);
@@ -288,7 +289,7 @@ class PlayState extends FlxState
 		{
 			
 			dir.rotateByDegrees(d);
-			var p2 : Particle = new Particle(p.x, p.y, p.x + dir.x, p.y + dir.y, false, p._level, this);
+			var p2 : Projectile = new Projectile(p.x, p.y, p.x + dir.x, p.y + dir.y, false, p._level, this);
 			level._grpParticles.add(p2);
 		}
 	}
