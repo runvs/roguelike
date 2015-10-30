@@ -64,7 +64,7 @@ class Level extends FlxObject
 		createBoundaries();
 		
 		
-		CreateShadows();
+		//CreateShadows();
 		
 		
 		
