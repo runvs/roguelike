@@ -80,7 +80,7 @@ class GameProperties
 	
 	public static var Player_AttackPushBackVelocity : Float = 2000;
 	
-	public static var Enemy_AggroRadius : Int = Tile_Size * 4;
+	public static var Enemy_AggroRadius : Int = Tile_Size * 3;
 	public static var Enemy_AttackTimer : Float = 0.75;
 	public static var Enemy_BaseXP : Int = 14;
 	

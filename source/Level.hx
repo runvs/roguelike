@@ -49,27 +49,15 @@ class Level extends FlxObject
 		StartPos = StartFinder.findPosition(mapAsTree);
 		
 		map = MapGenerator.generateMapFromTree(mapAsTree);
-		map = ExitGenerator.generateExitsForMap(map);
 		
-		map.floor.forEach(function (t:Tile) : Void
-		{
-			if (t.type == TileType.Exit)
-			{
-				Exit = t;
-			}
-		});
+		createExit();
 		
 		TileReplacement();
 		RemoveSingleWallTiles();
 		createBoundaries();
 		
-		
 		CreateShadows();
-		
-		
-		
 
-		
 		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, _level - 1, _worldLevel);
 		_grpDeadEnemies = new FlxTypedGroup<Enemy>();
 		
@@ -78,7 +66,8 @@ class Level extends FlxObject
 		_grpEnemies.forEach(function(e:Enemy) 
 		{
 			var dir : FlxVector = new FlxVector(e.x - StartPos.x, e.y - StartPos.y);
-			if (dir.length <= 1.5 * GameProperties.Enemy_AggroRadius)
+			//trace(dir.length + " "  GameProperties.Enemy_AggroRadius);
+			if (dir.length <= 7.5 * GameProperties.Enemy_AggroRadius)
 			{
 			}
 			else
@@ -240,6 +229,37 @@ class Level extends FlxObject
 			}
 			
 		});
+	}
+	
+	function createExit():Void 
+	{
+		var success : Bool = false;
+		
+		while (!success)
+		{
+			map = ExitGenerator.generateExitsForMap(map);
+			
+			map.floor.forEach(function (t:Tile) : Void
+			{
+				if (t.type == TileType.Exit)
+				{
+					var dx : Float = StartPos.x - t.tx;
+					var dy : Float = StartPos.y - t.ty;
+					
+					var distanceSquared : Float = dx * dx + dy * dy;
+					if (distanceSquared >= 36)
+					{
+						Exit = t;
+						success = true;
+					}
+					else 
+					{
+						var tnew : Tile = new Tile(t.tx, t.ty, TileType.Floor);
+						map.floor.replace(t, tnew);
+					}
+				}
+			});
+		}
 	}
 	
 	
