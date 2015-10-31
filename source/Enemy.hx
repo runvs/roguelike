@@ -4,6 +4,7 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
+import flixel.util.FlxColorUtil;
 import flixel.util.FlxPoint;
 import flixel.util.FlxRandom;
 
@@ -142,6 +143,7 @@ class Enemy extends Creature
 			animation.play("dead", true);
 			this.velocity.set();
 			acceleration.set();
+			this.color = FlxColorUtil.makeFromARGB(1.0, 100, 100, 100);
 		}
 	}
 	
