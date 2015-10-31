@@ -74,9 +74,9 @@ class GameProperties
 	public static var Player_MaxSpeed : Float = 100;
 	public static var Player_VelocityDecay : Float = 800;
 	public static var Player_Speed : Float = 1000;
-	public static var Player_AttackSpeed : Float = 0.25;
-	public static var Player_experienceLevelUpBase : Int = 40;
-	public static var Player_experienceLevelUpFactor : Float = 1.2;
+	public static var Player_AttackSpeed : Float = 0.45;
+	public static var Player_experienceLevelUpBase : Int = 45;
+	public static var Player_experienceLevelUpFactor : Float = 1.3;
 	
 	public static var Player_AttackPushBackVelocity : Float = 2000;
 	

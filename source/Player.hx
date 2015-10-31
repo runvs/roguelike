@@ -396,7 +396,7 @@ class Player extends Creature
 	{
 		if (attacTimer  <= 0)
 		{
-			attacTimer = GameProperties.Player_AttackSpeed;
+			attacTimer += GameProperties.Player_AttackSpeed;
 			
 		}
 	}
