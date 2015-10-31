@@ -3,6 +3,8 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
 import flixel.util.FlxColorUtil;
@@ -61,9 +63,11 @@ class Player extends Creature
 		
 		levelUpSprite = new FlxSprite();
 		levelUpSprite.loadGraphic(AssetPaths.levelup__png, false, 32, 32);
-		levelUpSprite.setPosition(100, 300);
+		levelUpSprite.setPosition(100, FlxG.height-24-32);
+		levelUpSprite.scrollFactor.set();
+		FlxTween.tween(levelUpSprite, { alpha: 0.5 }, 0.75, { type:FlxTween.PINGPONG, ease : FlxEase.sineInOut } );
 		
-		//this.makeGraphic(GameProperties.TileSize, GameProperties.TileSize);
+		
 		this.loadGraphic(AssetPaths.Player__png, true, 32, 32);
 		this.animation.add("idle", [0, 1], 3, true);
 		this.animation.add("walk", [4, 5, 6, 7],6, true);
@@ -184,8 +188,12 @@ class Player extends Creature
 		MPBar.draw();
 		ExpBar.draw();
 		
+		
 		// level up sprite
-		levelUpSprite.draw();
+		if ( properties.skillPoints > 0 || properties.attributePoints > 0)
+		{
+			levelUpSprite.draw();
+		}
 	}
 	
 	override public function update()
@@ -257,7 +265,6 @@ class Player extends Creature
 	
 	public function updateHud() : Void 
 	{
-		//levelUpSprite.alpha = 0;
 
 		if (skillz.PowerHit == 0)
 		{
