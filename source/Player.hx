@@ -51,11 +51,17 @@ class Player extends Creature
 	var effectFGYellow : FlxSprite;
 	var effectBGYellow : FlxSprite;
 	
+	var levelUpSprite : FlxSprite;
+	
 	public function new() 
 	{
 		super();
 		
 		properties = new PlayerProperties();
+		
+		levelUpSprite = new FlxSprite();
+		levelUpSprite.loadGraphic(AssetPaths.levelup__png, false, 32, 32);
+		levelUpSprite.setPosition(100, 300);
 		
 		//this.makeGraphic(GameProperties.TileSize, GameProperties.TileSize);
 		this.loadGraphic(AssetPaths.Player__png, true, 32, 32);
@@ -92,12 +98,16 @@ class Player extends Creature
 		skill_BoostExp    = new FlxText(200, FlxG.height - 10, 200, "Boost Exp [8]");
 		skill_BoostExp.scrollFactor.set();
 		
-		HPBar = new HudBar(100, FlxG.height - 100 -10, 30, 100);
+		var hudwidth : Float = FlxG.width - 10 - 10;
+		
+		HPBar = new HudBar(10, FlxG.height - 24, hudwidth/3.0 - 10 , 20, false);
 		HPBar.color = FlxColor.RED;
-		MPBar = new HudBar(FlxG.width - 100 , FlxG.height - 100 - 10, 30, 100);
+		
+		MPBar = new HudBar(FlxG.width - 10 - hudwidth/3.0 + 10 , FlxG.height - 24 ,  hudwidth/3.0 - 10 , 20, false);
 		MPBar.color = FlxColor.BLUE; 
-		ExpBar = new HudBar( 300, FlxG.height - 30 -10, FlxG.width - 600, 30, false);
-		ExpBar.color = FlxColor.GOLDEN;
+		
+		ExpBar = new HudBar( 10 + hudwidth/3.0 + 5 , FlxG.height - 24, hudwidth/3.0 - 10 , 20, false);
+		ExpBar.color = FlxColorUtil.makeFromARGB(0.25, 200, 200, 15);
 		
 		
 		effectFGRed = new FlxSprite();
@@ -110,8 +120,6 @@ class Player extends Creature
 		effectBGRed.animation.play("idle");
 		effectFGRed.animation.add("idle", [9], 30, true);
 		effectFGRed.animation.add("cast", [4,5,6,7,8], 10, true);
-		
-		
 		
 		effectFGGreen = new FlxSprite();
 		effectBGGreen = new FlxSprite();
@@ -170,9 +178,14 @@ class Player extends Creature
 		skill_BoostRegen.draw();
 		skill_BoostAgi.draw();
 		skill_BoostExp.draw();
+		
+		// bars 
 		HPBar.draw();
 		MPBar.draw();
 		ExpBar.draw();
+		
+		// level up sprite
+		levelUpSprite.draw();
 	}
 	
 	override public function update()
@@ -244,6 +257,8 @@ class Player extends Creature
 	
 	public function updateHud() : Void 
 	{
+		//levelUpSprite.alpha = 0;
+
 		if (skillz.PowerHit == 0)
 		{
 			skill_PowerHit.color = FlxColor.BLACK;
