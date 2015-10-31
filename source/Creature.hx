@@ -12,7 +12,8 @@ class Creature extends FlxSprite
 
 	private var lastFacing : EFacing;
 	
-	private var accelFactor : Float ;
+	private var accelFactor : Float;
+	private var shadow : FlxSprite;
 
 	public function new() 
 	{
@@ -21,6 +22,9 @@ class Creature extends FlxSprite
 		lastFacing = EFacing.Left;
 		setFacingFlip(FlxObject.LEFT, false, false);
 		setFacingFlip(FlxObject.RIGHT, true, false);
+		shadow = new FlxSprite();
+		shadow.loadGraphic(AssetPaths.creatureshadow__png, false, 32, 32);
+		shadow.alpha = 0.25;
 	}
 	
 	override public function update()
@@ -31,6 +35,14 @@ class Creature extends FlxSprite
 			doAnimationStuff();
 		}
 		super.update();
+		shadow.x = x;
+		shadow.y = y;
+	}
+	
+	public override function draw () : Void 
+	{
+		shadow.draw();
+		super.draw();
 	}
 	
 	
