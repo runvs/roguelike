@@ -49,37 +49,39 @@ class SkillIcon extends FlxSprite
 		
 		if (n == 1 )
 		{
-			this.loadGraphic(AssetPaths.skill_1__png, false, 32, 32);
+			this.loadGraphic(AssetPaths.skill_1__png, false, 16, 16);
 		}
 		else if (n == 2 )
 		{
-			this.loadGraphic(AssetPaths.skill_2__png, false, 32, 32);
+			this.loadGraphic(AssetPaths.skill_2__png, false, 16, 16);
 		}
 		else if (n == 3 )
 		{
-			this.loadGraphic(AssetPaths.skill_3__png, false, 32, 32);
+			this.loadGraphic(AssetPaths.skill_3__png, false, 16, 16);
 		}
 		else if (n == 4 )
 		{
-			this.loadGraphic(AssetPaths.skill_4__png, false, 32, 32);
+			this.loadGraphic(AssetPaths.skill_4__png, false, 16, 16);
 		}
 		else if (n == 5 )
 		{
-			this.loadGraphic(AssetPaths.skill_5__png, false, 32, 32);
+			this.loadGraphic(AssetPaths.skill_5__png, false, 16, 16);
 		}
 		else if (n == 6 )
 		{
-			this.loadGraphic(AssetPaths.skill_6__png, false, 32, 32);
+			this.loadGraphic(AssetPaths.skill_6__png, false, 16, 16);
 		}
 		else if (n == 7 )
 		{
-			this.loadGraphic(AssetPaths.skill_7__png, false, 32, 32);
+			this.loadGraphic(AssetPaths.skill_7__png, false, 16, 16);
 		}
 		else if (n == 8 )
 		{
-			this.loadGraphic(AssetPaths.skill_8__png, false, 32, 32);
+			this.loadGraphic(AssetPaths.skill_8__png, false, 16, 16);
 		}
 		this.scrollFactor.set();
+		this.scale.set(2, 2);
+		this.updateHitbox();
 		this.setPosition( 10 + (n - 1) * (32 + 16), FlxG.height - 24 - 32 );
 		
 		text = new FlxText(x, y, 32, Std.string(n));
@@ -132,7 +134,7 @@ class SkillIcon extends FlxSprite
 		
 		if ( avail && !ready)
 		{
-			var x : Int = 8 - Std.int(currentTime / ( coolDownTime / 8)) + 1;
+			var x : Int = 8 - Std.int(currentTime / ( coolDownTime / 8));
 			var s : String = Std.string(x);
 			overlay.animation.play(s, true);
 		}
