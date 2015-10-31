@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.group.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -29,14 +30,9 @@ class Player extends Creature
 	public var attackPowerShoot : Bool;
 	public var attackPowerBall : Bool;
 	public var attackShield : Bool;
-	private var skill_PowerHit : FlxText;
-	private var skill_PowerShoot : FlxText;
-	private var skill_PowerShield : FlxText;
-	private var skill_PowerBall : FlxText;
-	private var skill_PowerArmor : FlxText;
-	private var skill_BoostRegen : FlxText;
-	private var skill_BoostAgi : FlxText;
-	private var skill_BoostExp : FlxText;
+	
+	private var skillIconList : FlxTypedGroup<SkillIcon>;
+	
 	
 	private var HPBar : HudBar;
 	private var MPBar : HudBar;
@@ -67,6 +63,20 @@ class Player extends Creature
 		levelUpSprite.scrollFactor.set();
 		FlxTween.tween(levelUpSprite, { alpha: 0.5 }, 0.75, { type:FlxTween.PINGPONG, ease : FlxEase.sineInOut } );
 		
+		skillIconList = new FlxTypedGroup<SkillIcon>();
+		for (i in 1 ... 9 )
+		{
+			skillIconList.add(new SkillIcon (i));
+		}
+		
+		skillIconList.members[0].coolDownTime = GameProperties.Skills_PowerHit_CoolDown;
+		skillIconList.members[1].coolDownTime = GameProperties.Skills_PowerShoot_CoolDown;
+		skillIconList.members[2].coolDownTime = GameProperties.Skills_PowerShield_CoolDown;
+		skillIconList.members[3].coolDownTime = GameProperties.Skills_PowerBall_CoolDown;
+		skillIconList.members[4].coolDownTime = GameProperties.Skills_PowerArmor_CoolDown;
+		skillIconList.members[5].coolDownTime = GameProperties.Skills_BoostRegen_CoolDown;
+		skillIconList.members[6].coolDownTime = GameProperties.Skills_BoostAgi_Cooldown;
+		skillIconList.members[7].coolDownTime = GameProperties.Skills_BoostExp_Cooldown;
 		
 		this.loadGraphic(AssetPaths.Player__png, true, 32, 32);
 		this.animation.add("idle", [0, 1], 3, true);
@@ -85,22 +95,6 @@ class Player extends Creature
 		
 		// hud stuff
 		
-		skill_PowerHit    = new FlxText(200, FlxG.height - 80, 200, "Power Hit [1]");
-		skill_PowerHit.scrollFactor.set();
-		skill_PowerShoot  = new FlxText(200, FlxG.height - 70, 200, "Power Shoot [2]" );
-		skill_PowerShoot.scrollFactor.set();
-		skill_PowerShield = new FlxText(200, FlxG.height - 60, 200, "Power Shield [3]");
-		skill_PowerShield.scrollFactor.set();
-		skill_PowerBall   = new FlxText(200, FlxG.height - 50, 200, "Power Ball [4]");
-		skill_PowerBall.scrollFactor.set();
-		skill_PowerArmor  = new FlxText(200, FlxG.height - 40, 200, "Power Armor [5]");
-		skill_PowerArmor.scrollFactor.set();
-		skill_BoostRegen  = new FlxText(200, FlxG.height - 30, 200, "Boost Regen [6]");
-		skill_BoostRegen.scrollFactor.set();
-		skill_BoostAgi    = new FlxText(200, FlxG.height - 20, 200, "Boost Agi [7]");
-		skill_BoostAgi.scrollFactor.set();
-		skill_BoostExp    = new FlxText(200, FlxG.height - 10, 200, "Boost Exp [8]");
-		skill_BoostExp.scrollFactor.set();
 		
 		var hudwidth : Float = FlxG.width - 10 - 10;
 		
@@ -173,16 +167,6 @@ class Player extends Creature
 	
 	public function drawHud() : Void 
 	{		
-		// skill Buttons
-		skill_PowerHit.draw();
-		skill_PowerShoot.draw();
-		skill_PowerShield.draw();
-		skill_PowerBall.draw();
-		skill_PowerArmor.draw();
-		skill_BoostRegen.draw();
-		skill_BoostAgi.draw();
-		skill_BoostExp.draw();
-		
 		// bars 
 		HPBar.draw();
 		MPBar.draw();
@@ -194,6 +178,9 @@ class Player extends Creature
 		{
 			levelUpSprite.draw();
 		}
+		
+		// skillIcons
+		skillIconList.draw();
 	}
 	
 	override public function update()
@@ -266,118 +253,130 @@ class Player extends Creature
 	public function updateHud() : Void 
 	{
 
+		skillIconList.update();
+		skillIconList.members[0].currentTime = skillz.cooldown_PowerHit;
+		skillIconList.members[1].currentTime = skillz.cooldown_PowerShoot;
+		skillIconList.members[2].currentTime = skillz.cooldown_PowerShield;
+		skillIconList.members[3].currentTime = skillz.cooldown_PowerBall;
+		skillIconList.members[4].currentTime = skillz.cooldown_PowerArmor;
+		skillIconList.members[5].currentTime = skillz.cooldown_BoostRegen;
+		skillIconList.members[6].currentTime = skillz.cooldown_BoostAgi;
+		skillIconList.members[7].currentTime = skillz.cooldown_BoostExp;
+		
+		
 		if (skillz.PowerHit == 0)
 		{
-			skill_PowerHit.color = FlxColor.BLACK;
+			skillIconList.members[0].text.color = FlxColor.BLACK;
 		}
 		else if (skillz.cooldown_PowerHit >= 0 || properties.currentMP < GameProperties.Skills_PowerHitMPCost)
 		{
-			skill_PowerHit.color = FlxColor.GRAY;
+			skillIconList.members[0].text.color = FlxColor.GRAY;
 		}
 		else
 		{
-			skill_PowerHit.color = FlxColor.RED;
+			skillIconList.members[0].text.color = FlxColor.RED;
 		}
+		
 		
 		if (skillz.PowerShoot == 0)
 		{
-			skill_PowerShoot.color = FlxColor.BLACK;
+			skillIconList.members[1].text.color = FlxColor.BLACK;
 		}
 		else if (skillz.cooldown_PowerShoot >= 0 || properties.currentMP < GameProperties.Skills_PowerShootMPCost)
 		{
-			skill_PowerShoot.color = FlxColor.GRAY;
+			skillIconList.members[1].text.color = FlxColor.GRAY;
 		}
 		else
 		{
-			skill_PowerShoot.color = FlxColor.RED;
+			skillIconList.members[1].text.color = FlxColor.RED;
 		}
 		
 		if (skillz.PowerShield == 0)
 		{
-			skill_PowerShield.color = FlxColor.BLACK;
+			skillIconList.members[2].text.color = FlxColor.BLACK;
 		}
 		else if (skillz.cooldown_PowerShield >= 0 || properties.currentMP < GameProperties.Skills_PowerShieldMPCost)
 		{
-			skill_PowerShield.color = FlxColor.GRAY;
+			skillIconList.members[2].text.color = FlxColor.GRAY;
 		}
 		else
 		{
-			skill_PowerShield.color = FlxColor.RED;
+			skillIconList.members[2].text.color = FlxColor.RED;
 		}
+		
 		
 		if (skillz.PowerBall == 0)
 		{
-			skill_PowerBall.color = FlxColor.BLACK;
+			skillIconList.members[3].text.color = FlxColor.BLACK;
 		}
 		else if (skillz.cooldown_PowerBall >= 0 || properties.currentMP < GameProperties.Skills_PowerBallMPCost)
 		{
-			skill_PowerBall.color = FlxColor.GRAY;
+			skillIconList.members[3].text.color = FlxColor.GRAY;
 		}
 		else
 		{
-			skill_PowerBall.color = FlxColor.RED;
+			skillIconList.members[3].text.color = FlxColor.RED;
 		}
+
 		
 		if (skillz.PowerArmor == 0)
 		{
-			skill_PowerArmor.color = FlxColor.BLACK;
+			skillIconList.members[4].text.color = FlxColor.BLACK;
 		}
 		else if (skillz.cooldown_PowerArmor >= 0 || properties.currentMP < GameProperties.Skills_PowerArmorMPCost)
 		{
-			skill_PowerArmor.color = FlxColor.GRAY;
+			skillIconList.members[4].text.color = FlxColor.GRAY;
 		}
 		else
 		{
-			skill_PowerArmor.color = FlxColor.RED;
+			skillIconList.members[4].text.color = FlxColor.RED;
 		}
+
+
 		
 		if (skillz.BoostRegen == 0)
 		{
-			skill_BoostRegen.color = FlxColor.BLACK;
+			skillIconList.members[5].text.color = FlxColor.BLACK;
 		}
 		else if (skillz.cooldown_BoostRegen >= 0 || properties.currentMP < GameProperties.Skills_BoostRegenMPCost)
 		{
-			skill_BoostRegen.color = FlxColor.GRAY;
+			skillIconList.members[5].text.color = FlxColor.GRAY;
 		}
 		else
 		{
-			skill_BoostRegen.color = FlxColor.RED;
+			skillIconList.members[5].text.color = FlxColor.RED;
 		}
+		
+
 		
 		if (skillz.BoostAgi == 0)
 		{
-			skill_BoostAgi.color = FlxColor.BLACK;
+			skillIconList.members[6].text.color = FlxColor.BLACK;
 		}
 		else if (skillz.cooldown_BoostAgi >= 0 || properties.currentMP < GameProperties.Skills_BoostAgiMPCost)
 		{
-			skill_BoostAgi.color = FlxColor.GRAY;
+			skillIconList.members[6].text.color = FlxColor.GRAY;
 		}
 		else
 		{
-			skill_BoostAgi.color = FlxColor.RED;
+			skillIconList.members[6].text.color = FlxColor.RED;
 		}
+
+		
 		
 		if (skillz.BoostExp == 0)
 		{
-			skill_BoostExp.color = FlxColor.BLACK;
+			skillIconList.members[7].text.color = FlxColor.BLACK;
 		}
 		else if (skillz.cooldown_BoostExp >= 0 || properties.currentMP < GameProperties.Skills_BoostExpMPCost)
 		{
-			skill_BoostExp.color = FlxColor.GRAY;
+			skillIconList.members[7].text.color = FlxColor.GRAY;
 		}
 		else
 		{
-			skill_BoostExp.color = FlxColor.RED;
+			skillIconList.members[7].text.color = FlxColor.RED;
 		}
-		
-		skill_PowerHit.update();
-		skill_PowerShoot.update();
-		skill_PowerShield.update();
-		skill_PowerBall.update();
-		skill_PowerArmor.update();
-		skill_BoostRegen.update();
-		skill_BoostAgi.update();
-		skill_BoostExp.update();
+
 		
 	}
 	
@@ -472,7 +471,7 @@ class Player extends Creature
 		attackShield = false; 
 		if (FlxG.keys.justPressed.ONE)
 		{
-			if (FlxColorUtil.getRed(skill_PowerHit.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[0].text.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.activateSkillPowerHit();
 				skillz.payMP(GameProperties.Skills_PowerHitMPCost);
@@ -480,7 +479,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.TWO)
 		{
-			if (FlxColorUtil.getRed(skill_PowerShoot.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[1].text.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				attackPowerShoot = true;
 				skillz.useSkillPowerShoot();
@@ -490,7 +489,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.THREE)
 		{
-			if (FlxColorUtil.getRed(skill_PowerShield.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[2].text.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.useSkillPowerShield();
 				attackShield = true;
@@ -499,7 +498,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.FOUR)
 		{
-			if (FlxColorUtil.getRed(skill_PowerBall.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[3].text.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.useSkillPowerBall();
 				attackPowerBall = true;
@@ -508,7 +507,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.FIVE)
 		{
-			if (FlxColorUtil.getRed(skill_PowerArmor.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[4].text.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.useSkillPowerArmor();
 				skillz.payMP(GameProperties.Skills_PowerArmorMPCost);
@@ -516,7 +515,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.SIX)
 		{
-			if (FlxColorUtil.getRed(skill_BoostRegen.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[5].text.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.activateSkillBoostRegen();
 				skillz.payMP(GameProperties.Skills_BoostRegenMPCost);
@@ -525,7 +524,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.SEVEN)
 		{
-			if (FlxColorUtil.getRed(skill_BoostAgi.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[6].text.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.activateSkillBoostAgi();
 				skillz.payMP(GameProperties.Skills_BoostAgiMPCost);
@@ -534,7 +533,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.EIGHT)
 		{
-			if (FlxColorUtil.getRed(skill_BoostExp.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[7].text.color) == FlxColorUtil.getRed(FlxColor.RED))
 			{
 				skillz.activateSkillBoostExp();
 				skillz.payMP(GameProperties.Skills_BoostExpMPCost);
