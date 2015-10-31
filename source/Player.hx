@@ -18,11 +18,12 @@ class Player extends Creature
 {
 	public var properties : PlayerProperties;
 	
-	private var attacTimer : Float;
+	
 	
 	private var targetbox : FlxSprite;
 	private var targetboxRect : FlxRect;
 	
+	private var attackTimer : Float;
 	public var attack : Bool;
 	public var attackPowerShoot : Bool;
 	public var attackPowerBall : Bool;
@@ -68,7 +69,7 @@ class Player extends Creature
 	
 		this.drag = new FlxPoint( GameProperties.Player_VelocityDecay, GameProperties.Player_VelocityDecay);
 		
-		attacTimer = 0;
+		attackTimer = 0;
 		targetbox = new FlxSprite();
 		targetbox.makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(0.5, 100, 200, 200));
 		targetboxRect = new FlxRect(x, y, GameProperties.Tile_Size, GameProperties.Tile_Size);
@@ -370,12 +371,16 @@ class Player extends Creature
 		
 	}
 
+	public function getAttackTimer() : Float 
+	{
+		return GameProperties.Player_AttackTimerMax * ( 0.5 + 0.5 * (10.0/properties.getAg()));
+	}
 	
 	private function doAttack () : Void 
 	{
-		if (attacTimer  <= 0)
+		if (attackTimer  <= 0)
 		{
-			attacTimer = GameProperties.Player_AttackSpeed;
+			attackTimer = getAttackTimer();
 			
 		}
 	}
