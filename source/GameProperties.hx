@@ -78,6 +78,8 @@ class GameProperties
 	public static var Player_experienceLevelUpBase : Int = 40;
 	public static var Player_experienceLevelUpFactor : Float = 1.2;
 	
+	public static var Player_AttackPushBackVelocity : Float = 2000;
+	
 	public static var Enemy_AggroRadius : Int = Tile_Size * 4;
 	public static var Enemy_AttackTimer : Float = 0.75;
 	public static var Enemy_BaseXP : Int = 14;

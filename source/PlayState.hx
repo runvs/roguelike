@@ -215,6 +215,29 @@ class PlayState extends FlxState
 				if (r.overlaps(enemyRect))
 				{
 					e.TakeDamage(player.properties.getDamage());
+				
+					var f : EFacing = player.getLastFacing();
+					var tx : Float = 0;
+					var ty : Float = 0;
+					
+					if (f == EFacing.Down)
+					{
+						ty += 1;
+					}
+					else if (f == EFacing.Up)
+					{
+						ty -= 1;
+					}
+					else if (f == EFacing.Left)
+					{
+						tx -= 1;
+					}
+					else if (f == EFacing.Right)
+					{
+						tx += 1;
+					}
+				
+					e.velocity.set(tx * GameProperties.Player_AttackPushBackVelocity, ty * GameProperties.Player_AttackPushBackVelocity);
 				}
 			});
 		}
