@@ -215,28 +215,105 @@ class PlayState extends FlxState
 				if (r.overlaps(enemyRect))
 				{
 					e.TakeDamage(player.properties.getDamage());
+				
+					var f : EFacing = player.getLastFacing();
+					var tx : Float = 0;
+					var ty : Float = 0;
+					
+					if (f == EFacing.Down)
+					{
+						ty += 1;
+					}
+					else if (f == EFacing.Up)
+					{
+						ty -= 1;
+					}
+					else if (f == EFacing.Left)
+					{
+						tx -= 1;
+					}
+					else if (f == EFacing.Right)
+					{
+						tx += 1;
+					}
+				
+					e.velocity.set(tx * GameProperties.Player_AttackPushBackVelocity, ty * GameProperties.Player_AttackPushBackVelocity);
 				}
 			});
 		}
 		if (player.attackPowerShoot)
 		{
-			var mx : Float = FlxG.mouse.x;
-			var my : Float = FlxG.mouse.y;
-			var p : Projectile  = new Projectile(player.x, player.y, mx, my, false, skillz.PowerShoot, this);
+
+			var f : EFacing = player.getLastFacing();
+			var tx : Float = 0;
+			var ty : Float = 0;
+			
+			if (f == EFacing.Down)
+			{
+				ty += 1;
+			}
+			else if (f == EFacing.Up)
+			{
+				ty -= 1;
+			}
+			else if (f == EFacing.Left)
+			{
+				tx -= 1;
+			}
+			else if (f == EFacing.Right)
+			{
+				tx += 1;
+			}
+			var p : Projectile = new Projectile(player.x + GameProperties.Tile_Size/2 , player.y  + GameProperties.Tile_Size/2 , tx, ty, false, skillz.PowerShoot, this);
 			level._grpParticles.add(p);
 		}
 		if (player.attackPowerBall)
 		{
-			var mx : Float = FlxG.mouse.x;
-			var my : Float = FlxG.mouse.y;
-			var p : Projectile  = new Projectile(player.x, player.y, mx, my, true, skillz.PowerBall, this);
+			var tx : Float = 0;
+			var ty : Float = 0;
+			var f : EFacing = player.getLastFacing();
+			if (f == EFacing.Down)
+			{
+				ty += 1;
+			}
+			else if (f == EFacing.Up)
+			{
+				ty -= 1;
+			}
+			else if (f == EFacing.Left)
+			{
+				tx -= 1;
+			}
+			else if (f == EFacing.Right)
+			{
+				tx += 1;
+			}
+			var p : Projectile = new Projectile(player.x + GameProperties.Tile_Size/2, player.y + GameProperties.Tile_Size/2, tx, ty, true, skillz.PowerShoot, this);
 			level._grpParticles.add(p);
 		}
 		if (player.attackShield)
 		{
-			var mx : Float = FlxG.mouse.x;
-			var my : Float = FlxG.mouse.y;
-			var s : Shield = new Shield(mx, my, skillz.PowerShield);
+			var tx : Float = player.x;
+			var ty : Float = player.y;
+			var f : EFacing = player.getLastFacing();
+			if (f == EFacing.Down)
+			{
+				ty += GameProperties.Tile_Size * 3;
+			}
+			else if (f == EFacing.Up)
+			{
+				ty -= GameProperties.Tile_Size * 3;
+			}
+			else if (f == EFacing.Left)
+			{
+				tx -= GameProperties.Tile_Size * 3;
+			}
+			else if (f == EFacing.Right)
+			{
+				tx += GameProperties.Tile_Size * 3;
+			}
+			
+			var s : Shield = new Shield(tx + GameProperties.Tile_Size/2, ty + GameProperties.Tile_Size/2, skillz.PowerShield);
 			level._grpShields.add(s);
 		}
 		

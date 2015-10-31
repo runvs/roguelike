@@ -178,7 +178,7 @@ class PlayerProperties
 		{
 			level += 1;
 			skillPoints += 1;
-			attributePoints += 3;
+			attributePoints += 2;
 			experienceLevelUpLast = experienceLevelUp;
 			experienceLevelUp = Std.int(experienceLevelUp * GameProperties.Player_experienceLevelUpFactor);
 		}
@@ -231,9 +231,8 @@ class PlayerProperties
 	{
 		var reducedDamage = Math.round(damage * (1 - getDefense()));
 		
-		FlxG.camera.shake(0.0125, 0.25);
-		//trace("Took " + reducedDamage + " damage!");
-		
+		FlxG.camera.shake(0.0075, 0.2);
+	
 		currentHP -= reducedDamage;
 	}
 	

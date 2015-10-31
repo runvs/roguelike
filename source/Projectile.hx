@@ -28,7 +28,7 @@ class Projectile extends FlxSprite
 		this.origin.set(8, 8);
 		
 		
-		var dir : FlxVector = new FlxVector(tx - X, ty - Y);
+		var dir : FlxVector = new FlxVector(tx, ty);
 		dir = dir.normalize();
 		dir = dir.scale(GameProperties.Skills_PowerShootSpeed * Math.sqrt(level*2));
 		

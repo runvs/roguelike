@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
+import flixel.util.FlxColorUtil;
 
 /**
  * ...
@@ -24,11 +25,14 @@ class HudBar extends FlxSprite
 		makeGraphic(Std.int(w), Std.int(h), FlxColor.WHITE);
 		this.origin.set(0, 0);
 		this.scrollFactor.set();
-		
-		
+
 		_background = new FlxSprite(x-2,y-2);
-		_background.makeGraphic(Std.int(w) + 4, Std.int(h) + 4, FlxColor.GRAY);
+		_background.makeGraphic(Std.int(w) + 4, Std.int(h) + 4, FlxColorUtil.makeFromARGB(0.25, 100,100,100));
 		_background.scrollFactor.set();
+		if (vertical)
+		{
+			this.origin.set(0, height);
+		}
 		
 	}
 	
