@@ -59,7 +59,7 @@ class Player extends Creature
 		
 		levelUpSprite = new FlxSprite();
 		levelUpSprite.loadGraphic(AssetPaths.levelup__png, false, 32, 32);
-		levelUpSprite.setPosition(100, FlxG.height-24-32);
+		levelUpSprite.setPosition(FlxG.width - 32 - 10, FlxG.height-24-32);
 		levelUpSprite.scrollFactor.set();
 		FlxTween.tween(levelUpSprite, { alpha: 0.5 }, 0.75, { type:FlxTween.PINGPONG, ease : FlxEase.sineInOut } );
 		
@@ -99,13 +99,13 @@ class Player extends Creature
 		var hudwidth : Float = FlxG.width - 10 - 10;
 		
 		HPBar = new HudBar(10, FlxG.height - 24, hudwidth/3.0 - 10 , 20, false);
-		HPBar.color = FlxColor.RED;
+		HPBar.color = FlxColorUtil.makeFromARGB(1.0, 203,65,58);
 		
 		MPBar = new HudBar(FlxG.width - 10 - hudwidth/3.0 + 10 , FlxG.height - 24 ,  hudwidth/3.0 - 10 , 20, false);
-		MPBar.color = FlxColor.BLUE; 
+		MPBar.color = FlxColorUtil.makeFromARGB(1.0, 70, 148, 80);
 		
 		ExpBar = new HudBar( 10 + hudwidth/3.0 + 5 , FlxG.height - 24, hudwidth/3.0 - 10 , 20, false);
-		ExpBar.color = FlxColorUtil.makeFromARGB(0.25, 200, 200, 15);
+		ExpBar.color = FlxColorUtil.makeFromARGB(1.0, 203, 122, 58);
 		
 		
 		effectFGRed = new FlxSprite();
