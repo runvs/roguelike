@@ -264,7 +264,7 @@ class PlayState extends FlxState
 			{
 				tx += 1;
 			}
-			var p : Projectile = new Projectile(player.x, player.y, tx, ty, false, skillz.PowerShoot, this);
+			var p : Projectile = new Projectile(player.x + GameProperties.Tile_Size/2 , player.y  + GameProperties.Tile_Size/2 , tx, ty, false, skillz.PowerShoot, this);
 			level._grpParticles.add(p);
 		}
 		if (player.attackPowerBall)

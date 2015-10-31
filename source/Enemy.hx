@@ -157,7 +157,6 @@ class Enemy extends Creature
 		if (enemy.attackTimer <= 0.0)
 		{
 			player.properties.takeDamage(enemy.properties.baseDamage);
-			
 			enemy.attackTimer += GameProperties.Enemy_AttackTimer;
 		}
 	}

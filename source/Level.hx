@@ -65,9 +65,9 @@ class Level extends FlxObject
 		var ne : FlxTypedGroup<Enemy>= new FlxTypedGroup<Enemy>();
 		_grpEnemies.forEach(function(e:Enemy) 
 		{
-			var dir : FlxVector = new FlxVector(e.x - StartPos.x, e.y - StartPos.y);
-			//trace(dir.length + " "  GameProperties.Enemy_AggroRadius);
-			if (dir.length <= 7.5 * GameProperties.Enemy_AggroRadius)
+			var dir : FlxVector = new FlxVector(e.x - StartPos.x * GameProperties.Tile_Size, e.y - StartPos.y* GameProperties.Tile_Size);
+			trace(dir.length + " "  +GameProperties.Enemy_AggroRadius);
+			if (dir.length <= 2.5 * GameProperties.Enemy_AggroRadius)
 			{
 			}
 			else
