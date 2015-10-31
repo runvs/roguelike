@@ -58,9 +58,11 @@ class Player extends Creature
 		properties = new PlayerProperties();
 		
 		levelUpSprite = new FlxSprite();
-		levelUpSprite.loadGraphic(AssetPaths.levelup__png, false, 32, 32);
+		levelUpSprite.loadGraphic(AssetPaths.levelup__png, false, 16, 16);
 		levelUpSprite.setPosition(FlxG.width - 32 - 10, FlxG.height-24-32);
 		levelUpSprite.scrollFactor.set();
+		levelUpSprite.scale.set(2, 2);
+		levelUpSprite.updateHitbox();
 		FlxTween.tween(levelUpSprite, { alpha: 0.5 }, 0.75, { type:FlxTween.PINGPONG, ease : FlxEase.sineInOut } );
 		
 		skillIconList = new FlxTypedGroup<SkillIcon>();
