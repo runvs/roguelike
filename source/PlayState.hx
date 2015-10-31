@@ -32,6 +32,7 @@ class PlayState extends FlxState
 	private var _overlay : FlxSprite;
 	
 	private var switching : Bool;
+	private var pathfinder :Pathfinder;
 	
 	/**
 	 * Function that is called up when to state is created to set it up. 
@@ -69,6 +70,8 @@ class PlayState extends FlxState
 		_overlay  = new FlxSprite();
 		_overlay.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		
+		pathfinder = new Pathfinder();
+		
 		#if FLX_NO_DEBUG
 		FlxTween.tween(_overlay, { alpha:0 }, 0.5);
 		#else
@@ -99,7 +102,6 @@ class PlayState extends FlxState
 		{
 			_ending = true;
 			FlxG.camera.fade(FlxColor.BLACK, 1.0, false, function () : Void { FlxG.switchState(new MenuState()); } );
-			//FlxGameJolt.fetchScore(
 		}	
 	}
 	
@@ -114,7 +116,6 @@ class PlayState extends FlxState
 				var t : FlxTimer = new FlxTimer(1, function (t:FlxTimer) 
 				{
 					levelNumber++;
-					//level = new Level(this, GameProperties.WorldSizeInTilesx, GameProperties.WorldSizeInTilesy, player.properties.level, levelNumber);
 					CreateNewLevel(player.properties.level);
 					switching = false;
 					player.setPosition(level.getPlayerStartingPosition().x, level.getPlayerStartingPosition().y);
@@ -124,17 +125,175 @@ class PlayState extends FlxState
 		}
 	}
 	
-	// This Method will create a new Level and check if there is a distinctive path from the player's starting position to the map's exit
+	// This Method will create a new Level and do a floodfill check.
+	// if the check fails, a new level will be created
 	function CreateNewLevel(playerLevel:Int):Void 
 	{
 		FlxG.worldBounds.set(GameProperties.World_SizeInTilesX*GameProperties.Tile_Size, GameProperties.World_SizeInTilesY * GameProperties.Tile_Size);
 		
 		trace("create new Level");
 		level = new Level(GameProperties.World_SizeInTilesX, GameProperties.World_SizeInTilesY, playerLevel, levelNumber);
-		while (!FloodfillTester.Test(level, Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y), level.Exit.tx, level.Exit.ty))
+		while (!
+		FloodfillTester.Test(level,
+		level.Exit.tx, level.Exit.ty,
+		 Std.int(level.getStartingPositionInTiles().x), Std.int(level.getStartingPositionInTiles().y)
+		))
 		{
 			level = new Level(GameProperties.World_SizeInTilesX, GameProperties.World_SizeInTilesY, playerLevel, levelNumber);
 		}
+	}
+		
+	function updateEnemies():Void 
+	{
+		level._grpEnemies.forEach(function(e:Enemy) 
+		{
+			if (e.alive == false)
+			{
+				player.properties.gainXP(GameProperties.Enemy_BaseXP);
+			}
+			else 
+			{
+				var xx:Float = e.x - player.x;
+				var yy:Float = e.y - player.y;
+				var distance:Float = xx * xx + yy * yy;
+				
+				if (distance <= GameProperties.Enemy_AggroRadius*GameProperties.Enemy_AggroRadius) {
+					e.doRandomWalk = false;
+					e.walkTowards(player);
+				}
+				else
+				{
+					e.doRandomWalk = true;
+				}
+			}
+		});
+	}
+	
+	function updateCollisions():Void 
+	{
+		FlxG.collide(level.map.walls, level._grpParticles, function(t:Tile, p:Projectile)
+		{
+			p.hit();
+		});
+		FlxG.collide(level._grpEnemies, level._grpParticles, function(e:Enemy , p:Projectile)
+		{
+			e.TakeDamage(p.damage);
+			p.hit();
+		});
+		FlxG.collide(level.map.walls, player);
+		FlxG.collide(level._grpShields, level._grpEnemies);
+		FlxG.collide(level._grpShields, level._grpParticles);
+		FlxG.collide(level._grpShields, player);
+	
+		FlxG.collide(level._grpEnemies, level.map.walls, Enemy.handleWallCollision);
+		FlxG.collide(player, level._grpEnemies, Enemy.handlePlayerCollision);
+	}
+	
+	function updateLevel():Void 
+	{
+		var px : Int = Std.int(player.x / GameProperties.Tile_Size+0.5);
+		var py : Int = Std.int(player.y / GameProperties.Tile_Size+0.5);
+		
+		level.update();
+		level.map.setVisibility(px, py, 4);
+		pathfinder.setLevel (level);
+		pathfinder.setPlayerPos(px, py);
+		pathfinder.update();
+	}
+	
+	function updatePlayer():Void 
+	{
+		player.update();
+		player.updateHud();
+		
+		if (player.attack)
+		{
+			var r : FlxRect = player.getAttackRect();
+			level._grpEnemies.forEach(function (e:Enemy) 
+			{
+				var enemyRect : FlxRect = new FlxRect (e.x, e.y, e.width, e.height);
+				if (r.overlaps(enemyRect))
+				{
+					e.TakeDamage(player.properties.getDamage());
+				}
+			});
+		}
+		if (player.attackPowerShoot)
+		{
+
+			var f : EFacing = player.getLastFacing();
+			var tx : Float = 0;
+			var ty : Float = 0;
+			
+			if (f == EFacing.Down)
+			{
+				ty += 1;
+			}
+			else if (f == EFacing.Up)
+			{
+				ty -= 1;
+			}
+			else if (f == EFacing.Left)
+			{
+				tx -= 1;
+			}
+			else if (f == EFacing.Right)
+			{
+				tx += 1;
+			}
+			var p : Projectile = new Projectile(player.x, player.y, tx, ty, false, skillz.PowerShoot, this);
+			level._grpParticles.add(p);
+		}
+		if (player.attackPowerBall)
+		{
+			var tx : Float = 0;
+			var ty : Float = 0;
+			var f : EFacing = player.getLastFacing();
+			if (f == EFacing.Down)
+			{
+				ty += 1;
+			}
+			else if (f == EFacing.Up)
+			{
+				ty -= 1;
+			}
+			else if (f == EFacing.Left)
+			{
+				tx -= 1;
+			}
+			else if (f == EFacing.Right)
+			{
+				tx += 1;
+			}
+			var p : Projectile = new Projectile(player.x + GameProperties.Tile_Size/2, player.y + GameProperties.Tile_Size/2, tx, ty, true, skillz.PowerShoot, this);
+			level._grpParticles.add(p);
+		}
+		if (player.attackShield)
+		{
+			var tx : Float = player.x;
+			var ty : Float = player.y;
+			var f : EFacing = player.getLastFacing();
+			if (f == EFacing.Down)
+			{
+				ty += GameProperties.Tile_Size * 3;
+			}
+			else if (f == EFacing.Up)
+			{
+				ty -= GameProperties.Tile_Size * 3;
+			}
+			else if (f == EFacing.Left)
+			{
+				tx -= GameProperties.Tile_Size * 3;
+			}
+			else if (f == EFacing.Right)
+			{
+				tx += GameProperties.Tile_Size * 3;
+			}
+			
+			var s : Shield = new Shield(tx + GameProperties.Tile_Size/2, ty + GameProperties.Tile_Size/2, skillz.PowerShield);
+			level._grpShields.add(s);
+		}
+		
 	}
 	
 	/**
@@ -156,98 +315,27 @@ class PlayState extends FlxState
 			{
 				super.update();
 				
-				level._grpEnemies.forEach(function(e:Enemy) 
-				{
-					if (e.alive == false)
-					{
-						player.properties.gainXP(GameProperties.Enemy_BaseXP);
-					}
-				});
+				updateEnemies();
+				
 				cleanUp();
-				level.update();
-				player.update();
-				player.updateHud();
-				FlxG.collide(level.map.walls, level._grpParticles, function(t:Tile, p:Particle)
-				{
-					p.hit();
-				});
-				FlxG.collide(level._grpEnemies, level._grpParticles, function(e:Enemy , p:Particle)
-				{
-					e.TakeDamage(p.damage);
-					p.hit();
-				});
 				
-				FlxG.collide(level.map.walls, player);
-				FlxG.collide(level._grpShields, level._grpEnemies);
-				FlxG.collide(level._grpShields, level._grpParticles);
-				FlxG.collide(level._grpShields, player);
-			
-				FlxG.collide(level._grpEnemies, level.map.walls, Enemy.handleWallCollision);
-				for (enemy in level._grpEnemies)
-				{
-					var xx:Float = enemy.x - player.x;
-					var yy:Float = enemy.y - player.y;
-					var distance:Float = xx * xx + yy * yy;
-					
-					if (distance <= GameProperties.Enemy_AggroRadius*GameProperties.Enemy_AggroRadius) {
-						enemy.doRandomWalk = false;
-						enemy.walkTowards(player);
-					}
-					else
-					{
-						enemy.doRandomWalk = true;
-					}
-				}
+				updateLevel();
 				
-				FlxG.collide(player, level._grpEnemies, Enemy.handlePlayerCollision);
+				
+				updatePlayer();
+				
+				updateCollisions();
 				
 				ChangeLevel();
-				
-				if (player.attack)
-				{
-					//trace("attack");
-					var r : FlxRect = player.getAttackRect();
-					
-					level._grpEnemies.forEach(function (e:Enemy) 
-					{
-						var enemyRect : FlxRect = new FlxRect (e.x, e.y, e.width, e.height);
-						if (r.overlaps(enemyRect))
-						{
-							//trace("hit");
-							e.TakeDamage(player.properties.getDamage());
-						
-						}
-					});
-				}
-				if (player.attackPowerShoot)
-				{
-					var mx : Float = FlxG.mouse.x;
-					var my : Float = FlxG.mouse.y;
-					var p : Particle  = new Particle(player.x, player.y, mx, my, false, skillz.PowerShoot, this);
-					level._grpParticles.add(p);
-				}
-				if (player.attackPowerBall)
-				{
-					var mx : Float = FlxG.mouse.x;
-					var my : Float = FlxG.mouse.y;
-					var p : Particle  = new Particle(player.x, player.y, mx, my, true, skillz.PowerBall, this);
-					level._grpParticles.add(p);
-				}
-				if (player.attackShield)
-				{
-					var mx : Float = FlxG.mouse.x;
-					var my : Float = FlxG.mouse.y;
-					var s : Shield = new Shield(mx, my, skillz.PowerShield);
-					level._grpShields.add(s);
-				}
 			}
 		
 		}
 	}
 	
-	public function spawnPowerBallExplosion(p : Particle)
+	public function spawnPowerBallExplosion(p : Projectile)
 	{
 		//trace ("PBE");
+		FlxG.camera.shake(0.0125, 0.25);
 		var l : Int = p._level + 3;
 		var d : Float = 360.0 / l;
 		var dir : FlxVector = new FlxVector(1, 1);
@@ -255,7 +343,7 @@ class PlayState extends FlxState
 		{
 			
 			dir.rotateByDegrees(d);
-			var p2 : Particle = new Particle(p.x, p.y, p.x + dir.x, p.y + dir.y, false, p._level, this);
+			var p2 : Projectile = new Projectile(p.x, p.y, p.x + dir.x, p.y + dir.y, false, p._level, this);
 			level._grpParticles.add(p2);
 		}
 	}
@@ -267,6 +355,8 @@ class PlayState extends FlxState
 		
 		level.drawShadows();
 		
+
+		level.drawVisited();
 		
 		_vignette.draw();
 		if (!skillz.showMe)

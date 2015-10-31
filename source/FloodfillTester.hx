@@ -8,7 +8,7 @@ import flixel.util.FlxPoint;
  */
 class FloodfillTester
 {
-	public static function Test(level : Level, startX : Int, startY : Int, endX : Int, endY : Int) : Bool 
+	public static function Test(level : Level, startX : Int, startY : Int, endX : Int, endY : Int, tag : String = "exit") : Bool 
 	{		
 		if (level.getFloor(endX, endY) == null || level.getFloor(startX, startY) == null)
 		{
@@ -30,6 +30,7 @@ class FloodfillTester
 			for (i in 0...active.length)
 			{
 				var t : Tile = active[i];
+				t.setDistance(tag, runIdx);
 				if (t.tx == endX && t.ty == endY)
 				{
 					return true;

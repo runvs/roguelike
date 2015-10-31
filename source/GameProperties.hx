@@ -9,8 +9,10 @@ class GameProperties
 	public static var Tile_Size : Int = 32;
 	public static var Tiles_ShadowAlpha : Float = 0.25;
 	
-	public static var World_SizeInTilesX : Int = 50;
-	public static var World_SizeInTilesY : Int = 24;
+	public static var World_SizeInTilesX : Int = 45;
+	public static var World_SizeInTilesY : Int = 30;
+	
+	public static var World_PathfinderTimerMax : Float = 1;
 	
 	public static var Skills_Level1 : Int = 1;
 	
