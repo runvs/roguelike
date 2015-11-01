@@ -684,44 +684,44 @@ class SkillTree extends FlxSpriteGroup
 	
 	private function Open() : Void 
 	{
-		MouseEventManager.add(btn_PowerShoot, upgrade_PowerShoot);
-		MouseEventManager.add(btn_PowerShield, upgrade_PowerShield);
-		MouseEventManager.add(btn_PowerHit, upgrade_PowerHit);
-		MouseEventManager.add(btn_PowerBall, upgrade_PowerBall);
-		MouseEventManager.add(btn_PowerArmor, upgrade_PowerArmor);
-		MouseEventManager.add(btn_NaniteWeapon, upgrade_NaniteWeapon);
-		MouseEventManager.add(btn_NaniteHealth, upgrade_NaniteHealth);
-		MouseEventManager.add(btn_NaniteArmor, upgrade_NaniteArmor);
-		MouseEventManager.add(btn_BoostAgi, upgrade_BoostAgi);
-		MouseEventManager.add(btn_BoostExp, upgrade_BoostExp);
-		MouseEventManager.add(btn_BoostRegen, upgrade_BoostRegen);
+		MouseEventManager.add(btn_PowerShoot.hitbox, upgrade_PowerShoot);
+		MouseEventManager.add(btn_PowerShield.hitbox, upgrade_PowerShield);
+		MouseEventManager.add(btn_PowerHit.hitbox, upgrade_PowerHit);
+		MouseEventManager.add(btn_PowerBall.hitbox, upgrade_PowerBall);
+		MouseEventManager.add(btn_PowerArmor.hitbox, upgrade_PowerArmor);
+		MouseEventManager.add(btn_NaniteWeapon.hitbox, upgrade_NaniteWeapon);
+		MouseEventManager.add(btn_NaniteHealth.hitbox, upgrade_NaniteHealth);
+		MouseEventManager.add(btn_NaniteArmor.hitbox, upgrade_NaniteArmor);
+		MouseEventManager.add(btn_BoostAgi.hitbox, upgrade_BoostAgi);
+		MouseEventManager.add(btn_BoostExp.hitbox, upgrade_BoostExp);
+		MouseEventManager.add(btn_BoostRegen.hitbox, upgrade_BoostRegen);
 		
-		MouseEventManager.add(btn_St, upgradeSt);
-		MouseEventManager.add(btn_Ag, upgradeAg);
-		MouseEventManager.add(btn_En, upgradeEn);
-		MouseEventManager.add(btn_Wi, upgradeWi);
-		MouseEventManager.add(btn_Lk, upgradeLk);
+		MouseEventManager.add(btn_St.hitbox, upgradeSt);
+		MouseEventManager.add(btn_Ag.hitbox, upgradeAg);
+		MouseEventManager.add(btn_En.hitbox, upgradeEn);
+		MouseEventManager.add(btn_Wi.hitbox, upgradeWi);
+		MouseEventManager.add(btn_Lk.hitbox, upgradeLk);
 		
 	}
 	private function Close() : Void 
 	{
-		MouseEventManager.remove(btn_PowerShoot);
-		MouseEventManager.remove(btn_PowerShield);
-		MouseEventManager.remove(btn_PowerHit);
-		MouseEventManager.remove(btn_PowerBall);
-		MouseEventManager.remove(btn_PowerArmor);
-		MouseEventManager.remove(btn_NaniteWeapon);
-		MouseEventManager.remove(btn_NaniteHealth);
-		MouseEventManager.remove(btn_NaniteArmor);
-		MouseEventManager.remove(btn_BoostAgi);
-		MouseEventManager.remove(btn_BoostExp);
-		MouseEventManager.remove(btn_BoostRegen);
+		MouseEventManager.remove(btn_PowerShoot.hitbox);
+		MouseEventManager.remove(btn_PowerShield.hitbox);
+		MouseEventManager.remove(btn_PowerHit.hitbox);
+		MouseEventManager.remove(btn_PowerBall.hitbox);
+		MouseEventManager.remove(btn_PowerArmor.hitbox);
+		MouseEventManager.remove(btn_NaniteWeapon.hitbox);
+		MouseEventManager.remove(btn_NaniteHealth.hitbox);
+		MouseEventManager.remove(btn_NaniteArmor.hitbox);
+		MouseEventManager.remove(btn_BoostAgi.hitbox);
+		MouseEventManager.remove(btn_BoostExp.hitbox);
+		MouseEventManager.remove(btn_BoostRegen.hitbox);
 		
-		MouseEventManager.remove(btn_St);
-		MouseEventManager.remove(btn_Ag);
-		MouseEventManager.remove(btn_En);
-		MouseEventManager.remove(btn_Wi);
-		MouseEventManager.remove(btn_Lk);
+		MouseEventManager.remove(btn_St.hitbox);
+		MouseEventManager.remove(btn_Ag.hitbox);
+		MouseEventManager.remove(btn_En.hitbox);
+		MouseEventManager.remove(btn_Wi.hitbox);
+		MouseEventManager.remove(btn_Lk.hitbox);
 	}
 	
 	override public function update () : Void 

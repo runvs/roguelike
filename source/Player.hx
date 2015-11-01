@@ -114,13 +114,13 @@ class Player extends Creature
 		var hudwidth : Float = FlxG.width - 10 - 10;
 		
 		HPBar = new HudBar(10, FlxG.height - 24, hudwidth/3.0 - 10 , 20, false);
-		HPBar.color = FlxColorUtil.makeFromARGB(1.0, 203,65,58);
+		HPBar.color = GameProperties.Color_Red;
 		
 		MPBar = new HudBar(FlxG.width - 10 - hudwidth/3.0 + 10 , FlxG.height - 24 ,  hudwidth/3.0 - 10 , 20, false);
-		MPBar.color = FlxColorUtil.makeFromARGB(1.0, 70, 148, 80);
+		MPBar.color = GameProperties.Color_Green;
 		
 		ExpBar = new HudBar( 10 + hudwidth/3.0 + 5 , FlxG.height - 24, hudwidth/3.0 - 10 , 20, false);
-		ExpBar.color = FlxColorUtil.makeFromARGB(1.0, 203, 122, 58);
+		ExpBar.color = GameProperties.Color_Yellow;
 		
 		
 		effectFGRed = new FlxSprite();
@@ -162,6 +162,7 @@ class Player extends Creature
 		
 		MouseEventManager.add(charsheetSprite, OpenSkills);
 		
+		properties.attributePoints = 5;
 	}
 	
 	private function OpenSkills(o : FlxObject = null)
@@ -311,7 +312,7 @@ class Player extends Creature
 		}
 		else
 		{
-			skillIconList.members[0].text.color = FlxColor.RED;
+			skillIconList.members[0].text.color = GameProperties.Color_Red;
 		}
 		
 		
@@ -325,7 +326,7 @@ class Player extends Creature
 		}
 		else
 		{
-			skillIconList.members[1].text.color = FlxColor.RED;
+			skillIconList.members[1].text.color = GameProperties.Color_Red;
 		}
 		
 		if (skillz.PowerShield == 0)
@@ -338,7 +339,7 @@ class Player extends Creature
 		}
 		else
 		{
-			skillIconList.members[2].text.color = FlxColor.RED;
+			skillIconList.members[2].text.color = GameProperties.Color_Red;
 		}
 		
 		
@@ -352,7 +353,7 @@ class Player extends Creature
 		}
 		else
 		{
-			skillIconList.members[3].text.color = FlxColor.RED;
+			skillIconList.members[3].text.color = GameProperties.Color_Red;
 		}
 
 		
@@ -366,7 +367,7 @@ class Player extends Creature
 		}
 		else
 		{
-			skillIconList.members[4].text.color = FlxColor.RED;
+			skillIconList.members[4].text.color = GameProperties.Color_Red;
 		}
 
 
@@ -381,7 +382,7 @@ class Player extends Creature
 		}
 		else
 		{
-			skillIconList.members[5].text.color = FlxColor.RED;
+			skillIconList.members[5].text.color = GameProperties.Color_Red;
 		}
 		
 
@@ -396,7 +397,7 @@ class Player extends Creature
 		}
 		else
 		{
-			skillIconList.members[6].text.color = FlxColor.RED;
+			skillIconList.members[6].text.color = GameProperties.Color_Red;
 		}
 
 		
@@ -411,7 +412,7 @@ class Player extends Creature
 		}
 		else
 		{
-			skillIconList.members[7].text.color = FlxColor.RED;
+			skillIconList.members[7].text.color = GameProperties.Color_Red;
 		}
 
 		
@@ -524,7 +525,7 @@ class Player extends Creature
 		attackShield = false; 
 		if (FlxG.keys.justPressed.ONE)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[0].text.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[0].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
 			{
 				skillz.activateSkillPowerHit();
 				skillz.payMP(GameProperties.Skills_PowerHitMPCost);
@@ -532,7 +533,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.TWO)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[1].text.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[1].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
 			{
 				attackPowerShoot = true;
 				skillz.useSkillPowerShoot();
@@ -542,7 +543,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.THREE)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[2].text.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[2].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
 			{
 				skillz.useSkillPowerShield();
 				attackShield = true;
@@ -551,7 +552,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.FOUR)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[3].text.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[3].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
 			{
 				skillz.useSkillPowerBall();
 				attackPowerBall = true;
@@ -560,7 +561,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.FIVE)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[4].text.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[4].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
 			{
 				skillz.useSkillPowerArmor();
 				skillz.payMP(GameProperties.Skills_PowerArmorMPCost);
@@ -568,7 +569,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.SIX)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[5].text.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[5].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
 			{
 				skillz.activateSkillBoostRegen();
 				skillz.payMP(GameProperties.Skills_BoostRegenMPCost);
@@ -577,7 +578,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.SEVEN)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[6].text.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[6].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
 			{
 				skillz.activateSkillBoostAgi();
 				skillz.payMP(GameProperties.Skills_BoostAgiMPCost);
@@ -586,7 +587,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.EIGHT)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[7].text.color) == FlxColorUtil.getRed(FlxColor.RED))
+			if (FlxColorUtil.getRed(skillIconList.members[7].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
 			{
 				skillz.activateSkillBoostExp();
 				skillz.payMP(GameProperties.Skills_BoostExpMPCost);

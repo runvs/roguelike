@@ -245,7 +245,7 @@ class PlayerProperties
 	
 	public function getAttackTimer () : Float
 	{
-		return (0.45 + 0.55/((Ag)/5)  )* GameProperties.Player_AttackTimer;
+		return (0.50 + 0.5/((Ag)/5)  )* GameProperties.Player_AttackTimer;
 	}
 	
 

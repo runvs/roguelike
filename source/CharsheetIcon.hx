@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxSprite;
 import flixel.text.FlxText;
+import flixel.util.FlxColorUtil;
 
 /**
  * ...
@@ -16,6 +17,9 @@ class CharsheetIcon extends FlxSprite
 	public var maxLevel : Int;
 	public var currentLevel : Int;
 	
+	public var hitbox : FlxSprite;
+	
+	
 	public function new(X:Float=0, Y:Float=0, graphic:Dynamic, skillname :String = "") 
 	{
 		super(X, Y);
@@ -24,6 +28,10 @@ class CharsheetIcon extends FlxSprite
 		this.setSize(32, 32);
 		this.updateHitbox();
 		this.scrollFactor.set();
+		
+		hitbox = new FlxSprite(X, Y);
+		hitbox.makeGraphic(32, 32, FlxColorUtil.makeFromARGB(0.1, 255, 255, 255));
+		hitbox.scrollFactor.set();
 		
 		text = new FlxText(x, y + 32, 150, "" );
 		text.scrollFactor.set();
@@ -36,6 +44,7 @@ class CharsheetIcon extends FlxSprite
 	
 	public override function update () : Void 
 	{
+		hitbox.update();
 		super.update();
 		text.update();
 		if (maxLevel > 0)
@@ -48,13 +57,16 @@ class CharsheetIcon extends FlxSprite
 		}
 		
 		text.color = this.color;
+		
 	}
 	
 	public override function draw () : Void 
 	{
+		hitbox.draw();
 		super.draw();
 		text.draw();
 	}
+	
 	
 	
 }
