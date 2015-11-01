@@ -395,7 +395,7 @@ class PlayState extends FlxState
 
 		level.drawVisited();
 		
-		_vignette.draw();
+		
 		if (!skillz.showMe)
 		{
 			player.drawHud();
@@ -404,6 +404,7 @@ class PlayState extends FlxState
 		{
 			skillz.draw();
 		}
+		_vignette.draw();
 		_overlay.draw();
 		
 		super.draw();

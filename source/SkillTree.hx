@@ -48,10 +48,15 @@ class SkillTree extends FlxSpriteGroup
 	
 	private var playerThumb : FlxSprite;
 	
+	private var unlock1Str : FlxText;
+	private var unlock2Str : FlxText;
+	
 	public function new( properties : PlayerProperties) 
 	{
 		super();
 		_properties = properties;
+		
+		
 		
 		backgroundSprite = new FlxSprite();
 		backgroundSprite.loadGraphic(AssetPaths.background_charsheet__png, false, 512, 384);
@@ -141,6 +146,13 @@ class SkillTree extends FlxSpriteGroup
 		btn_NaniteHealth = new CharsheetIcon(skillOffsetX + skillOffsetXRow2, skillOffsetY + skillOffsetYColumn3,AssetPaths.skill_10__png, "Nanite Health");
 		btn_NaniteWeapon = new CharsheetIcon(skillOffsetX + skillOffsetXRow3 , skillOffsetY + skillOffsetYColumn3,AssetPaths.skill_11__png, "Nanite Weapon");
 		
+		unlock1Str = new FlxText(skillOffsetX + skillOffsetXRow2- 110, 100, 200, "unlocked\nat level " + GameProperties.Skills_Level2);
+		unlock1Str.angle = 90;
+		add(unlock1Str);
+		
+		unlock2Str = new FlxText(skillOffsetX + skillOffsetXRow2- 30, 100, 200, "unlocked\nat level " + GameProperties.Skills_Level3);
+		unlock2Str.angle = 90;
+		add(unlock2Str);
 		
 		var attrOffsetX : Float = 20;
 		var attrOffsetY : Float = 220 + 20;
@@ -170,6 +182,8 @@ class SkillTree extends FlxSpriteGroup
 		InfoString.scale.set(1.5, 1.5);
 		InfoString.scrollFactor.set();
 		//add(InfoString);
+		
+		
 		
 		this.scrollFactor.set();
 	}

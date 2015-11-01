@@ -14,10 +14,9 @@ class GameProperties
 	
 	public static var World_PathfinderTimerMax : Float = 1;
 	
-	public static var Skills_Level1 : Int = 1;
-	
-	public static var Skills_Level2 : Int = 10;
-	public static var Skills_Level3 : Int = 20;
+	public static var Skills_Level1 : Int = 1;	// obviously
+	public static var Skills_Level2 : Int = 4;
+	public static var Skills_Level3 : Int = 9;
 	
 	// Tier 1
 	public static var Skills_NaniteArmor_FactorPerLevel : Float = 0.05;
