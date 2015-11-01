@@ -508,7 +508,7 @@ class SkillTree extends FlxSpriteGroup
 		
 		if (b_PowerArmor)
 		{
-			btn_PowerArmor.color = FlxColor.RED;
+			btn_PowerArmor.color = FlxColor.WHITE;
 		}
 		else
 		{
@@ -517,7 +517,7 @@ class SkillTree extends FlxSpriteGroup
 		
 		if (b_PowerBall)
 		{
-			btn_PowerBall.color = FlxColor.RED;
+			btn_PowerBall.color = FlxColor.WHITE;
 		}
 		else
 		{
@@ -526,7 +526,7 @@ class SkillTree extends FlxSpriteGroup
 		
 		if (b_PowerHit)
 		{
-			btn_PowerHit.color = FlxColor.RED;
+			btn_PowerHit.color = FlxColor.WHITE;
 		}
 		else
 		{
@@ -535,7 +535,7 @@ class SkillTree extends FlxSpriteGroup
 		
 		if (b_PowerShield)
 		{
-			btn_PowerShield.color = FlxColor.RED;
+			btn_PowerShield.color = FlxColor.WHITE;
 		}
 		else
 		{
@@ -544,7 +544,7 @@ class SkillTree extends FlxSpriteGroup
 		
 		if (b_PowerShoot)
 		{
-			btn_PowerShoot.color = FlxColor.RED;
+			btn_PowerShoot.color = FlxColor.WHITE;
 		}
 		else
 		{
@@ -554,7 +554,7 @@ class SkillTree extends FlxSpriteGroup
 		
 		if (b_NaniteArmor)
 		{
-			btn_NaniteArmor.color = FlxColor.RED;
+			btn_NaniteArmor.color = FlxColor.WHITE;
 		}
 		else
 		{
@@ -563,7 +563,7 @@ class SkillTree extends FlxSpriteGroup
 		
 		if (b_NaniteHealth)
 		{
-			btn_NaniteHealth.color = FlxColor.RED;
+			btn_NaniteHealth.color = FlxColor.WHITE;
 		}
 		else
 		{
@@ -572,7 +572,7 @@ class SkillTree extends FlxSpriteGroup
 		
 		if (b_NaniteWeapon)
 		{
-			btn_NaniteWeapon.color = FlxColor.RED;
+			btn_NaniteWeapon.color = FlxColor.WHITE;
 		}
 		else
 		{
@@ -581,7 +581,7 @@ class SkillTree extends FlxSpriteGroup
 		
 		if (b_BoostRegen)
 		{
-			btn_BoostRegen.color = FlxColor.RED;
+			btn_BoostRegen.color = FlxColor.WHITE;
 		}
 		else
 		{
@@ -590,7 +590,7 @@ class SkillTree extends FlxSpriteGroup
 		
 		if (b_BoostAgi)
 		{
-			btn_BoostAgi.color = FlxColor.RED;
+			btn_BoostAgi.color = FlxColor.WHITE;
 		}
 		else
 		{
@@ -599,7 +599,7 @@ class SkillTree extends FlxSpriteGroup
 		
 		if (b_BoostExp)
 		{
-			btn_BoostExp.color = FlxColor.RED;
+			btn_BoostExp.color = FlxColor.WHITE;
 		}
 		else
 		{
@@ -626,10 +626,6 @@ class SkillTree extends FlxSpriteGroup
 			btn_BoostRegen.draw();
 
 		}
-		
-		
-		
-		
 		
 	}
 	
