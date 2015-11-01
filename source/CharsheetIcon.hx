@@ -38,7 +38,15 @@ class CharsheetIcon extends FlxSprite
 	{
 		super.update();
 		text.update();
-		text.text = skillName + "\n" + Std.string(currentLevel) + " / " + Std.string(maxLevel);
+		if (maxLevel > 0)
+		{
+			text.text = skillName + "\n" + Std.string(currentLevel) + " / " + Std.string(maxLevel);
+		}
+		else
+		{
+			text.text = skillName  + " " + Std.string(currentLevel);
+		}
+		
 		text.color = this.color;
 	}
 	

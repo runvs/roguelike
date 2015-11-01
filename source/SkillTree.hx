@@ -8,6 +8,7 @@ import flixel.plugin.MouseEventManager;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
+import flixel.util.FlxColorUtil;
 
 /**
  * ...
@@ -34,11 +35,11 @@ class SkillTree extends FlxSpriteGroup
 	
 	
 	
-	private var btn_St : FlxButton;
-	private var btn_Ag : FlxButton;
-	private var btn_En : FlxButton;
-	private var btn_Wi : FlxButton;
-	private var btn_Lk : FlxButton;
+	private var btn_St : CharsheetIcon;
+	private var btn_Ag : CharsheetIcon;
+	private var btn_En : CharsheetIcon;
+	private var btn_Wi : CharsheetIcon;
+	private var btn_Lk : CharsheetIcon;
 	
 	
 	private var InfoString : FlxText;
@@ -140,28 +141,28 @@ class SkillTree extends FlxSpriteGroup
 		btn_NaniteHealth = new CharsheetIcon(skillOffsetX + skillOffsetXRow2, skillOffsetY + skillOffsetYColumn3,AssetPaths.skill_10__png, "Nanite Health");
 		btn_NaniteWeapon = new CharsheetIcon(skillOffsetX + skillOffsetXRow3 , skillOffsetY + skillOffsetYColumn3,AssetPaths.skill_11__png, "Nanite Weapon");
 		
-		btn_St = new FlxButton(-60, 85, "Str", upgradeSt);
-		btn_St.scale.set(1, 0.9);
-		btn_St.updateHitbox();
-		btn_Ag = new FlxButton(-60, 100, "Agi", upgradeAg);
-		btn_Ag.scale.set(1, 0.9);
-		btn_Ag.updateHitbox();
-		btn_En = new FlxButton(-60, 115, "End", upgradeEn);
-		btn_En.scale.set(1, 0.9);
-		btn_En.updateHitbox();
-		btn_Wi = new FlxButton(-60, 130, "Wil", upgradeWi);
-		btn_Wi.scale.set(1, 0.9);
-		btn_Wi.updateHitbox();
-		btn_Lk = new FlxButton(-60, 145, "Luk", upgradeLk);
-		btn_Lk.scale.set(1, 0.9);
-		btn_Lk.updateHitbox();
 		
-		add(btn_St);
-		add(btn_Ag);
-		add(btn_En);
-		add(btn_Wi);
-		add(btn_Lk);
+		var attrOffsetX : Float = 20;
+		var attrOffsetY : Float = 220 + 20;
+		var attrOffsetYPerColumn : Float = 64;
+		var attrOffsetXPerRow : Float = 88;
 		
+		btn_St = new CharsheetIcon(attrOffsetX + 0 * attrOffsetXPerRow, attrOffsetY + 0 * attrOffsetYPerColumn, AssetPaths.btn_str__png, "Str");
+		btn_St.maxLevel = -1;
+		btn_St.currentLevel = properties.St;
+		btn_Ag = new CharsheetIcon(attrOffsetX + 1 * attrOffsetXPerRow, attrOffsetY + 0 * attrOffsetYPerColumn, AssetPaths.btn_agi__png, "Agi");
+		btn_Ag.maxLevel = -1;
+		btn_Ag.currentLevel = properties.Ag;
+		btn_En = new CharsheetIcon(attrOffsetX + 0 * attrOffsetXPerRow, attrOffsetY + 1 * attrOffsetYPerColumn, AssetPaths.btn_end__png, "End");
+		btn_En.maxLevel = -1;
+		btn_En.currentLevel = properties.En;
+		btn_Wi = new CharsheetIcon(attrOffsetX + 1 * attrOffsetXPerRow, attrOffsetY + 1 * attrOffsetYPerColumn, AssetPaths.btn_wil__png, "Wil");
+		btn_Wi.maxLevel = -1;
+		btn_Wi.currentLevel = properties.Wi;
+		btn_Lk = new CharsheetIcon(attrOffsetX + 2 * attrOffsetXPerRow, attrOffsetY + 0.5 * attrOffsetYPerColumn, AssetPaths.btn_luk__png, "Luk");
+		btn_Lk.maxLevel = -1;
+		btn_Lk.currentLevel = properties.Lk;
+
 		InfoString = new FlxText();
 		InfoString.setPosition(50,50);
 		InfoString.origin.set();
@@ -174,36 +175,39 @@ class SkillTree extends FlxSpriteGroup
 	}
 	
 	
-	public function upgradeSt ( )
+	public function upgradeSt (o:FlxObject = null )
 	{
 		if (_properties.attributePoints >= 1)
 		{
 			_properties.St += 1;
 			_properties.attributePoints -= 1;
 			_properties.ReCalculateDerivedValues();
+			btn_St.currentLevel = _properties.St;
 		}
 	}
 	
-	public function upgradeAg()
+	public function upgradeAg(o:FlxObject = null)
 	{
 		if (_properties.attributePoints >= 1)
 		{
 			_properties.Ag += 1;
 			_properties.attributePoints -= 1;
 			_properties.ReCalculateDerivedValues();
+			btn_Ag.currentLevel = _properties.Ag;
 		}
 	}
-	public function upgradeEn()
+	public function upgradeEn(o:FlxObject = null)
 	{
 		if (_properties.attributePoints >= 1)
 		{
 			_properties.increaseEN();
 			_properties.attributePoints -= 1;
 			_properties.ReCalculateDerivedValues();
+			btn_En.currentLevel = _properties.En;
 			
 		}
 	}
-	public function upgradeWi()
+	public function upgradeWi(o:FlxObject = null)
 	{
 		if (_properties.attributePoints >= 1)
 		{
@@ -211,16 +215,18 @@ class SkillTree extends FlxSpriteGroup
 			_properties.increaseWI();
 			_properties.attributePoints -= 1;
 			_properties.ReCalculateDerivedValues();
+			btn_Wi.currentLevel = _properties.Wi;
 		}
 	}
 	
-	public function upgradeLk()
+	public function upgradeLk(o:FlxObject = null)
 	{
 		if (_properties.attributePoints >= 1)
 		{
 			_properties.Lk += 1;
 			_properties.attributePoints -= 1;
 			_properties.ReCalculateDerivedValues();
+			btn_Lk.currentLevel = _properties.Lk;
 		}
 	}
 	
@@ -639,6 +645,12 @@ class SkillTree extends FlxSpriteGroup
 			btn_BoostExp.draw();
 			btn_BoostRegen.draw();
 			InfoString.draw();
+			
+			btn_St.draw();
+			btn_Ag.draw();
+			btn_En.draw();
+			btn_Wi.draw();
+			btn_Lk.draw();
 		}
 		
 	}
@@ -669,6 +681,13 @@ class SkillTree extends FlxSpriteGroup
 		MouseEventManager.add(btn_BoostAgi, upgrade_BoostAgi);
 		MouseEventManager.add(btn_BoostExp, upgrade_BoostExp);
 		MouseEventManager.add(btn_BoostRegen, upgrade_BoostRegen);
+		
+		MouseEventManager.add(btn_St, upgradeSt);
+		MouseEventManager.add(btn_Ag, upgradeAg);
+		MouseEventManager.add(btn_En, upgradeEn);
+		MouseEventManager.add(btn_Wi, upgradeWi);
+		MouseEventManager.add(btn_Lk, upgradeLk);
+		
 	}
 	private function Close() : Void 
 	{
@@ -683,6 +702,12 @@ class SkillTree extends FlxSpriteGroup
 		MouseEventManager.remove(btn_BoostAgi);
 		MouseEventManager.remove(btn_BoostExp);
 		MouseEventManager.remove(btn_BoostRegen);
+		
+		MouseEventManager.remove(btn_St);
+		MouseEventManager.remove(btn_Ag);
+		MouseEventManager.remove(btn_En);
+		MouseEventManager.remove(btn_Wi);
+		MouseEventManager.remove(btn_Lk);
 	}
 	
 	override public function update () : Void 
@@ -690,13 +715,15 @@ class SkillTree extends FlxSpriteGroup
 		if (showMe)
 		{
 			super.update();
+			InfoString.color = FlxColorUtil.makeFromARGB(1.0, 203, 122, 58);
 			InfoString.text = "Level:\t\t" + Std.string(_properties.level) + 
-			"\nExp:\t\t" + Std.string(_properties.experience) + "/" + Std.string(_properties.experienceLevelUp)  +  "\nSkillpoints: " + Std.string(_properties.skillPoints) + "\n\n";
+			"\nExp:\t\t\t" + Std.string(_properties.experience) + " / " + Std.string(_properties.experienceLevelUp) + "\n\n";
 			
 			InfoString.text = InfoString.text + "HP:\t\t\t" + Std.string(_properties.currentHP) + " / " + Std.string(_properties.getHP()) + "\n";
 			InfoString.text = InfoString.text + "HP Max:\t" + Std.string(_properties.getHP()) + " = " + Std.string(_properties.baseHP) + " + "  + Std.string(_properties.skillHP) + "\n";
 			InfoString.text = InfoString.text + "MP:\t\t\t" + Std.string(_properties.currentMP) + " / " + Std.string(_properties.baseMP) + "\n\n";
 			
+			InfoString.text = InfoString.text + "Attack interval:\t" + GameProperties.floatToStringPrecision(_properties.getAttackTimer(),2) + " s\n";
 			InfoString.text = InfoString.text + "Movespeed:\t\t" + GameProperties.floatToStringPrecision(_properties.getMoveSpeedFactor(),2) + "\n\n";
 			
 			InfoString.text = InfoString.text + "Damage:\t" + Std.string(_properties.getDamage()) + 
@@ -704,6 +731,8 @@ class SkillTree extends FlxSpriteGroup
 			
 			InfoString.text = InfoString.text + "Defence:\t" + GameProperties.floatToStringPrecision(_properties.getDefense(), 2) + 
 			" = " + GameProperties.floatToStringPrecision(_properties.baseDefense , 2) + " + " + GameProperties.floatToStringPrecision((_properties.skillPowerArmorDefense + _properties.skillDefense), 2) + "\n\n" ;			
+			
+			InfoString.text = InfoString.text + "Attribute Points:\t" + Std.string(_properties.attributePoints);
 		}
 		ActivateDeactivateLevelUpSkills();
 		calculateSkillBoni();
@@ -730,6 +759,12 @@ class SkillTree extends FlxSpriteGroup
 		btn_BoostAgi.update();
 		btn_BoostExp.update();
 		btn_BoostRegen.update();
+		
+		btn_St.update();
+		btn_Ag.update();
+		btn_En.update();
+		btn_Wi.update();
+		btn_Lk.update();
 
 		InfoString.update();
 	}

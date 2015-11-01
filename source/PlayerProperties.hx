@@ -240,8 +240,14 @@ class PlayerProperties
 	
 	public function getMoveSpeedFactor () : Float 
 	{
-		return 1.0 + (Ag-5) / 90.0;
+		return 1.0 + (Ag-5) / 40.0;
 	}
+	
+	public function getAttackTimer () : Float
+	{
+		return (0.45 + 0.55/((Ag)/5)  )* GameProperties.Player_AttackTimer;
+	}
+	
 
 	
 	

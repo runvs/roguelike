@@ -222,6 +222,7 @@ class Player extends Creature
 			alive = false;
 		}
 		
+		
 		charsheetSprite.update();
 		levelUpSprite.update();
 		
@@ -249,6 +250,8 @@ class Player extends Creature
 		ExpBar.health = f;
 		ExpBar.update();
 		
+		
+		attacTimer -= FlxG.elapsed;
 		attack = false;
 		attackPowerShoot = false;
 		attackPowerBall = false;
@@ -445,12 +448,13 @@ class Player extends Creature
 	}
 
 	
+	
 	private function doAttack () : Void 
 	{
 		if (attacTimer  <= 0)
 		{
-			attacTimer += GameProperties.Player_AttackSpeed;
-			
+			attacTimer = properties.getAttackTimer();
+			attack = true;
 		}
 	}
 	
@@ -505,15 +509,11 @@ class Player extends Creature
 		attack = false;
 		if (FlxG.mouse.justPressed || FlxG.keys.anyJustPressed(["SPACE"]))
 		{
-			attack = true;
+			doAttack();
 			if (skillz.active_PowerHit)
 			{
 				skillz.useSkillPowerHit();
 			}
-		}
-		if (attack)
-		{
-			doAttack();
 		}
 	}
 	
