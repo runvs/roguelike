@@ -62,7 +62,7 @@ class Player extends Creature
 		
 		levelUpSprite = new FlxSprite();
 		levelUpSprite.loadGraphic(AssetPaths.levelup__png, false, 16, 16);
-		levelUpSprite.setPosition(FlxG.width - 32 - 10, FlxG.height-24-32);
+		levelUpSprite.setPosition(FlxG.width - 32 - 10, FlxG.height-24-34);
 		levelUpSprite.scrollFactor.set();
 		levelUpSprite.origin.set();
 		levelUpSprite.offset.set();
@@ -73,7 +73,7 @@ class Player extends Creature
 		charsheetSprite = new FlxSprite();
 		charsheetSprite.loadGraphic(AssetPaths.opencharsheet__png, false, 32, 32);
 		charsheetSprite.scrollFactor.set();
-		charsheetSprite.setPosition(FlxG.width - 32 - 10, FlxG.height-24-32);
+		charsheetSprite.setPosition(FlxG.width - 32 - 10, FlxG.height-24-34);
 		
 		
 		skillIconList = new FlxTypedGroup<SkillIcon>();
@@ -199,9 +199,7 @@ class Player extends Creature
 		HPBar.draw();
 		MPBar.draw();
 		ExpBar.draw();
-		
-		
-		
+
 		// level up sprite
 		if ( !(properties.skillPoints > 0 || properties.attributePoints > 0))
 		{

@@ -82,7 +82,7 @@ class SkillIcon extends FlxSprite
 		this.scrollFactor.set();
 		this.scale.set(2, 2);
 		this.updateHitbox();
-		this.setPosition( 10 + (n - 1) * (32 + 16), FlxG.height - 24 - 32 );
+		this.setPosition( 10 + (n - 1) * (32 + 16), FlxG.height - 24 - 34 );
 		
 		text = new FlxText(x, y, 32, Std.string(n));
 		text.scrollFactor.set();
