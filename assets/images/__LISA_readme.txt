@@ -12,7 +12,9 @@ anbei die Liste der Sprites, die noch etwas Liebe und Zuneigung brauchen
 
 Anderes Zeug:
  
- * Zum Thema Charsheet: Hier sollten wir uns nochmal zusammensetzen bezüglich der genauen Position der Buttons, damit das auch alles anständig ausschaut
+ * Zum Charsheet: Hier sollten wir uns nochmal zusammensetzen bezüglich der genauen Position der Buttons, damit das auch alles anständig ausschaut
+ 
+ * zum Charsheet: Farben. da sollten wir vll nochmal kurz schauen, dass ich die korrekten Farben verwende.
 
 Grüße,
 Simon

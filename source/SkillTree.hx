@@ -41,9 +41,11 @@ class SkillTree extends FlxSpriteGroup
 	private var btn_Lk : FlxButton;
 	
 	
-	private var text_Skillpoints : FlxText;
+	private var InfoString : FlxText;
 	
 	private var backgroundSprite : FlxSprite;
+	
+	private var playerThumb : FlxSprite;
 	
 	public function new( properties : PlayerProperties) 
 	{
@@ -57,7 +59,15 @@ class SkillTree extends FlxSpriteGroup
 		backgroundSprite.scrollFactor.set();
 		backgroundSprite.setPosition();
 		
+		playerThumb = new FlxSprite(200, 30);
+		playerThumb.scale.set(-2, 2);
+		playerThumb.scrollFactor.set();
+		playerThumb.loadGraphic(AssetPaths.Player__png, true, 32, 32);
+		playerThumb.animation.add("idle", [0, 1, 2, 3], 3, true);
+		playerThumb.animation.play("idle");
+		
 		add(backgroundSprite);
+		add(playerThumb); 
 		
 		PowerHit = 0;
 		PowerShoot = 0;
@@ -152,9 +162,13 @@ class SkillTree extends FlxSpriteGroup
 		add(btn_Wi);
 		add(btn_Lk);
 		
-		text_Skillpoints = new FlxText(40, 50, 400, "");
-		text_Skillpoints.scale.set(1.5, 1.5);
-		add(text_Skillpoints);
+		InfoString = new FlxText();
+		InfoString.setPosition(50,50);
+		InfoString.origin.set();
+		InfoString.offset.set();
+		InfoString.scale.set(1.5, 1.5);
+		InfoString.scrollFactor.set();
+		//add(InfoString);
 		
 		this.scrollFactor.set();
 	}
@@ -624,7 +638,7 @@ class SkillTree extends FlxSpriteGroup
 			btn_BoostAgi.draw();
 			btn_BoostExp.draw();
 			btn_BoostRegen.draw();
-
+			InfoString.draw();
 		}
 		
 	}
@@ -676,28 +690,20 @@ class SkillTree extends FlxSpriteGroup
 		if (showMe)
 		{
 			super.update();
-			text_Skillpoints.text = "Level:\t\t" + Std.string(_properties.level) + 
+			InfoString.text = "Level:\t\t" + Std.string(_properties.level) + 
 			"\nExp:\t\t" + Std.string(_properties.experience) + "/" + Std.string(_properties.experienceLevelUp)  +  "\nSkillpoints: " + Std.string(_properties.skillPoints) + "\n\n";
-		
-			text_Skillpoints.text = text_Skillpoints.text + "Attribute Points: \t" + Std.string(_properties.attributePoints) + "\n";
-			text_Skillpoints.text = text_Skillpoints.text + "        \t\t" + Std.string(_properties.St) + "\n" ;
-			text_Skillpoints.text = text_Skillpoints.text + "        \t\t" + Std.string(_properties.getAg()) + " = " + Std.string(_properties.Ag) + " + " + Std.string(_properties.skillAg) + "\n" ;
-			text_Skillpoints.text = text_Skillpoints.text + "        \t\t" + Std.string(_properties.En) + "\n" ;
-			text_Skillpoints.text = text_Skillpoints.text + "        \t\t" + Std.string(_properties.Wi) + "\n" ;
-			text_Skillpoints.text = text_Skillpoints.text + "        \t\t" + Std.string(_properties.Lk) + "\n\n" ;
 			
-			text_Skillpoints.text = text_Skillpoints.text + "HP:\t\t\t" + Std.string(_properties.currentHP) + " / " + Std.string(_properties.getHP()) + "\n";
-			text_Skillpoints.text = text_Skillpoints.text + "HP Max:\t" + Std.string(_properties.getHP()) + " = " + Std.string(_properties.baseHP) + " + "  + Std.string(_properties.skillHP) + "\n";
-			text_Skillpoints.text = text_Skillpoints.text + "MP:\t\t\t" + Std.string(_properties.currentMP) + " / " + Std.string(_properties.baseMP) + "\n\n";
+			InfoString.text = InfoString.text + "HP:\t\t\t" + Std.string(_properties.currentHP) + " / " + Std.string(_properties.getHP()) + "\n";
+			InfoString.text = InfoString.text + "HP Max:\t" + Std.string(_properties.getHP()) + " = " + Std.string(_properties.baseHP) + " + "  + Std.string(_properties.skillHP) + "\n";
+			InfoString.text = InfoString.text + "MP:\t\t\t" + Std.string(_properties.currentMP) + " / " + Std.string(_properties.baseMP) + "\n\n";
 			
-			text_Skillpoints.text = text_Skillpoints.text + "Movespeed:\t\t" + GameProperties.floatToStringPrecision(_properties.getMoveSpeedFactor(),2) + "\n\n";
+			InfoString.text = InfoString.text + "Movespeed:\t\t" + GameProperties.floatToStringPrecision(_properties.getMoveSpeedFactor(),2) + "\n\n";
 			
-			text_Skillpoints.text = text_Skillpoints.text + "Damage:\t" + Std.string(_properties.getDamage()) + 
+			InfoString.text = InfoString.text + "Damage:\t" + Std.string(_properties.getDamage()) + 
 			" = " + Std.string(_properties.baseDamage) + " + " + Std.string(_properties.skillDamage + _properties.skillPowerHitDamage) + "\n" ;
 			
-			text_Skillpoints.text = text_Skillpoints.text + "Defence:\t" + GameProperties.floatToStringPrecision(_properties.getDefense(), 2) + 
-			" = " + GameProperties.floatToStringPrecision(_properties.baseDefense , 2) + " + " + GameProperties.floatToStringPrecision((_properties.skillPowerArmorDefense + _properties.skillDefense), 2) + "\n" ;
-			
+			InfoString.text = InfoString.text + "Defence:\t" + GameProperties.floatToStringPrecision(_properties.getDefense(), 2) + 
+			" = " + GameProperties.floatToStringPrecision(_properties.baseDefense , 2) + " + " + GameProperties.floatToStringPrecision((_properties.skillPowerArmorDefense + _properties.skillDefense), 2) + "\n\n" ;			
 		}
 		ActivateDeactivateLevelUpSkills();
 		calculateSkillBoni();
@@ -725,7 +731,7 @@ class SkillTree extends FlxSpriteGroup
 		btn_BoostExp.update();
 		btn_BoostRegen.update();
 
-		
+		InfoString.update();
 	}
 	
 	
