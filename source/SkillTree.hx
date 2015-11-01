@@ -1,7 +1,9 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.group.FlxSpriteGroup;
+import flixel.plugin.MouseEventManager;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
@@ -637,6 +639,28 @@ class SkillTree extends FlxSpriteGroup
 		
 	}
 	
+	public function Show () : Void 
+	{
+		showMe = ! showMe;
+		if (showMe)
+		{
+			Open();
+		}
+		else
+		{
+			Close();
+		}
+	}
+	
+	private function Open() : Void 
+	{
+		
+	}
+	private function Close() : Void 
+	{
+		
+	}
+	
 	override public function update () : Void 
 	{
 		if (showMe)
@@ -666,11 +690,6 @@ class SkillTree extends FlxSpriteGroup
 		}
 		ActivateDeactivateLevelUpSkills();
 		calculateSkillBoni();
-		
-		if (FlxG.keys.justPressed.C)
-		{
-			showMe = ! showMe;
-		}
 		
 		cooldown_PowerShoot -= FlxG.elapsed;
 		cooldown_PowerShield -= FlxG.elapsed;

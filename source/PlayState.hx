@@ -4,6 +4,7 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.plugin.MouseEventManager;
 import flixel.text.FlxText;
 import flixel.tile.FlxTile;
 import flixel.tweens.FlxTween;
@@ -79,7 +80,12 @@ class PlayState extends FlxState
 		#end
 		
 		_overlay.scrollFactor.set();
+		
 	}
+	
+	
+	
+	
 	
 	public function cleanUp ()  : Void 
 	{
@@ -326,13 +332,16 @@ class PlayState extends FlxState
 	{
 		_overlay.update();
 		skillz.update();
-		
+		player.getInputMenu();
 		if (!_ending && !switching )
 		{
+		
 			if (!player.alive)
 			{
 				endGame();
 			}
+			
+			
 			
 			if (!skillz.showMe)
 			{
@@ -351,8 +360,13 @@ class PlayState extends FlxState
 				
 				ChangeLevel();
 			}
-		
+			
+			
+			
 		}
+		
+		
+		
 	}
 	
 	public function spawnPowerBallExplosion(p : Projectile)

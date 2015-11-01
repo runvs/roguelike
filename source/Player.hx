@@ -1,8 +1,10 @@
 package;
 
 import flixel.FlxG;
+import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.group.FlxTypedGroup;
+import flixel.plugin.MouseEventManager;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -49,7 +51,7 @@ class Player extends Creature
 	var effectFGYellow : FlxSprite;
 	var effectBGYellow : FlxSprite;
 	
-	var levelUpSprite : FlxSprite;
+	public var levelUpSprite : FlxSprite;
 	
 	public function new() 
 	{
@@ -61,9 +63,12 @@ class Player extends Creature
 		levelUpSprite.loadGraphic(AssetPaths.levelup__png, false, 16, 16);
 		levelUpSprite.setPosition(FlxG.width - 32 - 10, FlxG.height-24-32);
 		levelUpSprite.scrollFactor.set();
+		levelUpSprite.origin.set();
+		levelUpSprite.offset.set();
 		levelUpSprite.scale.set(2, 2);
 		levelUpSprite.updateHitbox();
 		FlxTween.tween(levelUpSprite, { alpha: 0.5 }, 0.75, { type:FlxTween.PINGPONG, ease : FlxEase.sineInOut } );
+		
 		
 		skillIconList = new FlxTypedGroup<SkillIcon>();
 		for (i in 1 ... 9 )
@@ -79,6 +84,8 @@ class Player extends Creature
 		skillIconList.members[5].coolDownTime = GameProperties.Skills_BoostRegen_CoolDown;
 		skillIconList.members[6].coolDownTime = GameProperties.Skills_BoostAgi_Cooldown;
 		skillIconList.members[7].coolDownTime = GameProperties.Skills_BoostExp_Cooldown;
+		
+		
 		
 		this.loadGraphic(AssetPaths.Player__png, true, 32, 32);
 		this.animation.add("idle", [0, 1], 3, true);
@@ -147,7 +154,20 @@ class Player extends Creature
 		effectFGYellow.animation.add("cast", [4,5,6,7,8], 10, true);
 		
 		
+		MouseEventManager.add(levelUpSprite, OpenSkills);
 		
+	}
+	
+	private function OpenSkills(o : FlxObject = null)
+	{
+		skillz.Show();
+		MouseEventManager.remove(levelUpSprite);
+	}
+	
+	private function CloseSkills (o:FlxObject = null) : Void 
+	{
+		skillz.Show();
+		MouseEventManager.add(levelUpSprite, OpenSkills);
 	}
 	
 	public function setSkills (sk : SkillTree)
@@ -382,6 +402,22 @@ class Player extends Creature
 		
 	}
 	
+	public function getInputMenu() : Void 
+	{
+			
+		if (FlxG.keys.justPressed.C)
+		{
+			if (skillz.showMe)
+			{
+				CloseSkills();
+			}
+			else
+			{
+				OpenSkills();
+			}
+		}
+	}
+	
 	private function getInput () : Void 
 	{
 		
@@ -390,6 +426,9 @@ class Player extends Creature
 		getInputSkills();
 		
 		EffectAnimations();
+		
+	
+			
 		
 	}
 
