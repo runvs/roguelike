@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
 import flixel.util.FlxColorUtil;
@@ -19,8 +20,10 @@ class CharsheetIcon extends FlxSprite
 	
 	public var hitbox : FlxSprite;
 	
+	public var tooltip : FlxText;
 	
-	public function new(X:Float=0, Y:Float=0, graphic:Dynamic, skillname :String = "") 
+	
+	public function new(X:Float=0, Y:Float=0, graphic:Dynamic, skillname :String = "", tip : String = "") 
 	{
 		super(X, Y);
 		this.loadGraphic(graphic, false, 16, 16);
@@ -39,6 +42,9 @@ class CharsheetIcon extends FlxSprite
 		maxLevel = 5;
 		currentLevel = 0;
 		skillName = skillname;
+		
+		tooltip = new FlxText(x, y, 150, tip);
+		tooltip.scrollFactor.set();
 	}
 	
 	
@@ -58,6 +64,32 @@ class CharsheetIcon extends FlxSprite
 		
 		text.color = this.color;
 		
+		
+		
+		if (hitbox.overlapsPoint(FlxG.mouse, true))
+		{
+			tooltip.alpha = 1.0;
+			tooltip.x = FlxG.mouse.screenX;
+			tooltip.y = FlxG.mouse.screenY; 
+			
+			var ovx : Float = tooltip.x + tooltip.width - FlxG.width;
+			var ovy : Float = tooltip.y + tooltip.height- FlxG.height;
+			
+			if (ovx  > 0)
+			{
+				tooltip.x -= ovx;
+			}
+			if (ovy > 0 )
+			{
+				tooltip.y -= ovy;
+			}
+			
+		}
+		else
+		{
+			tooltip.alpha = 0.0;
+		}
+		
 	}
 	
 	public override function draw () : Void 
@@ -65,6 +97,12 @@ class CharsheetIcon extends FlxSprite
 		hitbox.draw();
 		super.draw();
 		text.draw();
+		
+	}
+	
+	public function drawToolTip() : Void 
+	{
+		tooltip.draw();
 	}
 	
 	
