@@ -684,8 +684,6 @@ class SkillTree extends FlxSpriteGroup
 			btn_Wi.drawToolTip();
 			btn_Lk.drawToolTip();
 		}
-		
-		
 	}
 	
 	public function Show () : Void 

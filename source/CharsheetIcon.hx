@@ -69,8 +69,8 @@ class CharsheetIcon extends FlxSprite
 		if (hitbox.overlapsPoint(FlxG.mouse, true))
 		{
 			tooltip.alpha = 1.0;
-			tooltip.x = FlxG.mouse.screenX;
-			tooltip.y = FlxG.mouse.screenY; 
+			tooltip.x = FlxG.mouse.screenX + 16;
+			tooltip.y = FlxG.mouse.screenY + 16; 
 			
 			var ovx : Float = tooltip.x + tooltip.width - FlxG.width;
 			var ovy : Float = tooltip.y + tooltip.height- FlxG.height;

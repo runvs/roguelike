@@ -32,7 +32,7 @@ class GameProperties
 	
 	// Tier 1
 	public static var Skills_PowerHit_CoolDown : Float = 5;
-	public static var Skills_PowerHit_DamagePerLevel : Int = 5;
+	public static var Skills_PowerHit_DamagePerLevel : Int = 6;
 	public static var Skills_PowerHitMPCost : Int = 5; 
 	
 	// Tier 2
@@ -57,7 +57,7 @@ class GameProperties
 	public static var Skills_BoostRegen_CoolDown : Float = 3;
 	public static var Skills_BoostRegen_LifeTime : Float = 2;
 	public static var Skills_BoostRegen_GainPerTickPerLevel : Int = 1;
-	public static var Skills_BoostRegenMPCost : Int = 8; 
+	public static var Skills_BoostRegenMPCost : Int = 7; 
 	
 	// Tier 2
 	public static var Skills_BoostAgi_Cooldown : Float = 20;
@@ -83,9 +83,9 @@ class GameProperties
 	public static var Enemy_AggroRadius : Int = Tile_Size * 3;
 	public static var Enemy_AttackTimer : Float = 0.75;
 	public static var Enemy_BaseXP : Int = 9;
-	public static var Enemy_HP_Base : Int = 10;
-	public static var Enemy_HP_PerLevel : Int = 6;
-	public static var Enemy_HP_PerLevel_Exponent : Float = 1.5;
+	public static var Enemy_HP_Base : Int = 8;
+	public static var Enemy_HP_PerLevel : Int = 4 ;
+	public static var Enemy_HP_PerLevel_Exponent : Float = 1.3;
 	
 	public static var Color_Red : Int  = FlxColorUtil.makeFromARGB(1.0, 203, 65, 58);
 	public static var Color_Green : Int  = FlxColorUtil.makeFromARGB(1.0, 70, 148, 80);

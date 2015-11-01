@@ -222,7 +222,7 @@ class PlayerProperties
 		MPRegenTimer -= FlxG.elapsed;
 		if (MPRegenTimer <= 0)
 		{
-			MPRegenTimer = MPRegenTimerMax * (10/(1+Wi));
+			MPRegenTimer = MPRegenTimerMax * (9/(1+Wi));
 			currentMP += 1;
 		}
 	}
