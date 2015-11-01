@@ -18,19 +18,19 @@ class SkillTree extends FlxSpriteGroup
 	
 	public var showMe : Bool = false;
 	
-	private var btn_PowerShoot: FlxSprite;
-	private var btn_PowerShield: FlxSprite;
-	private var btn_PowerHit: FlxSprite;
-	private var btn_PowerBall: FlxSprite;
-	private var btn_PowerArmor: FlxSprite;
+	private var btn_PowerShoot: CharsheetSkillIcon;
+	private var btn_PowerShield: CharsheetSkillIcon;
+	private var btn_PowerHit: CharsheetSkillIcon;
+	private var btn_PowerBall: CharsheetSkillIcon;
+	private var btn_PowerArmor: CharsheetSkillIcon;
 	
-	private var btn_NaniteArmor : FlxSprite;
-	private var btn_NaniteHealth : FlxSprite;
-	private var btn_NaniteWeapon : FlxSprite;
+	private var btn_NaniteArmor : CharsheetSkillIcon;
+	private var btn_NaniteHealth : CharsheetSkillIcon;
+	private var btn_NaniteWeapon : CharsheetSkillIcon;
 	
-	private var btn_BoostRegen : FlxSprite;
-	private var btn_BoostAgi : FlxSprite;
-	private var btn_BoostExp : FlxSprite;
+	private var btn_BoostRegen : CharsheetSkillIcon;
+	private var btn_BoostAgi : CharsheetSkillIcon;
+	private var btn_BoostExp : CharsheetSkillIcon;
 	
 	
 	
@@ -107,62 +107,28 @@ class SkillTree extends FlxSpriteGroup
 		active_BoostAgi= false;
 		active_BoostExp = false;
 		
+		var skillOffsetX : Float = 20 + 256;
+		var skillOffsetXRow2 : Float = 75;
+		var skillOffsetXRow3 : Float = 150;
 		
-		btn_PowerHit = new FlxSprite(200, 40);
-		btn_PowerHit.loadGraphic(AssetPaths.skill_1__png, false, 16, 16);
-		btn_PowerHit.setSize(32, 32);
-		btn_PowerHit.updateHitbox();
+		var skillOffsetY : Float = 100;
+		var skillOffsetHalfColumn : Float = 30;
+		var skillOffsetYColumn2 : Float = 115;
+		var skillOffsetYColumn3 : Float = 190;
 		
+		btn_PowerHit = new CharsheetSkillIcon(skillOffsetX, skillOffsetY, AssetPaths.skill_1__png, "Power Hit");
+		btn_PowerShoot = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow2 , skillOffsetY - skillOffsetHalfColumn, AssetPaths.skill_2__png, "Power Shoot");	
+		btn_PowerShield = new CharsheetSkillIcon( skillOffsetX + skillOffsetXRow2, skillOffsetY + skillOffsetHalfColumn, AssetPaths.skill_3__png, "Power Shield");
+		btn_PowerBall = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow3, skillOffsetY - skillOffsetHalfColumn, AssetPaths.skill_4__png, "Power Ball");
+		btn_PowerArmor = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow3, skillOffsetY + skillOffsetHalfColumn, AssetPaths.skill_5__png, "Power Armor");
 			
-		btn_PowerShoot = new FlxSprite(200, 40);
-		btn_PowerShoot.loadGraphic(AssetPaths.skill_1__png, false, 16, 16);
-		btn_PowerShoot.setSize(32, 32);
-		btn_PowerShoot.updateHitbox();
-			
-		btn_PowerShield = new FlxSprite(200, 40);
-		btn_PowerShield.loadGraphic(AssetPaths.skill_1__png, false, 16, 16);
-		btn_PowerShield.setSize(32, 32);
-		btn_PowerShield.updateHitbox();
-			
-		btn_PowerBall = new FlxSprite(200, 40);
-		btn_PowerBall.loadGraphic(AssetPaths.skill_1__png, false, 16, 16);
-		btn_PowerBall.setSize(32, 32);
-		btn_PowerBall.updateHitbox();
-			
-		btn_BoostRegen = new FlxSprite(200, 40);
-		btn_BoostRegen.loadGraphic(AssetPaths.skill_1__png, false, 16, 16);
-		btn_BoostRegen.setSize(32, 32);
-		btn_BoostRegen.updateHitbox();
-			
-		btn_BoostAgi = new FlxSprite(200, 40);
-		btn_BoostAgi.loadGraphic(AssetPaths.skill_1__png, false, 16, 16);
-		btn_BoostAgi.setSize(32, 32);
-		btn_BoostAgi.updateHitbox();
-			
-		btn_BoostExp = new FlxSprite(200, 40);
-		btn_BoostExp.loadGraphic(AssetPaths.skill_1__png, false, 16, 16);
-		btn_BoostExp.setSize(32, 32);
-		btn_BoostExp.updateHitbox();
-			
-		btn_NaniteWeapon = new FlxSprite(200, 40);
-		btn_NaniteWeapon.loadGraphic(AssetPaths.skill_1__png, false, 16, 16);
-		btn_NaniteWeapon.setSize(32, 32);
-		btn_NaniteWeapon.updateHitbox();
-			
-		btn_NaniteHealth = new FlxSprite(200, 40);
-		btn_NaniteHealth.loadGraphic(AssetPaths.skill_1__png, false, 16, 16);
-		btn_NaniteHealth.setSize(32, 32);
-		btn_NaniteHealth.updateHitbox();
-			
-		btn_NaniteArmor = new FlxSprite(200, 40);
-		btn_NaniteArmor.loadGraphic(AssetPaths.skill_1__png, false, 16, 16);
-		btn_NaniteArmor.setSize(32, 32);
-		btn_NaniteArmor.updateHitbox();
-			
-		btn_PowerArmor = new FlxSprite(200, 40);
-		btn_PowerArmor.loadGraphic(AssetPaths.skill_1__png, false, 16, 16);
-		btn_PowerArmor.setSize(32, 32);
-		btn_PowerArmor.updateHitbox();
+		btn_BoostRegen = new CharsheetSkillIcon(skillOffsetX , skillOffsetY + skillOffsetYColumn2, AssetPaths.skill_6__png, "Boost Regen");	
+		btn_BoostAgi = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow2, skillOffsetY + skillOffsetYColumn2,AssetPaths.skill_7__png, "Boost Agi");	
+		btn_BoostExp = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow3, skillOffsetY + skillOffsetYColumn2,AssetPaths.skill_8__png, "Boost Exp");
+		
+		btn_NaniteArmor = new CharsheetSkillIcon(skillOffsetX, skillOffsetY + skillOffsetYColumn3, AssetPaths.skill_9__png, "Nanite Armor");
+		btn_NaniteHealth = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow2, skillOffsetY + skillOffsetYColumn3,AssetPaths.skill_10__png, "Nanite Health");
+		btn_NaniteWeapon = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow3 , skillOffsetY + skillOffsetYColumn3,AssetPaths.skill_11__png, "Nanite Weapon");
 		
 		btn_St = new FlxButton(-60, 85, "Str", upgradeSt);
 		btn_St.scale.set(1, 0.9);
@@ -185,21 +151,6 @@ class SkillTree extends FlxSpriteGroup
 		add(btn_En);
 		add(btn_Wi);
 		add(btn_Lk);
-		
-		
-		add(btn_PowerShoot);
-		add(btn_PowerShield);
-		add(btn_PowerHit);
-		add(btn_PowerBall);
-		add(btn_PowerArmor);
-		
-		add(btn_NaniteArmor);
-		add(btn_NaniteHealth);
-		add(btn_NaniteWeapon);
-		
-		add(btn_BoostRegen);
-		add(btn_BoostAgi);
-		add(btn_BoostExp);
 		
 		text_Skillpoints = new FlxText(40, 50, 400, "");
 		text_Skillpoints.scale.set(1.5, 1.5);
@@ -266,7 +217,7 @@ class SkillTree extends FlxSpriteGroup
 		{
 			_properties.skillPoints -= 1;
 			PowerShoot += 1;
-			//btn_PowerShoot.text = "Power Shot " + Std.string(PowerShoot) + "/5";
+			btn_PowerShoot.currentLevel = PowerShoot;
 		}
 	}
 	public function upgrade_PowerShield(o :FlxObject) : Void 
@@ -275,7 +226,7 @@ class SkillTree extends FlxSpriteGroup
 		{
 			_properties.skillPoints -= 1;
 			PowerShield += 1;
-			//btn_PowerShield.text = "Power Shield " + Std.string(PowerShield) + "/5";
+			btn_PowerShield.currentLevel = PowerShield;
 		}
 	}
 	public function upgrade_PowerHit(o :FlxObject) : Void 
@@ -284,7 +235,7 @@ class SkillTree extends FlxSpriteGroup
 		{
 			_properties.skillPoints -= 1;
 			PowerHit += 1;
-			//btn_PowerHit.text = "Power Hit " + Std.string(PowerHit) + "/5";
+			btn_PowerHit.currentLevel = PowerHit;
 		}
 	}
 	public function upgrade_PowerBall(o :FlxObject) : Void 
@@ -293,7 +244,7 @@ class SkillTree extends FlxSpriteGroup
 		{
 			_properties.skillPoints -= 1;
 			PowerBall += 1;
-		//	btn_PowerBall.text = "Power Ball " + Std.string(PowerBall) + "/5";
+			btn_PowerBall.currentLevel = PowerBall;
 		}
 	}
 	public function upgrade_PowerArmor(o :FlxObject) : Void 
@@ -302,7 +253,7 @@ class SkillTree extends FlxSpriteGroup
 		{
 			_properties.skillPoints -= 1;
 			PowerArmor += 1;
-			//btn_PowerArmor.text = "Power Armor " + Std.string(PowerArmor) + "/5";
+			btn_PowerArmor.currentLevel = PowerArmor;
 		}
 	}
 	
@@ -312,7 +263,7 @@ class SkillTree extends FlxSpriteGroup
 		{
 			_properties.skillPoints -= 1;
 			NaniteArmor += 1;
-			//btn_NaniteArmor.text = "Nanite Armor " + Std.string(NaniteArmor) + "/5";
+			btn_NaniteArmor.currentLevel = NaniteArmor;
 		}
 	}
 	public function upgrade_NaniteHealth(o :FlxObject) : Void 
@@ -321,7 +272,7 @@ class SkillTree extends FlxSpriteGroup
 		{
 			_properties.skillPoints -= 1;
 			NaniteHealth += 1;
-			//btn_NaniteHealth.text = "Nanite Health " + Std.string(NaniteHealth) + "/5";
+			btn_NaniteHealth.currentLevel = NaniteHealth;
 		}
 	}
 	public function upgrade_NaniteWeapon(o :FlxObject) : Void 
@@ -330,7 +281,7 @@ class SkillTree extends FlxSpriteGroup
 		{
 			_properties.skillPoints -= 1;
 			NaniteWeapon += 1;
-			//btn_NaniteWeapon.text = "Nanite Weapon " + Std.string(NaniteWeapon) + "/5";
+			btn_NaniteWeapon.currentLevel = NaniteWeapon;
 		}
 	}
 	
@@ -341,7 +292,7 @@ class SkillTree extends FlxSpriteGroup
 		{
 			_properties.skillPoints -= 1;
 			BoostRegen += 1;
-			//btn_BoostRegen.text = "Boost Regen " + Std.string(BoostRegen) + "/5";
+			btn_BoostRegen.currentLevel = BoostRegen;
 		}
 	}
 	public function upgrade_BoostAgi(o :FlxObject) : Void 
@@ -350,7 +301,7 @@ class SkillTree extends FlxSpriteGroup
 		{
 			_properties.skillPoints -= 1;
 			BoostAgi += 1;
-			//btn_BoostAgi.text = "Boost Agi " + Std.string(BoostAgi) + "/5";
+			btn_BoostAgi.currentLevel = BoostAgi;
 		}
 	}
 	public function upgrade_BoostExp(o :FlxObject) : Void 
@@ -359,7 +310,7 @@ class SkillTree extends FlxSpriteGroup
 		{
 			_properties.skillPoints -= 1;
 			BoostExp += 1;
-			//btn_BoostExp.text = "Boost Exp " + Std.string(BoostExp) + "/5";
+			btn_BoostExp.currentLevel = BoostExp;
 		}
 	}
 	
@@ -661,7 +612,22 @@ class SkillTree extends FlxSpriteGroup
 		if (showMe)
 		{
 			super.draw();
+			
+			btn_PowerHit.draw();		
+			btn_PowerShoot.draw();
+			btn_PowerShield.draw();
+			btn_PowerBall.draw();
+			btn_PowerArmor.draw();
+			btn_NaniteWeapon.draw();
+			btn_NaniteHealth.draw();
+			btn_NaniteArmor.draw();
+			btn_BoostAgi.draw();
+			btn_BoostExp.draw();
+			btn_BoostRegen.draw();
+
 		}
+		
+		
 		
 		
 		
@@ -734,7 +700,8 @@ class SkillTree extends FlxSpriteGroup
 			" = " + Std.string(_properties.baseDamage) + " + " + Std.string(_properties.skillDamage + _properties.skillPowerHitDamage) + "\n" ;
 			
 			text_Skillpoints.text = text_Skillpoints.text + "Defence:\t" + GameProperties.floatToStringPrecision(_properties.getDefense(), 2) + 
-			" = " + GameProperties.floatToStringPrecision(_properties.baseDefense ,2)+ " + " + GameProperties.floatToStringPrecision((_properties.skillPowerArmorDefense + _properties.skillDefense),2) + "\n" ;
+			" = " + GameProperties.floatToStringPrecision(_properties.baseDefense , 2) + " + " + GameProperties.floatToStringPrecision((_properties.skillPowerArmorDefense + _properties.skillDefense), 2) + "\n" ;
+			
 		}
 		ActivateDeactivateLevelUpSkills();
 		calculateSkillBoni();
@@ -749,6 +716,20 @@ class SkillTree extends FlxSpriteGroup
 		cooldown_BoostAgi -= FlxG.elapsed;
 		
 		CheckSkillLifeTime();
+		
+		btn_PowerHit.update();		
+		btn_PowerShoot.update();
+		btn_PowerShield.update();
+		btn_PowerBall.update();
+		btn_PowerArmor.update();
+		btn_NaniteWeapon.update();
+		btn_NaniteHealth.update();
+		btn_NaniteArmor.update();
+		btn_BoostAgi.update();
+		btn_BoostExp.update();
+		btn_BoostRegen.update();
+
+		
 	}
 	
 	
