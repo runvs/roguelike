@@ -7,7 +7,7 @@ import flixel.text.FlxText;
  * ...
  * @author 
  */
-class CharsheetSkillIcon extends FlxSprite
+class CharsheetIcon extends FlxSprite
 {
 	
 	public var text : FlxText;

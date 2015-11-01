@@ -18,19 +18,19 @@ class SkillTree extends FlxSpriteGroup
 	
 	public var showMe : Bool = false;
 	
-	private var btn_PowerShoot: CharsheetSkillIcon;
-	private var btn_PowerShield: CharsheetSkillIcon;
-	private var btn_PowerHit: CharsheetSkillIcon;
-	private var btn_PowerBall: CharsheetSkillIcon;
-	private var btn_PowerArmor: CharsheetSkillIcon;
+	private var btn_PowerShoot: CharsheetIcon;
+	private var btn_PowerShield: CharsheetIcon;
+	private var btn_PowerHit: CharsheetIcon;
+	private var btn_PowerBall: CharsheetIcon;
+	private var btn_PowerArmor: CharsheetIcon;
 	
-	private var btn_NaniteArmor : CharsheetSkillIcon;
-	private var btn_NaniteHealth : CharsheetSkillIcon;
-	private var btn_NaniteWeapon : CharsheetSkillIcon;
+	private var btn_NaniteArmor : CharsheetIcon;
+	private var btn_NaniteHealth : CharsheetIcon;
+	private var btn_NaniteWeapon : CharsheetIcon;
 	
-	private var btn_BoostRegen : CharsheetSkillIcon;
-	private var btn_BoostAgi : CharsheetSkillIcon;
-	private var btn_BoostExp : CharsheetSkillIcon;
+	private var btn_BoostRegen : CharsheetIcon;
+	private var btn_BoostAgi : CharsheetIcon;
+	private var btn_BoostExp : CharsheetIcon;
 	
 	
 	
@@ -126,19 +126,19 @@ class SkillTree extends FlxSpriteGroup
 		var skillOffsetYColumn2 : Float = 115;
 		var skillOffsetYColumn3 : Float = 190;
 		
-		btn_PowerHit = new CharsheetSkillIcon(skillOffsetX, skillOffsetY, AssetPaths.skill_1__png, "Power Hit");
-		btn_PowerShoot = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow2 , skillOffsetY - skillOffsetHalfColumn, AssetPaths.skill_2__png, "Power Shoot");	
-		btn_PowerShield = new CharsheetSkillIcon( skillOffsetX + skillOffsetXRow2, skillOffsetY + skillOffsetHalfColumn, AssetPaths.skill_3__png, "Power Shield");
-		btn_PowerBall = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow3, skillOffsetY - skillOffsetHalfColumn, AssetPaths.skill_4__png, "Power Ball");
-		btn_PowerArmor = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow3, skillOffsetY + skillOffsetHalfColumn, AssetPaths.skill_5__png, "Power Armor");
+		btn_PowerHit = new CharsheetIcon(skillOffsetX, skillOffsetY, AssetPaths.skill_1__png, "Power Hit");
+		btn_PowerShoot = new CharsheetIcon(skillOffsetX + skillOffsetXRow2 , skillOffsetY - skillOffsetHalfColumn, AssetPaths.skill_2__png, "Power Shoot");	
+		btn_PowerShield = new CharsheetIcon( skillOffsetX + skillOffsetXRow2, skillOffsetY + skillOffsetHalfColumn, AssetPaths.skill_3__png, "Power Shield");
+		btn_PowerBall = new CharsheetIcon(skillOffsetX + skillOffsetXRow3, skillOffsetY - skillOffsetHalfColumn, AssetPaths.skill_4__png, "Power Ball");
+		btn_PowerArmor = new CharsheetIcon(skillOffsetX + skillOffsetXRow3, skillOffsetY + skillOffsetHalfColumn, AssetPaths.skill_5__png, "Power Armor");
 			
-		btn_BoostRegen = new CharsheetSkillIcon(skillOffsetX , skillOffsetY + skillOffsetYColumn2, AssetPaths.skill_6__png, "Boost Regen");	
-		btn_BoostAgi = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow2, skillOffsetY + skillOffsetYColumn2,AssetPaths.skill_7__png, "Boost Agi");	
-		btn_BoostExp = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow3, skillOffsetY + skillOffsetYColumn2,AssetPaths.skill_8__png, "Boost Exp");
+		btn_BoostRegen = new CharsheetIcon(skillOffsetX , skillOffsetY + skillOffsetYColumn2, AssetPaths.skill_6__png, "Boost Regen");	
+		btn_BoostAgi = new CharsheetIcon(skillOffsetX + skillOffsetXRow2, skillOffsetY + skillOffsetYColumn2,AssetPaths.skill_7__png, "Boost Agi");	
+		btn_BoostExp = new CharsheetIcon(skillOffsetX + skillOffsetXRow3, skillOffsetY + skillOffsetYColumn2,AssetPaths.skill_8__png, "Boost Exp");
 		
-		btn_NaniteArmor = new CharsheetSkillIcon(skillOffsetX, skillOffsetY + skillOffsetYColumn3, AssetPaths.skill_9__png, "Nanite Armor");
-		btn_NaniteHealth = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow2, skillOffsetY + skillOffsetYColumn3,AssetPaths.skill_10__png, "Nanite Health");
-		btn_NaniteWeapon = new CharsheetSkillIcon(skillOffsetX + skillOffsetXRow3 , skillOffsetY + skillOffsetYColumn3,AssetPaths.skill_11__png, "Nanite Weapon");
+		btn_NaniteArmor = new CharsheetIcon(skillOffsetX, skillOffsetY + skillOffsetYColumn3, AssetPaths.skill_9__png, "Nanite Armor");
+		btn_NaniteHealth = new CharsheetIcon(skillOffsetX + skillOffsetXRow2, skillOffsetY + skillOffsetYColumn3,AssetPaths.skill_10__png, "Nanite Health");
+		btn_NaniteWeapon = new CharsheetIcon(skillOffsetX + skillOffsetXRow3 , skillOffsetY + skillOffsetYColumn3,AssetPaths.skill_11__png, "Nanite Weapon");
 		
 		btn_St = new FlxButton(-60, 85, "Str", upgradeSt);
 		btn_St.scale.set(1, 0.9);
