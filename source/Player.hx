@@ -52,6 +52,7 @@ class Player extends Creature
 	var effectBGYellow : FlxSprite;
 	
 	public var levelUpSprite : FlxSprite;
+	public var charsheetSprite : FlxSprite;
 	
 	public function new() 
 	{
@@ -68,6 +69,11 @@ class Player extends Creature
 		levelUpSprite.scale.set(2, 2);
 		levelUpSprite.updateHitbox();
 		FlxTween.tween(levelUpSprite, { alpha: 0.5 }, 0.75, { type:FlxTween.PINGPONG, ease : FlxEase.sineInOut } );
+		
+		charsheetSprite = new FlxSprite();
+		charsheetSprite.loadGraphic(AssetPaths.opencharsheet__png, false, 32, 32);
+		charsheetSprite.scrollFactor.set();
+		charsheetSprite.setPosition(FlxG.width - 32 - 10, FlxG.height-24-32);
 		
 		
 		skillIconList = new FlxTypedGroup<SkillIcon>();
@@ -154,20 +160,20 @@ class Player extends Creature
 		effectFGYellow.animation.add("cast", [4,5,6,7,8], 10, true);
 		
 		
-		MouseEventManager.add(levelUpSprite, OpenSkills);
+		MouseEventManager.add(charsheetSprite, OpenSkills);
 		
 	}
 	
 	private function OpenSkills(o : FlxObject = null)
 	{
 		skillz.Show();
-		MouseEventManager.remove(levelUpSprite);
+		MouseEventManager.remove(charsheetSprite);
 	}
 	
 	private function CloseSkills (o:FlxObject = null) : Void 
 	{
 		skillz.Show();
-		MouseEventManager.add(levelUpSprite, OpenSkills);
+		MouseEventManager.add(charsheetSprite, OpenSkills);
 	}
 	
 	public function setSkills (sk : SkillTree)
@@ -195,8 +201,13 @@ class Player extends Creature
 		ExpBar.draw();
 		
 		
+		
 		// level up sprite
-		if ( properties.skillPoints > 0 || properties.attributePoints > 0)
+		if ( !(properties.skillPoints > 0 || properties.attributePoints > 0))
+		{
+			charsheetSprite.draw();
+		}
+		else
 		{
 			levelUpSprite.draw();
 		}
@@ -212,6 +223,9 @@ class Player extends Creature
 		{
 			alive = false;
 		}
+		
+		charsheetSprite.update();
+		levelUpSprite.update();
 		
 		
 		effectFGRed.setPosition(x, y);
