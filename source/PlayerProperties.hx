@@ -178,7 +178,7 @@ class PlayerProperties
 		{
 			level += 1;
 			skillPoints += 1;
-			attributePoints += GameProperties.;
+			attributePoints += GameProperties.Player_AttributePointsPerLevelUp;
 			experienceLevelUpLast = experienceLevelUp;
 			experienceLevelUp = Std.int(experienceLevelUp * GameProperties.Player_experienceLevelUpFactor);
 		}
