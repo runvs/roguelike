@@ -17,6 +17,8 @@ Anderes Zeug:
  * Zum Charsheet: Hier sollten wir uns nochmal zusammensetzen bezüglich der genauen Position der Buttons (Skills/Attribute), damit das auch alles anständig ausschaut
  
  * zum Charsheet: Farben. da sollten wir vll nochmal kurz schauen, dass ich die korrekten Farben verwende.
+ 
+ * projectile2.png : Ist das Projektil für den Power Ball. Größe (16x16) und Länge (3 Frames) der Animation wie bei projectile.png.
 
 Grüße,
 Simon

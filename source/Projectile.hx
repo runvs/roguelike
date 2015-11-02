@@ -21,9 +21,7 @@ class Projectile extends FlxSprite
 		_state = state;
 		_level = level;
 		_type  = type;
-		this.loadGraphic(AssetPaths.Projectile__png, true, 16, 16);
-		this.animation.add("normal", [0, 1, 2], 4);
-		this.animation.play("normal");
+		
 		
 		this.origin.set(8, 8);
 		
@@ -41,10 +39,16 @@ class Projectile extends FlxSprite
 		if (type)
 		{
 			damage = Std.int(1 + GameProperties.Skills_PowerShootDamagePerLevel * level);
+			this.loadGraphic(AssetPaths.Projectile__png, true, 16, 16);
+			this.animation.add("normal", [0, 1, 2], 4);
+			this.animation.play("normal");
 		}
 		else 
 		{
-			damage = 10;		
+			damage = 10;	
+			this.loadGraphic(AssetPaths.Projectile2__png, true, 16, 16);
+			this.animation.add("normal", [0, 1, 2], 4);
+			this.animation.play("normal");
 		}
 	}
 	
