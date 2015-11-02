@@ -16,8 +16,8 @@ class GameProperties
 	public static var World_PathfinderTimerMax : Float = 1;
 	
 	public static var Skills_Level1 : Int = 1;	// obviously
-	public static var Skills_Level2 : Int = 6;
-	public static var Skills_Level3 : Int = 14;
+	public static var Skills_Level2 : Int = 8;
+	public static var Skills_Level3 : Int = 17;
 	
 	// Tier 1
 	public static var Skills_NaniteArmor_FactorPerLevel : Float = 0.05;
@@ -32,14 +32,14 @@ class GameProperties
 	
 	// Tier 1
 	public static var Skills_PowerHit_CoolDown : Float = 5;
-	public static var Skills_PowerHit_DamagePerLevel : Int = 6;
+	public static var Skills_PowerHit_DamagePerLevel : Int = 7;
 	public static var Skills_PowerHitMPCost : Int = 5; 
 	
 	// Tier 2
-	public static var Skills_PowerShoot_CoolDown : Float = 5;
+	public static var Skills_PowerShoot_CoolDown : Float = 3.5;
 	public static var Skills_PowerShootMPCost : Int = 5; 
-	public static var Skills_PowerShootSpeed : Float = 200;
-	public static var Skills_PowerShootDamagePerLevel : Int = 3;
+	public static var Skills_PowerShootSpeed : Float = 250;
+	public static var Skills_PowerShootDamagePerLevel : Int = 7;
 	
 	public static var Skills_PowerShield_CoolDown : Float = 5;
 	public static var Skills_PowerShieldMPCost : Int = 5; 
@@ -54,8 +54,8 @@ class GameProperties
 	public static var Skills_PowerArmorMPCost : Int = 5; 
 	
 	// Tier 1
-	public static var Skills_BoostRegen_CoolDown : Float = 3;
-	public static var Skills_BoostRegen_LifeTime : Float = 2;
+	public static var Skills_BoostRegen_CoolDown : Float = 5;
+	public static var Skills_BoostRegen_LifeTime : Float = 3;
 	public static var Skills_BoostRegen_GainPerTickPerLevel : Int = 1;
 	public static var Skills_BoostRegenMPCost : Int = 7; 
 	
@@ -79,6 +79,8 @@ class GameProperties
 	public static var Player_experienceLevelUpFactor : Float = 1.3;
 	
 	public static var Player_AttackPushBackVelocity : Float = 1500;
+	
+	public static var Player_AttributePointsPerLevelUp : Int = 3;
 	
 	public static var Enemy_AggroRadius : Int = Tile_Size * 3;
 	public static var Enemy_AttackTimer : Float = 0.75;
