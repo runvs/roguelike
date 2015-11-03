@@ -18,16 +18,18 @@ class BasicEnemy extends Creature
 	private var randomwalkTimer : Float;
 	private var randomWalkDirection : Int;
 	
-	private var walkTarget : FlxObject;
-	
 	private var attackTimer : Float;
+	private var doAttack : Bool;
 	
 	public var properties : EnemyPropeties;
-	public var doRandomWalk:Bool;
 
 	public var playerX : Float;
 	public var playerY : Float;
 
+	private var player : Player;
+	private var state : PlayState;
+	
+	public var type : Int ;
 	public function new(l:Int) 
 	{
 		super();
@@ -36,30 +38,36 @@ class BasicEnemy extends Creature
 		accelFactor = 0.75;
 		playerX = 0;
 		playerY = 0;
+		player = null;
 		
-		makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.RED);
-		
+		makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColor.RED);
 		
 		attackTimer = GameProperties.Enemy_AttackTimer;
 		
-		doRandomWalk = true;
 		randomwalkTimer = 1.5;
 		randomWalkDirection = FlxRandom.intRanged(0, 3);
 		this.drag = new FlxPoint( GameProperties.Player_VelocityDecay, GameProperties.Player_VelocityDecay);
 		this.maxVelocity = new FlxPoint(GameProperties.Player_MaxSpeed * 0.5,  GameProperties.Player_MaxSpeed * 0.5);
 	}
 	
-	public function setPlayerPosition (px : Float, py :Float) : Void 
+	public function setState (s : PlayState) : Void 
 	{
-		playerX = px;
-		playerY = py;
+		state = s;
+		player  = s.player;
+		playerX = s.player.x;
+		playerY = s.player.y;
 	}
 	
 	override  public function update ()
 	{
+		doAttack = false;
 		if (alive)
 		{
 			acceleration.set(0, 0);
+			if (attackTimer > 0)
+			{
+				attackTimer -= FlxG.elapsed;
+			}
 			doKIStuff();
 		}
 		else
@@ -72,11 +80,6 @@ class BasicEnemy extends Creature
 	public  function doKIStuff()
 	{
 		// dont do anything, override in child classes
-	}
-	
-	public function walkTowards() : Void
-	{
-		walkTarget = new FlxObject(playerX, playerY, 0 , 0);
 	}
 	
 	public function TakeDamage ( d : Int ) : Void 
@@ -99,12 +102,11 @@ class BasicEnemy extends Creature
 		enemy.randomWalkDirection = (enemy.randomWalkDirection + 2) % 4;
 	}
 	
-	public static function handlePlayerCollision(player:Player, enemy:BasicEnemy):Void
+	
+	public function attack () : Void 
 	{
-		if (enemy.attackTimer <= 0.0)
-		{
-			player.properties.takeDamage(enemy.properties.baseDamage);
-			enemy.attackTimer += GameProperties.Enemy_AttackTimer;
-		}
+		//do nothing. has to be overwritten by child classes
 	}
+	
+	
 }

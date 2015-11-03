@@ -22,9 +22,9 @@ import flixel.util.FlxVector;
 class PlayState extends FlxState
 {
 	
-	var level : Level;
+	public var level : Level;
 	var levelNumber : Int;
-	var player : Player;
+	public var player : Player;
 	
 	var skillz : SkillTree;
 	private var _ending : Bool;
@@ -159,7 +159,7 @@ class PlayState extends FlxState
 			}
 			else 
 			{
-				e.setPlayerPosition(player.x, player.y);
+				e.setState(this);
 			}
 		});
 	}
@@ -175,13 +175,25 @@ class PlayState extends FlxState
 			e.TakeDamage(p.damage);
 			p.hit();
 		});
+		
 		FlxG.collide(level.map.walls, player);
 		FlxG.collide(level._grpShields, level._grpEnemies);
 		FlxG.collide(level._grpShields, level._grpParticles);
 		FlxG.collide(level._grpShields, player);
+		
+		FlxG.collide(level._grpEnemyParticles, player, function(p:Projectile, pla:Player)
+		{
+			trace ("take damage");
+			pla.properties.takeDamage(p.damage);
+			p.hit();
+		});
+		FlxG.collide(level.map.walls, level._grpEnemyParticles, function(t:Tile, p:Projectile)
+		{
+			p.hit();
+		});
 	
 		FlxG.collide(level._grpEnemies, level.map.walls, BasicEnemy.handleWallCollision);
-		FlxG.collide(player, level._grpEnemies, BasicEnemy.handlePlayerCollision);
+		//FlxG.collide(player, level._grpEnemies);
 	}
 	
 	function updateLevel():Void 
@@ -341,8 +353,7 @@ class PlayState extends FlxState
 				cleanUp();
 				
 				updateLevel();
-				
-				
+
 				updatePlayer();
 				
 				updateCollisions();

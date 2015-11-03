@@ -12,13 +12,14 @@ class Enemy_CloseCombat extends BasicEnemy
 	public function new(l:Int) 
 	{
 		super(l);
-		doRandomWalk = true;
-		
+
 		loadGraphic(AssetPaths.Enemy__png, true, 32, 32);
 		this.animation.add("idle", [0, 1, 2, 3, 4],FlxRandom.intRanged(4,6));
 		this.animation.add("walk", [5, 6, 7, 8], 5);
 		this.animation.play("idle", false, FlxRandom.intRanged(0, 3));
 		this.animation.add("dead", [9], 30, true);
+		
+		type = 0;
 	}
 	
 	public override function doKIStuff () : Void 
@@ -29,22 +30,35 @@ class Enemy_CloseCombat extends BasicEnemy
 		
 		if (distance <= GameProperties.Enemy_AggroRadius * GameProperties.Enemy_AggroRadius) 
 		{
-			doRandomWalk = false;
-			walkTowards();
+			// move towrads player
+			var xx = playerX - x;
+			var yy = playerY - y;
+			
+			if (xx > 0)
+			{
+				// target to the right
+				moveRight();
+			}
+			else
+			{
+				// target to the left
+				moveLeft();
+			}
+			
+			if (yy > 0)
+			{
+				// target below
+				moveDown();
+			}
+			else
+			{
+				// target above
+				moveUp();
+			}
 		}
 		else
 		{
-			doRandomWalk = true;
-		}
-		
-		
-		if (attackTimer > 0)
-		{
-			attackTimer -= FlxG.elapsed;
-		}
-		
-		if (doRandomWalk)
-		{			
+			// do random walk
 			randomwalkTimer -= FlxG.elapsed;
 			if (randomwalkTimer <= 0)
 			{
@@ -69,35 +83,25 @@ class Enemy_CloseCombat extends BasicEnemy
 				moveRight();
 			}
 		}
-		// walk target is obviously in aggro range
-		else
+		
+		if (FlxG.collide(this, player))
 		{
-			var xx = walkTarget.x - x;
-			var yy = walkTarget.y - y;
-			
-			if (xx > 0)
-			{
-				// target to the right
-				moveRight();
-			}
-			else
-			{
-				// target to the left
-				moveLeft();
-			}
-			
-			if (yy > 0)
-			{
-				// target below
-				moveDown();
-			}
-			else
-			{
-				// target above
-				moveUp();
-			}
+			//trace ("attack me");
+			attack();
 		}
+		
 	}
 	
 	
+	public override function attack () : Void 
+	{
+		if (attackTimer <= 0.0)
+		{
+			if (player != null)
+			{
+				player.properties.takeDamage(this.properties.baseDamage);
+				attackTimer += GameProperties.Enemy_AttackTimer;
+			}
+		}
+	}
 }

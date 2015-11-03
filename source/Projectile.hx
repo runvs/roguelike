@@ -15,7 +15,7 @@ class Projectile extends FlxSprite
 	private var _state : PlayState;
 	public var _level : Int;
 
-	public function new(X:Float=0, Y:Float=0, tx : Float, ty : Float,  type : Bool, level: Int, state : PlayState) 
+	public function new(X:Float = 0, Y:Float = 0, tx : Float, ty : Float,  type : Bool, level: Int, state : PlayState, d : Int = -1 ) 
 	{
 		super(X, Y);
 		_state = state;
@@ -38,14 +38,28 @@ class Projectile extends FlxSprite
 		
 		if (type)
 		{
-			damage = Std.int(1 + GameProperties.Skills_PowerShootDamagePerLevel * level);
+			if (d == -1 )
+			{
+				damage = Std.int(1 + GameProperties.Skills_PowerShootDamagePerLevel * level);
+			}
+			else 
+			{
+				damage = d;
+			}
 			this.loadGraphic(AssetPaths.Projectile__png, true, 16, 16);
 			this.animation.add("normal", [0, 1, 2], 4);
 			this.animation.play("normal");
 		}
 		else 
 		{
-			damage = 10;	
+			if (d == -1 )
+			{
+				damage =  2 * Std.int(1 + GameProperties.Skills_PowerShootDamagePerLevel * level);
+			}	
+			else
+			{
+				damage = d;
+			}
 			this.loadGraphic(AssetPaths.Projectile2__png, true, 16, 16);
 			this.animation.add("normal", [0, 1, 2], 4);
 			this.animation.play("normal");

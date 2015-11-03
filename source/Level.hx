@@ -26,6 +26,8 @@ class Level extends FlxObject
 	public var _grpParticles : FlxTypedGroup<Projectile>;
 	public var _grpShields : FlxTypedGroup<Shield>;
 	
+	public var _grpEnemyParticles : FlxTypedGroup<Projectile>;
+	
 
 	public function new(sX:Int, sY:Int, level:Int, worldLevel : Int)
 	{
@@ -40,6 +42,7 @@ class Level extends FlxObject
 		
 		_grpParticles = new FlxTypedGroup<Projectile>();
 		_grpShields = new FlxTypedGroup<Shield>();
+		_grpEnemyParticles = new FlxTypedGroup<Projectile>();
 	}
 	
 	private function initializeLevel(sizeX:Int, sizeY:Int):Void
@@ -310,6 +313,7 @@ class Level extends FlxObject
 		_grpEnemies.update();
 		_grpShields.update();
 		_grpParticles.update();
+		_grpEnemyParticles.update();
 	}
 
 	public override function draw():Void
@@ -321,6 +325,7 @@ class Level extends FlxObject
 		
 		_grpShields.draw();
 		_grpParticles.draw();
+		_grpEnemyParticles.draw();
 		
 	}
 	
@@ -352,6 +357,13 @@ class Level extends FlxObject
 		});
 		_grpParticles = newPart;
 		
+		var newPart2 : FlxTypedGroup<Projectile> = new FlxTypedGroup<Projectile>();
+		_grpEnemyParticles.forEach(function(p:Projectile) : Void
+		{
+			if (p.alive) { newPart2.add(p); } else { p.destroy(); }
+		});
+		_grpEnemyParticles = newPart2;
+		
 		var newShields : FlxTypedGroup<Shield> = new FlxTypedGroup<Shield>();
 		_grpShields.forEach(function(s:Shield) : Void
 		{
@@ -362,5 +374,11 @@ class Level extends FlxObject
 	
 	public function getPlayerStartingPosition () : FlxPoint { return new FlxPoint(StartPos.x * GameProperties.Tile_Size, StartPos.y * GameProperties.Tile_Size); };
 	public function getStartingPositionInTiles () : FlxPoint { return new FlxPoint(StartPos.x , StartPos.y); };
+	
+	public function spawnEnemyShot ( p : Projectile) : Void 
+	{
+		_grpEnemyParticles.add(p);
+	}
+	
 	
 }
