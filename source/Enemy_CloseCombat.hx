@@ -13,6 +13,12 @@ class Enemy_CloseCombat extends BasicEnemy
 	{
 		super(l);
 		doRandomWalk = true;
+		
+		loadGraphic(AssetPaths.Enemy__png, true, 32, 32);
+		this.animation.add("idle", [0, 1, 2, 3, 4],FlxRandom.intRanged(4,6));
+		this.animation.add("walk", [5, 6, 7, 8], 5);
+		this.animation.play("idle", false, FlxRandom.intRanged(0, 3));
+		this.animation.add("dead", [9], 30, true);
 	}
 	
 	public override function doKIStuff () : Void 
