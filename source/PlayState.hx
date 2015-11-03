@@ -151,7 +151,7 @@ class PlayState extends FlxState
 		
 	function updateEnemies():Void 
 	{
-		level._grpEnemies.forEach(function(e:Enemy) 
+		level._grpEnemies.forEach(function(e:BasicEnemy) 
 		{
 			if (e.alive == false)
 			{
@@ -159,18 +159,7 @@ class PlayState extends FlxState
 			}
 			else 
 			{
-				var xx:Float = e.x - player.x;
-				var yy:Float = e.y - player.y;
-				var distance:Float = xx * xx + yy * yy;
-				
-				if (distance <= GameProperties.Enemy_AggroRadius*GameProperties.Enemy_AggroRadius) {
-					e.doRandomWalk = false;
-					e.walkTowards(player);
-				}
-				else
-				{
-					e.doRandomWalk = true;
-				}
+				e.setPlayerPosition(player.x, player.y);
 			}
 		});
 	}
@@ -181,7 +170,7 @@ class PlayState extends FlxState
 		{
 			p.hit();
 		});
-		FlxG.collide(level._grpEnemies, level._grpParticles, function(e:Enemy , p:Projectile)
+		FlxG.collide(level._grpEnemies, level._grpParticles, function(e:BasicEnemy , p:Projectile)
 		{
 			e.TakeDamage(p.damage);
 			p.hit();
@@ -191,8 +180,8 @@ class PlayState extends FlxState
 		FlxG.collide(level._grpShields, level._grpParticles);
 		FlxG.collide(level._grpShields, player);
 	
-		FlxG.collide(level._grpEnemies, level.map.walls, Enemy.handleWallCollision);
-		FlxG.collide(player, level._grpEnemies, Enemy.handlePlayerCollision);
+		FlxG.collide(level._grpEnemies, level.map.walls, BasicEnemy.handleWallCollision);
+		FlxG.collide(player, level._grpEnemies, BasicEnemy.handlePlayerCollision);
 	}
 	
 	function updateLevel():Void 
@@ -215,7 +204,7 @@ class PlayState extends FlxState
 		if (player.attack)
 		{
 			var r : FlxRect = player.getAttackRect();
-			level._grpEnemies.forEach(function (e:Enemy) 
+			level._grpEnemies.forEach(function (e:BasicEnemy) 
 			{
 				var enemyRect : FlxRect = new FlxRect (e.x, e.y, e.width, e.height);
 				if (r.overlaps(enemyRect))

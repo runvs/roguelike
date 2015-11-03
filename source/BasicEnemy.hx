@@ -12,7 +12,7 @@ import flixel.util.FlxRandom;
  * ...
  * @author 
  */
-class Enemy extends Creature
+class BasicEnemy extends Creature
 {
 	
 	private var randomwalkTimer : Float;
@@ -25,6 +25,8 @@ class Enemy extends Creature
 	public var properties : EnemyPropeties;
 	public var doRandomWalk:Bool;
 
+	public var playerX : Float;
+	public var playerY : Float;
 
 	public function new(l:Int) 
 	{
@@ -32,6 +34,8 @@ class Enemy extends Creature
 		
 		properties = new EnemyPropeties( l );
 		accelFactor = 0.75;
+		playerX = 0;
+		playerY = 0;
 		
 		//makeGraphic(GameProperties.TileSize, GameProperties.TileSize, FlxColor.RED);
 		loadGraphic(AssetPaths.Enemy__png, true, 32, 32);
@@ -49,13 +53,18 @@ class Enemy extends Creature
 		this.maxVelocity = new FlxPoint(GameProperties.Player_MaxSpeed * 0.5,  GameProperties.Player_MaxSpeed * 0.5);
 	}
 	
+	public function setPlayerPosition (px : Float, py :Float) : Void 
+	{
+		playerX = px;
+		playerY = py;
+	}
+	
 	override  public function update ()
 	{
 		if (alive)
 		{
 			acceleration.set(0, 0);
 			doKIStuff();
-
 		}
 		else
 		{
@@ -64,72 +73,14 @@ class Enemy extends Creature
 		super.update();
 	}
 	
-	private function doKIStuff()
+	public  function doKIStuff()
 	{
-		if (attackTimer > 0)
-		{
-			attackTimer -= FlxG.elapsed;
-		}
-		
-		if (doRandomWalk)
-		{			
-			randomwalkTimer -= FlxG.elapsed;
-			if (randomwalkTimer <= 0)
-			{
-				randomwalkTimer = FlxRandom.floatRanged(2, 5);
-				randomWalkDirection = FlxRandom.intRanged(0, 3);
-			}
-			
-			if (randomWalkDirection == 0)
-			{
-				moveDown();
-			}
-			else if (randomWalkDirection == 1)
-			{
-				moveLeft();
-			}
-			else if (randomWalkDirection == 2)
-			{
-				moveUp();
-			}
-			else 
-			{
-				moveRight();
-			}
-		}
-		// walk target is obviously in aggro range
-		else
-		{
-			var xx = walkTarget.x - x;
-			var yy = walkTarget.y - y;
-			
-			if (xx > 0)
-			{
-				// target to the right
-				moveRight();
-			}
-			else
-			{
-				// target to the left
-				moveLeft();
-			}
-			
-			if (yy > 0)
-			{
-				// target below
-				moveDown();
-			}
-			else
-			{
-				// target above
-				moveUp();
-			}
-		}
+		// dont do anything, override in child classes
 	}
 	
-	public function walkTowards(obj:FlxObject) : Void
+	public function walkTowards() : Void
 	{
-		walkTarget = obj;
+		walkTarget = new FlxObject(playerX, playerY, 0 , 0);
 	}
 	
 	public function TakeDamage ( d : Int ) : Void 
@@ -147,12 +98,12 @@ class Enemy extends Creature
 		}
 	}
 	
-	public static function handleWallCollision(enemy:Enemy, wall:FlxObject):Void
+	public static function handleWallCollision(enemy:BasicEnemy, wall:FlxObject):Void
 	{
 		enemy.randomWalkDirection = (enemy.randomWalkDirection + 2) % 4;
 	}
 	
-	public static function handlePlayerCollision(player:Player, enemy:Enemy):Void
+	public static function handlePlayerCollision(player:Player, enemy:BasicEnemy):Void
 	{
 		if (enemy.attackTimer <= 0.0)
 		{

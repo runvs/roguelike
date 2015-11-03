@@ -10,8 +10,8 @@ import flixel.util.FlxVector;
 class Level extends FlxObject
 {
 	
-	public var _grpEnemies:flixel.group.FlxTypedGroup<Enemy>;
-	public var _grpDeadEnemies:flixel.group.FlxTypedGroup<Enemy>;
+	public var _grpEnemies:flixel.group.FlxTypedGroup<BasicEnemy>;
+	public var _grpDeadEnemies:flixel.group.FlxTypedGroup<BasicEnemy>;
 
 	public var map : MyTileMap;
 	private var _level : Int;
@@ -59,11 +59,11 @@ class Level extends FlxObject
 		CreateShadows();
 
 		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, _level - 1, _worldLevel);
-		_grpDeadEnemies = new FlxTypedGroup<Enemy>();
+		_grpDeadEnemies = new FlxTypedGroup<BasicEnemy>();
 		
 		
-		var ne : FlxTypedGroup<Enemy>= new FlxTypedGroup<Enemy>();
-		_grpEnemies.forEach(function(e:Enemy) 
+		var ne : FlxTypedGroup<BasicEnemy>= new FlxTypedGroup<BasicEnemy>();
+		_grpEnemies.forEach(function(e:BasicEnemy) 
 		{
 			var dir : FlxVector = new FlxVector(e.x - StartPos.x * GameProperties.Tile_Size, e.y - StartPos.y* GameProperties.Tile_Size);
 			//trace(dir.length + " "  +GameProperties.Enemy_AggroRadius);
@@ -305,9 +305,6 @@ class Level extends FlxObject
 		
 		super.update();
 		map.update();
-		
-		
-		
 
 		_grpDeadEnemies.update();
 		_grpEnemies.update();
@@ -340,9 +337,9 @@ class Level extends FlxObject
 	
 	public function cleanUp () : Void 
 	{
-		var newEnemies : FlxTypedGroup<Enemy> = new FlxTypedGroup<Enemy>();
+		var newEnemies : FlxTypedGroup<BasicEnemy> = new FlxTypedGroup<BasicEnemy>();
 		
-		_grpEnemies.forEach(function (e: Enemy ) : Void 
+		_grpEnemies.forEach(function (e: BasicEnemy ) : Void 
 		{
 			if (e.alive) { newEnemies.add(e); } else { _grpDeadEnemies.add(e); }
 		});

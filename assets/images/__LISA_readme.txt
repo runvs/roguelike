@@ -19,6 +19,9 @@ Anderes Zeug:
  * zum Charsheet: Farben. da sollten wir vll nochmal kurz schauen, dass ich die korrekten Farben verwende.
  
  * projectile2.png : Ist das Projektil für den Power Ball. Größe (16x16) und Länge (3 Frames) der Animation wie bei projectile.png.
+ 
+ * Enemy2.png : Der Fernkampf Gegner. Analog zu Enemy.png
+ 
 
 Grüße,
 Simon

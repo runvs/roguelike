@@ -1,9 +1,9 @@
 import flixel.util.FlxRandom;
 class MobGenerator 
 {
-	public static function generateMobsFromTree(tree:flixel.group.FlxTypedGroup<Leaf>, PlayerLlevel : Int, WorldLevel : Int):flixel.group.FlxTypedGroup<Enemy>
+	public static function generateMobsFromTree(tree:flixel.group.FlxTypedGroup<Leaf>, PlayerLlevel : Int, WorldLevel : Int):flixel.group.FlxTypedGroup<BasicEnemy>
 	{
-		var listOfEmenies:flixel.group.FlxTypedGroup<Enemy> = new flixel.group.FlxTypedGroup<Enemy>();
+		var listOfEmenies:flixel.group.FlxTypedGroup<BasicEnemy> = new flixel.group.FlxTypedGroup<BasicEnemy>();
 
 		var level : Int = PlayerLlevel + WorldLevel;
 		
@@ -33,7 +33,7 @@ class MobGenerator
 				var x:Int = flixel.util.FlxRandom.intRanged(cast tmpRoom.left + 1, cast tmpRoom.right - 1) * GameProperties.Tile_Size;
 				var y:Int = flixel.util.FlxRandom.intRanged(cast tmpRoom.top + 1, cast tmpRoom.bottom - 1) * GameProperties.Tile_Size;
 				//trace(x + "; " + y);
-				var e:Enemy = new Enemy(level);
+				var e:BasicEnemy = new Enemy_CloseCombat(level);
 				e.setPosition(x, y);
 				listOfEmenies.add(e);
 			}
@@ -52,7 +52,7 @@ class MobGenerator
 				var x:Int = flixel.util.FlxRandom.intRanged(cast tmpRoom.left + 1, cast tmpRoom.right - 1) * GameProperties.Tile_Size;
 				var y:Int = flixel.util.FlxRandom.intRanged(cast tmpRoom.top + 1, cast tmpRoom.bottom - 1) * GameProperties.Tile_Size;
 				//trace(x + "; " + y);
-				var e:Enemy = new Enemy(level);
+				var e:BasicEnemy = new Enemy_CloseCombat(level);
 				e.setPosition(x, y);
 				listOfEmenies.add(e);
 				//increase chance for next spawn
@@ -66,7 +66,7 @@ class MobGenerator
 					var x:Int = flixel.util.FlxRandom.intRanged(cast tmpRoom.left + 1, cast tmpRoom.right - 1) * GameProperties.Tile_Size;
 					var y:Int = flixel.util.FlxRandom.intRanged(cast tmpRoom.top + 1, cast tmpRoom.bottom - 1) * GameProperties.Tile_Size;
 					//trace(x + "; " + y);
-					var e:Enemy = new Enemy(level);
+					var e:BasicEnemy = new Enemy_CloseCombat(level);
 					e.setPosition(x, y);
 					listOfEmenies.add(e);
 					//increase chance for next spawn

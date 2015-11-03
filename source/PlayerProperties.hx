@@ -144,9 +144,6 @@ class PlayerProperties
 		return  val;
 	}
 	
-	
-	
-	
 	public var baseDefense : Float;
 	public var skillDefense : Float;
 	public var skillPowerArmorDefense : Float;
