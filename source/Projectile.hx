@@ -10,12 +10,12 @@ import flixel.util.FlxVector;
  */
 class Projectile extends FlxSprite
 {
-	var _type : Bool;
+	var _type : ProjectileType;
 	public var damage : Int;
 	private var _state : PlayState;
 	public var _level : Int;
 
-	public function new(X:Float = 0, Y:Float = 0, tx : Float, ty : Float,  type : Bool, level: Int, state : PlayState, d : Int = -1 ) 
+	public function new(X:Float = 0, Y:Float = 0, tx : Float, ty : Float,  type : ProjectileType, level: Int, state : PlayState) 
 	{
 		super(X, Y);
 		_state = state;
@@ -36,31 +36,26 @@ class Projectile extends FlxSprite
 		//maxVelocity.set (dir.x, dir.y);
 		velocity.set(dir.x, dir.y);
 		
-		if (type)
+		if (type == ProjectileType.Shot)
 		{
-			if (d == -1 )
-			{
-				damage = Std.int(1 + GameProperties.Skills_PowerShootDamagePerLevel * level);
-			}
-			else 
-			{
-				damage = d;
-			}
+			damage = Std.int(1 + GameProperties.Skills_PowerShootDamagePerLevel * level);
+			
 			this.loadGraphic(AssetPaths.Projectile__png, true, 16, 16);
 			this.animation.add("normal", [0, 1, 2], 4);
 			this.animation.play("normal");
 		}
-		else 
+		else if ( type == ProjectileType.Ball)
 		{
-			if (d == -1 )
-			{
-				damage =  2 * Std.int(1 + GameProperties.Skills_PowerShootDamagePerLevel * level);
-			}	
-			else
-			{
-				damage = d;
-			}
+			damage =  2 * Std.int(1 + GameProperties.Skills_PowerShootDamagePerLevel * level);
+		
 			this.loadGraphic(AssetPaths.Projectile2__png, true, 16, 16);
+			this.animation.add("normal", [0, 1, 2], 4);
+			this.animation.play("normal");
+		}
+		else if (type == ProjectileType.EnemyProj)
+		{
+			damage = level;
+			this.loadGraphic(AssetPaths.Projectile3__png, true, 16, 16);
 			this.animation.add("normal", [0, 1, 2], 4);
 			this.animation.play("normal");
 		}
@@ -69,7 +64,7 @@ class Projectile extends FlxSprite
 	public function hit()
 	{
 		//trace("hit");
-		if (_type)
+		if (_type == ProjectileType.Ball)
 		{
 			_state.spawnPowerBallExplosion(this);
 		}

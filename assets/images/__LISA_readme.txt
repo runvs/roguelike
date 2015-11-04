@@ -20,6 +20,8 @@ Anderes Zeug:
  
  * projectile2.png : Ist das Projektil für den Power Ball. Größe (16x16) und Länge (3 Frames) der Animation wie bei projectile.png.
  
+  * projectile3.png : Ist das Projektil für den Schuss der Gegner. Größe (16x16) und Länge (3 Frames) der Animation wie bei projectile.png.
+ 
  * Enemy2.png : Der Fernkampf Gegner. Analog zu Enemy.png
  
 

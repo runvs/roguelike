@@ -271,7 +271,7 @@ class PlayState extends FlxState
 			{
 				tx += 1;
 			}
-			var p : Projectile = new Projectile(player.x + GameProperties.Tile_Size/2 , player.y  + GameProperties.Tile_Size/2 , tx, ty, false, skillz.PowerShoot, this);
+			var p : Projectile = new Projectile(player.x + GameProperties.Tile_Size/2 , player.y  + GameProperties.Tile_Size/2 , tx, ty, ProjectileType.Shot, skillz.PowerShoot, this);
 			level._grpParticles.add(p);
 		}
 		if (player.attackPowerBall)
@@ -295,7 +295,7 @@ class PlayState extends FlxState
 			{
 				tx += 1;
 			}
-			var p : Projectile = new Projectile(player.x + GameProperties.Tile_Size/2, player.y + GameProperties.Tile_Size/2, tx, ty, true, skillz.PowerShoot, this);
+			var p : Projectile = new Projectile(player.x + GameProperties.Tile_Size/2, player.y + GameProperties.Tile_Size/2, tx, ty, ProjectileType.Ball, skillz.PowerShoot, this);
 			level._grpParticles.add(p);
 		}
 		if (player.attackShield)
@@ -380,7 +380,7 @@ class PlayState extends FlxState
 		{
 			
 			dir.rotateByDegrees(d);
-			var p2 : Projectile = new Projectile(p.x, p.y, p.x + dir.x, p.y + dir.y, false, p._level, this);
+			var p2 : Projectile = new Projectile(p.x, p.y, p.x + dir.x, p.y + dir.y, ProjectileType.Shot, p._level, this);
 			level._grpParticles.add(p2);
 		}
 	}

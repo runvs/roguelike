@@ -14,13 +14,13 @@ class Enemy_DistantCombat extends BasicEnemy
 	{
 		super(l);
 		
-		//loadGraphic(AssetPaths.Enemy__png, true, 32, 32);
-		//this.animation.add("idle", [0, 1, 2, 3, 4],FlxRandom.intRanged(4,6));
-		//this.animation.add("walk", [5, 6, 7, 8], 5);
-		//this.animation.play("idle", false, FlxRandom.intRanged(0, 3));
-		//this.animation.add("dead", [9], 30, true);
+		loadGraphic(AssetPaths.Enemy2__png, true, 32, 32);
+		this.animation.add("idle", [0, 1, 2, 3, 4],FlxRandom.intRanged(4,6));
+		this.animation.add("walk", [5, 6, 7, 8], 5);
+		this.animation.play("idle", false, FlxRandom.intRanged(0, 3));
+		this.animation.add("dead", [9], 30, true);
 		
-		makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColor.AZURE);
+		//makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColor.AZURE);
 		
 		type = 1;
 	}
@@ -118,6 +118,7 @@ class Enemy_DistantCombat extends BasicEnemy
 				moveRight();
 			}
 		}
+		FlxG.collide(this, player);
 	}
 	
 	public override function attack () : Void 
@@ -128,7 +129,7 @@ class Enemy_DistantCombat extends BasicEnemy
 			{
 				var xx = player.x - x;
 				var yy = player.y -y ;
-				var p : Projectile = new Projectile(x + GameProperties.Tile_Size / 2.0 , y + GameProperties.Tile_Size / 2.0, xx, yy, false, Std.int(properties.baseDamage* 0.75), state);
+				var p : Projectile = new Projectile(x + GameProperties.Tile_Size / 2.0 , y + GameProperties.Tile_Size / 2.0, xx, yy, ProjectileType.EnemyProj, Std.int(properties.baseDamage), state);
 				state.level.spawnEnemyShot(p);
 				attackTimer += GameProperties.Enemy_AttackTimer;
 			}
