@@ -144,9 +144,6 @@ class PlayerProperties
 		return  val;
 	}
 	
-	
-	
-	
 	public var baseDefense : Float;
 	public var skillDefense : Float;
 	public var skillPowerArmorDefense : Float;
@@ -178,7 +175,7 @@ class PlayerProperties
 		{
 			level += 1;
 			skillPoints += 1;
-			attributePoints += 2;
+			attributePoints += GameProperties.Player_AttributePointsPerLevelUp;
 			experienceLevelUpLast = experienceLevelUp;
 			experienceLevelUp = Std.int(experienceLevelUp * GameProperties.Player_experienceLevelUpFactor);
 		}
@@ -222,7 +219,7 @@ class PlayerProperties
 		MPRegenTimer -= FlxG.elapsed;
 		if (MPRegenTimer <= 0)
 		{
-			MPRegenTimer = MPRegenTimerMax * (10/(1+Wi));
+			MPRegenTimer = MPRegenTimerMax * (9/(1+Wi));
 			currentMP += 1;
 		}
 	}
@@ -240,8 +237,14 @@ class PlayerProperties
 	
 	public function getMoveSpeedFactor () : Float 
 	{
-		return 1.0 + (Ag-5) / 90.0;
+		return 1.0 + (Ag-5) / 40.0;
 	}
+	
+	public function getAttackTimer () : Float
+	{
+		return (0.50 + 0.5/((Ag)/5)  )* GameProperties.Player_AttackTimer;
+	}
+	
 
 	
 	

@@ -10,9 +10,9 @@ class EnemyPropeties
 	public function new(l : Int) 
 	{
 		level = l;
-		currentHP = baseHP = 6 * (level +1);
+		currentHP = baseHP = GameProperties.Enemy_HP_Base + GameProperties.Enemy_HP_PerLevel * Math.round(Math.pow(level, GameProperties.Enemy_HP_PerLevel_Exponent));
 		
-		baseDamage = 1 + level * 0.5;
+		baseDamage = 2 + level * 0.85;
 	}
 	
 	public var level : Int;

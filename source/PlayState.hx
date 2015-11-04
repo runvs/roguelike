@@ -4,6 +4,7 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.plugin.MouseEventManager;
 import flixel.text.FlxText;
 import flixel.tile.FlxTile;
 import flixel.tweens.FlxTween;
@@ -21,9 +22,9 @@ import flixel.util.FlxVector;
 class PlayState extends FlxState
 {
 	
-	var level : Level;
+	public var level : Level;
 	var levelNumber : Int;
-	var player : Player;
+	public var player : Player;
 	
 	var skillz : SkillTree;
 	private var _ending : Bool;
@@ -79,7 +80,12 @@ class PlayState extends FlxState
 		#end
 		
 		_overlay.scrollFactor.set();
+		
 	}
+	
+	
+	
+	
 	
 	public function cleanUp ()  : Void 
 	{
@@ -145,7 +151,7 @@ class PlayState extends FlxState
 		
 	function updateEnemies():Void 
 	{
-		level._grpEnemies.forEach(function(e:Enemy) 
+		level._grpEnemies.forEach(function(e:BasicEnemy) 
 		{
 			if (e.alive == false)
 			{
@@ -153,18 +159,7 @@ class PlayState extends FlxState
 			}
 			else 
 			{
-				var xx:Float = e.x - player.x;
-				var yy:Float = e.y - player.y;
-				var distance:Float = xx * xx + yy * yy;
-				
-				if (distance <= GameProperties.Enemy_AggroRadius*GameProperties.Enemy_AggroRadius) {
-					e.doRandomWalk = false;
-					e.walkTowards(player);
-				}
-				else
-				{
-					e.doRandomWalk = true;
-				}
+				e.setState(this);
 			}
 		});
 	}
@@ -175,18 +170,30 @@ class PlayState extends FlxState
 		{
 			p.hit();
 		});
-		FlxG.collide(level._grpEnemies, level._grpParticles, function(e:Enemy , p:Projectile)
+		FlxG.collide(level._grpEnemies, level._grpParticles, function(e:BasicEnemy , p:Projectile)
 		{
 			e.TakeDamage(p.damage);
 			p.hit();
 		});
+		
 		FlxG.collide(level.map.walls, player);
 		FlxG.collide(level._grpShields, level._grpEnemies);
 		FlxG.collide(level._grpShields, level._grpParticles);
 		FlxG.collide(level._grpShields, player);
+		
+		FlxG.collide(level._grpEnemyParticles, player, function(p:Projectile, pla:Player)
+		{
+			trace ("take damage");
+			pla.properties.takeDamage(p.damage);
+			p.hit();
+		});
+		FlxG.collide(level.map.walls, level._grpEnemyParticles, function(t:Tile, p:Projectile)
+		{
+			p.hit();
+		});
 	
-		FlxG.collide(level._grpEnemies, level.map.walls, Enemy.handleWallCollision);
-		FlxG.collide(player, level._grpEnemies, Enemy.handlePlayerCollision);
+		FlxG.collide(level._grpEnemies, level.map.walls, BasicEnemy.handleWallCollision);
+		//FlxG.collide(player, level._grpEnemies);
 	}
 	
 	function updateLevel():Void 
@@ -209,7 +216,7 @@ class PlayState extends FlxState
 		if (player.attack)
 		{
 			var r : FlxRect = player.getAttackRect();
-			level._grpEnemies.forEach(function (e:Enemy) 
+			level._grpEnemies.forEach(function (e:BasicEnemy) 
 			{
 				var enemyRect : FlxRect = new FlxRect (e.x, e.y, e.width, e.height);
 				if (r.overlaps(enemyRect))
@@ -264,7 +271,7 @@ class PlayState extends FlxState
 			{
 				tx += 1;
 			}
-			var p : Projectile = new Projectile(player.x + GameProperties.Tile_Size/2 , player.y  + GameProperties.Tile_Size/2 , tx, ty, false, skillz.PowerShoot, this);
+			var p : Projectile = new Projectile(player.x + GameProperties.Tile_Size/2 , player.y  + GameProperties.Tile_Size/2 , tx, ty, ProjectileType.Shot, skillz.PowerShoot, this);
 			level._grpParticles.add(p);
 		}
 		if (player.attackPowerBall)
@@ -288,7 +295,7 @@ class PlayState extends FlxState
 			{
 				tx += 1;
 			}
-			var p : Projectile = new Projectile(player.x + GameProperties.Tile_Size/2, player.y + GameProperties.Tile_Size/2, tx, ty, true, skillz.PowerShoot, this);
+			var p : Projectile = new Projectile(player.x + GameProperties.Tile_Size/2, player.y + GameProperties.Tile_Size/2, tx, ty, ProjectileType.Ball, skillz.PowerShoot, this);
 			level._grpParticles.add(p);
 		}
 		if (player.attackShield)
@@ -326,13 +333,16 @@ class PlayState extends FlxState
 	{
 		_overlay.update();
 		skillz.update();
-		
+		player.getInputMenu();
 		if (!_ending && !switching )
 		{
+		
 			if (!player.alive)
 			{
 				endGame();
 			}
+			
+			
 			
 			if (!skillz.showMe)
 			{
@@ -343,16 +353,20 @@ class PlayState extends FlxState
 				cleanUp();
 				
 				updateLevel();
-				
-				
+
 				updatePlayer();
 				
 				updateCollisions();
 				
 				ChangeLevel();
 			}
-		
+			
+			
+			
 		}
+		
+		
+		
 	}
 	
 	public function spawnPowerBallExplosion(p : Projectile)
@@ -366,7 +380,7 @@ class PlayState extends FlxState
 		{
 			
 			dir.rotateByDegrees(d);
-			var p2 : Projectile = new Projectile(p.x, p.y, p.x + dir.x, p.y + dir.y, false, p._level, this);
+			var p2 : Projectile = new Projectile(p.x, p.y, p.x + dir.x, p.y + dir.y, ProjectileType.Shot, p._level, this);
 			level._grpParticles.add(p2);
 		}
 	}
@@ -381,7 +395,7 @@ class PlayState extends FlxState
 
 		level.drawVisited();
 		
-		_vignette.draw();
+		
 		if (!skillz.showMe)
 		{
 			player.drawHud();
@@ -390,6 +404,7 @@ class PlayState extends FlxState
 		{
 			skillz.draw();
 		}
+		_vignette.draw();
 		_overlay.draw();
 		
 		super.draw();

@@ -10,8 +10,8 @@ import flixel.util.FlxVector;
 class Level extends FlxObject
 {
 	
-	public var _grpEnemies:flixel.group.FlxTypedGroup<Enemy>;
-	public var _grpDeadEnemies:flixel.group.FlxTypedGroup<Enemy>;
+	public var _grpEnemies:flixel.group.FlxTypedGroup<BasicEnemy>;
+	public var _grpDeadEnemies:flixel.group.FlxTypedGroup<BasicEnemy>;
 
 	public var map : MyTileMap;
 	private var _level : Int;
@@ -25,6 +25,8 @@ class Level extends FlxObject
 	
 	public var _grpParticles : FlxTypedGroup<Projectile>;
 	public var _grpShields : FlxTypedGroup<Shield>;
+	
+	public var _grpEnemyParticles : FlxTypedGroup<Projectile>;
 	
 
 	public function new(sX:Int, sY:Int, level:Int, worldLevel : Int)
@@ -40,6 +42,7 @@ class Level extends FlxObject
 		
 		_grpParticles = new FlxTypedGroup<Projectile>();
 		_grpShields = new FlxTypedGroup<Shield>();
+		_grpEnemyParticles = new FlxTypedGroup<Projectile>();
 	}
 	
 	private function initializeLevel(sizeX:Int, sizeY:Int):Void
@@ -59,14 +62,14 @@ class Level extends FlxObject
 		CreateShadows();
 
 		_grpEnemies = MobGenerator.generateMobsFromTree(mapAsTree, _level - 1, _worldLevel);
-		_grpDeadEnemies = new FlxTypedGroup<Enemy>();
+		_grpDeadEnemies = new FlxTypedGroup<BasicEnemy>();
 		
 		
-		var ne : FlxTypedGroup<Enemy>= new FlxTypedGroup<Enemy>();
-		_grpEnemies.forEach(function(e:Enemy) 
+		var ne : FlxTypedGroup<BasicEnemy>= new FlxTypedGroup<BasicEnemy>();
+		_grpEnemies.forEach(function(e:BasicEnemy) 
 		{
 			var dir : FlxVector = new FlxVector(e.x - StartPos.x * GameProperties.Tile_Size, e.y - StartPos.y* GameProperties.Tile_Size);
-			trace(dir.length + " "  +GameProperties.Enemy_AggroRadius);
+			//trace(dir.length + " "  +GameProperties.Enemy_AggroRadius);
 			if (dir.length <= 2.5 * GameProperties.Enemy_AggroRadius)
 			{
 			}
@@ -305,14 +308,12 @@ class Level extends FlxObject
 		
 		super.update();
 		map.update();
-		
-		
-		
 
 		_grpDeadEnemies.update();
 		_grpEnemies.update();
 		_grpShields.update();
 		_grpParticles.update();
+		_grpEnemyParticles.update();
 	}
 
 	public override function draw():Void
@@ -324,6 +325,7 @@ class Level extends FlxObject
 		
 		_grpShields.draw();
 		_grpParticles.draw();
+		_grpEnemyParticles.draw();
 		
 	}
 	
@@ -340,9 +342,9 @@ class Level extends FlxObject
 	
 	public function cleanUp () : Void 
 	{
-		var newEnemies : FlxTypedGroup<Enemy> = new FlxTypedGroup<Enemy>();
+		var newEnemies : FlxTypedGroup<BasicEnemy> = new FlxTypedGroup<BasicEnemy>();
 		
-		_grpEnemies.forEach(function (e: Enemy ) : Void 
+		_grpEnemies.forEach(function (e: BasicEnemy ) : Void 
 		{
 			if (e.alive) { newEnemies.add(e); } else { _grpDeadEnemies.add(e); }
 		});
@@ -355,6 +357,13 @@ class Level extends FlxObject
 		});
 		_grpParticles = newPart;
 		
+		var newPart2 : FlxTypedGroup<Projectile> = new FlxTypedGroup<Projectile>();
+		_grpEnemyParticles.forEach(function(p:Projectile) : Void
+		{
+			if (p.alive) { newPart2.add(p); } else { p.destroy(); }
+		});
+		_grpEnemyParticles = newPart2;
+		
 		var newShields : FlxTypedGroup<Shield> = new FlxTypedGroup<Shield>();
 		_grpShields.forEach(function(s:Shield) : Void
 		{
@@ -365,5 +374,11 @@ class Level extends FlxObject
 	
 	public function getPlayerStartingPosition () : FlxPoint { return new FlxPoint(StartPos.x * GameProperties.Tile_Size, StartPos.y * GameProperties.Tile_Size); };
 	public function getStartingPositionInTiles () : FlxPoint { return new FlxPoint(StartPos.x , StartPos.y); };
+	
+	public function spawnEnemyShot ( p : Projectile) : Void 
+	{
+		_grpEnemyParticles.add(p);
+	}
+	
 	
 }
