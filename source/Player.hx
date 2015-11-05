@@ -190,6 +190,7 @@ class Player extends Creature
 	private function CloseSkills (o:FlxObject = null) : Void 
 	{
 		skillz.Show();
+		blipSound.play();
 		MouseEventManager.add(charsheetSprite, OpenSkills);
 	}
 	

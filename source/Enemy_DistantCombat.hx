@@ -129,7 +129,7 @@ class Enemy_DistantCombat extends BasicEnemy
 			{
 				var xx = player.x - x;
 				var yy = player.y -y ;
-				var p : Projectile = new Projectile(x + GameProperties.Tile_Size / 2.0 , y + GameProperties.Tile_Size / 2.0, xx, yy, ProjectileType.EnemyProj, Std.int(properties.baseDamage), state);
+				var p : Projectile = new Projectile(x + GameProperties.Tile_Size / 2.0 , y + GameProperties.Tile_Size / 2.0, xx, yy, ProjectileType.EnemyProj, Std.int(0.75*properties.baseDamage), state);
 				state.level.spawnEnemyShot(p);
 				attackTimer += GameProperties.Enemy_AttackTimer;
 			}
