@@ -1,6 +1,8 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxVector;
 
@@ -14,6 +16,8 @@ class Projectile extends FlxSprite
 	public var damage : Int;
 	private var _state : PlayState;
 	public var _level : Int;
+	
+	private var spawnSound : FlxSound;
 
 	public function new(X:Float = 0, Y:Float = 0, tx : Float, ty : Float,  type : ProjectileType, level: Int, state : PlayState) 
 	{
@@ -59,6 +63,15 @@ class Projectile extends FlxSprite
 			this.animation.add("normal", [0, 1, 2], 4);
 			this.animation.play("normal");
 		}
+		
+		spawnSound = new FlxSound();
+	
+		#if flash
+		spawnSound = FlxG.sound.load(AssetPaths.powershoot__mp3, 0.25);
+		#else
+		spawnSound = FlxG.sound.load(AssetPaths.powershoot__ogg, 0.25);
+		#end
+		spawnSound.play();
 	}
 	
 	public function hit()

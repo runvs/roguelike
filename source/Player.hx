@@ -5,6 +5,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.group.FlxTypedGroup;
 import flixel.plugin.MouseEventManager;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -54,9 +55,13 @@ class Player extends Creature
 	public var levelUpSprite : FlxSprite;
 	public var charsheetSprite : FlxSprite;
 	
+	private var attackSound : FlxSound;
+	private var hitSound : FlxSound;
+	
 	public function new() 
 	{
 		super();
+		
 		
 		properties = new PlayerProperties();
 		
@@ -162,7 +167,17 @@ class Player extends Creature
 		
 		MouseEventManager.add(charsheetSprite, OpenSkills);
 		
-		properties.attributePoints = 5;
+		//properties.attributePoints = 5;
+		
+		attackSound = new FlxSound();
+		hitSound = new FlxSound();
+		#if flash
+		attackSound = FlxG.sound.load(AssetPaths.attack__mp3);
+		hitSound = FlxG.sound.load(AssetPaths.hit__mp3);
+		#else
+		attackSound = FlxG.sound.load(AssetPaths.attack__ogg);
+		hitSound = FlxG.sound.load(AssetPaths.hit__ogg);
+		#end
 	}
 	
 	private function OpenSkills(o : FlxObject = null)
@@ -456,6 +471,7 @@ class Player extends Creature
 		{
 			attacTimer = properties.getAttackTimer();
 			attack = true;
+			attackSound.play(true);
 		}
 	}
 	

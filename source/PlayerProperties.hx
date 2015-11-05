@@ -1,5 +1,6 @@
 package;
 import flixel.FlxG;
+import flixel.system.FlxSound;
 
 /**
  * ...
@@ -8,6 +9,8 @@ import flixel.FlxG;
 class PlayerProperties
 {
 
+	private var hitSound : FlxSound;
+	
 	public function new() 
 	{
 		level = 0;
@@ -43,6 +46,14 @@ class PlayerProperties
 		skillDefense= 0;
 		skillPowerArmorDefense= 0;
 		baseHitChance = 0;
+		
+		hitSound = new FlxSound();
+		#if flash
+		hitSound = FlxG.sound.load(AssetPaths.hit__mp3);
+		#else
+		hitSound = FlxG.sound.load(AssetPaths.hit__ogg);
+		#end
+		
 		
 		//gainXP(50000);
 	}
@@ -231,6 +242,7 @@ class PlayerProperties
 		FlxG.camera.shake(0.0075, 0.2);
 	
 		currentHP -= reducedDamage;
+		hitSound.play();
 	}
 	
 	public var baseHitChance : Float;
