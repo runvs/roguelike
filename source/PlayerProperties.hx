@@ -20,11 +20,11 @@ class PlayerProperties
 		experienceFactor = 0;
 		skillPoints = 0;
 		
-		St = 5;
-		Ag = 5;
-		En = 5;
-		Wi = 5;
-		Lk = 5;
+		St = 7;
+		Ag = 7;
+		En = 7;
+		Wi = 7;
+		Lk = 7;
 		baseHP = 30;
 		skillHP = 0;
 		currentHP = baseHP;

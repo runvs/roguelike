@@ -56,7 +56,7 @@ class Player extends Creature
 	public var charsheetSprite : FlxSprite;
 	
 	private var attackSound : FlxSound;
-	private var hitSound : FlxSound;
+	private var blipSound :FlxSound;
 	
 	public function new() 
 	{
@@ -170,19 +170,20 @@ class Player extends Creature
 		//properties.attributePoints = 5;
 		
 		attackSound = new FlxSound();
-		hitSound = new FlxSound();
+		blipSound = new FlxSound();
 		#if flash
 		attackSound = FlxG.sound.load(AssetPaths.attack__mp3);
-		hitSound = FlxG.sound.load(AssetPaths.hit__mp3);
+		blipSound = FlxG.sound.load(AssetPaths.blib__mp3);
 		#else
 		attackSound = FlxG.sound.load(AssetPaths.attack__ogg);
-		hitSound = FlxG.sound.load(AssetPaths.hit__ogg);
+		blipSound = FlxG.sound.load(AssetPaths.blib__ogg);
 		#end
 	}
 	
 	private function OpenSkills(o : FlxObject = null)
 	{
 		skillz.Show();
+		blipSound.play();
 		MouseEventManager.remove(charsheetSprite);
 	}
 	

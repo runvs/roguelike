@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import flixel.util.FlxColorUtil;
 import flixel.util.FlxPoint;
@@ -30,6 +31,8 @@ class BasicEnemy extends Creature
 	private var state : PlayState;
 	
 	public var type : Int ;
+	
+	private var hitSound : FlxSound;
 	public function new(l:Int) 
 	{
 		super();
@@ -48,6 +51,15 @@ class BasicEnemy extends Creature
 		randomWalkDirection = FlxRandom.intRanged(0, 3);
 		this.drag = new FlxPoint( GameProperties.Player_VelocityDecay, GameProperties.Player_VelocityDecay);
 		this.maxVelocity = new FlxPoint(GameProperties.Player_MaxSpeed * 0.5,  GameProperties.Player_MaxSpeed * 0.5);
+		
+		hitSound = new FlxSound();
+	
+		#if flash
+		hitSound = FlxG.sound.load(AssetPaths.hit_enemy__mp3);
+		#else
+		hitSound = FlxG.sound.load(AssetPaths.hit_enemy__ogg);
+		#end
+		
 	}
 	
 	public function setState (s : PlayState) : Void 
@@ -84,7 +96,9 @@ class BasicEnemy extends Creature
 	
 	public function TakeDamage ( d : Int ) : Void 
 	{
+		
 		properties.currentHP -= d;
+		hitSound.play();
 		//trace ("take damage " + Std.string(d) + " newHP " + Std.string(properties.currentHP));
 		if (properties.currentHP <= 0)
 		{
