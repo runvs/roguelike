@@ -33,9 +33,12 @@ class MenuState extends FlxState
 		
 		ring = new RingMenu();
 		ring.setTitleText("Roguelike");
-		add(ring);
+		ring.setCreditText("A Game by\n  Lisa Malvareth Zumblick \nand\n  Simon @Laguna_999 Weis\n\nVisit us at https://runvs.io\n\nCreated August / November 2015");
+		
 		ring.addItem("Play Game", StartGame);
 		ring.addItem("Exit", QuitGame);
+		
+		add(ring);
 	}
 	
 	public function QuitGame() : Void 
