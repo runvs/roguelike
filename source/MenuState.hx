@@ -9,6 +9,9 @@ import flixel.util.FlxColor;
 import flixel.util.FlxMath;
 
 using flixel.util.FlxSpriteUtil;
+import flash.system.System; 	// for System.exit(0);
+
+
 /**
  * A FlxState which can be used for the game's menu.
  */
@@ -36,19 +39,38 @@ class MenuState extends FlxState
 		ring.setCreditText("A Game by\n  Lisa Malvareth Zumblick \nand\n  Simon @Laguna_999 Weis\n\nVisit us at https://runvs.io\n\nCreated August / November 2015");
 		
 		ring.addItem("Play Game", StartGame);
+		ring.addItem("Sound On/Off", EnDisAbleSound);
 		ring.addItem("Exit", QuitGame);
 		
 		add(ring);
 	}
 	
-	public function QuitGame() : Void 
+	public function EnDisAbleSound() : Bool
 	{
+		if (FlxG.sound.volume != 0)
+		{
+			FlxG.sound.volume = 0;
+			return false;
+		}
+		else
+		{
+			FlxG.sound.volume = 1;
+			return true;
+		}
 		
 	}
 	
-	public function StartGame() : Void
+	public function QuitGame() : Bool 
+	{
+		System.exit(0);
+		return true;
+	}
+	
+	
+	public function StartGame() : Bool
 	{
 		FlxG.switchState(new PlayState());
+		return true;
 	}
 	
 	/**

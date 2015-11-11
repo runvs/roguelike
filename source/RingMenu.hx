@@ -62,7 +62,7 @@ class RingMenu extends FlxSpriteGroup
 		CreditsText.y = FlxG.height - 80 - 4;
 	}
 	
-	public function addItem(name:String, notifyCallback:Void -> Void)
+	public function addItem(name:String, notifyCallback:Void -> Bool)
 	{
 		var i : Int = itemGroup.length;
 		var t : RingItem = new RingItem(0, 0, 100, name, 12);
@@ -96,7 +96,14 @@ class RingMenu extends FlxSpriteGroup
 				var r : RingItem = itemGroup.members[i];
 				if (i == selectedItem)
 				{
-					r.setBorderStyle(FlxText.BORDER_OUTLINE, GameProperties.Color_Red, 2);
+					if (r.result)
+					{
+						r.setBorderStyle(FlxText.BORDER_OUTLINE, GameProperties.Color_Green, 2);
+					}
+					else
+					{
+						r.setBorderStyle(FlxText.BORDER_OUTLINE, GameProperties.Color_Red, 2);
+					}
 				}
 				else
 				{
@@ -127,7 +134,8 @@ class RingMenu extends FlxSpriteGroup
 	{
 		if (itemGroup.length > 0)
 		{
-			itemGroup.members[selectedItem].callback();
+			var c : Bool = itemGroup.members[selectedItem].callback();
+			itemGroup.members[selectedItem].result = c;
 		}
 	}
 	
