@@ -71,6 +71,12 @@ class RingMenu extends FlxSpriteGroup
 		t.y += 32 * i;
 		t.x = leftXPos;
 		itemGroup.add(t);
+		if (itemGroup.length == 1 )
+		{
+			itemGroup.members[0].x = leftXPos + 10;
+		}
+		
+	
 	}
 	
 	public override function update()
