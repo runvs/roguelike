@@ -6,6 +6,7 @@ import flixel.group.FlxSpriteGroup;
 import flixel.group.FlxTypedGroup;
 import flixel.input.gamepad.LogitechButtonID;
 import flixel.text.FlxText;
+import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxColorUtil;
@@ -26,6 +27,8 @@ class RingMenu extends FlxSpriteGroup
 	
 	private var leftXPos : Float = FlxG.width / 2 - 25;
 	
+	private var itemOffsetX : Float;
+	
 	public function new() 
 	{
 		super();
@@ -41,10 +44,15 @@ class RingMenu extends FlxSpriteGroup
 		selector.makeGraphic(16, 4);
 		selector.offset.set(32, -8);
 		selector.color = GameProperties.Color_Red;
+		selector.alpha = 0;
+		FlxTween.tween(selector, { alpha: 1.0 }, 0.25, {startDelay: 1.75 } );
 		add(selector);
 		
 		selectedItem = 0;
 		
+		itemOffsetX = FlxG.width/2 + 32;
+
+		FlxTween.tween(this, { itemOffsetX: 0 }, 0.75, { ease:FlxEase.bounceOut, startDelay: 1.0 } );
 	}
 	
 	public function setTitleText (t : String)
@@ -52,14 +60,20 @@ class RingMenu extends FlxSpriteGroup
 		Title.text = t;
 		Title.screenCenter();
 		Title.setFormat(40, FlxColor.WHITE, "center");
-		Title.setBorderStyle(FlxText.BORDER_OUTLINE, GameProperties.Color_Red, 2);
-		Title.y -= FlxG.height/3;
+		Title.setBorderStyle(FlxText.BORDER_OUTLINE, GameProperties.Color_Yellow, 2);
+		var finalTitlePosition : Float = Title.y -FlxG.height / 3;
+		Title.y = - 50;
+	
+		FlxTween.tween(Title, { y: finalTitlePosition }, 0.6, { ease:FlxEase.bounceOut, startDelay: 0 } );
 	}
 	public function setCreditText (t : String)
 	{
 		CreditsText.text = t;
-		CreditsText.x = 0;
+		var finalCreditsPosition : Int = 0;
+		CreditsText.x = -FlxG.width / 2 - 64;
 		CreditsText.y = FlxG.height - 80 - 4;
+
+		FlxTween.tween(CreditsText, { x: finalCreditsPosition }, 1, { ease:FlxEase.bounceOut, startDelay:0.35 } );
 	}
 	
 	public function addItem(name:String, notifyCallback:Void -> Bool)
@@ -94,6 +108,7 @@ class RingMenu extends FlxSpriteGroup
 			for (i in 0...itemGroup.length)
 			{
 				var r : RingItem = itemGroup.members[i];
+				r.offset.x = -itemOffsetX;	// tween at the beginning
 				if (i == selectedItem)
 				{
 					if (r.result)
