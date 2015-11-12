@@ -27,7 +27,7 @@ class MobGenerator
 			var tmpRoom:flixel.util.FlxRect = listOfRooms[roomIndex];
 			
 			var distant : Bool = FlxRandom.chanceRoll();
-			distant = false;
+			//distant = false;
 			if (FlxRandom.chanceRoll(30))
 			{
 				//spawn
