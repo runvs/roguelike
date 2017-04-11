@@ -1,5 +1,5 @@
 package;
-import flixel.util.FlxColorUtil;
+import flixel.util.FlxColor;
 
 /**
  * ...
@@ -89,9 +89,9 @@ class GameProperties
 	public static var Enemy_HP_PerLevel : Int = 4 ;
 	public static var Enemy_HP_PerLevel_Exponent : Float = 1.3;
 	
-	public static var Color_Red : Int  = FlxColorUtil.makeFromARGB(1.0, 203, 65, 58);
-	public static var Color_Green : Int  = FlxColorUtil.makeFromARGB(1.0, 70, 148, 80);
-	public static var Color_Yellow : Int  = FlxColorUtil.makeFromARGB(1.0, 203, 122, 58);
+	public static var Color_Red : FlxColor  = FlxColor.fromRGB( 203, 65, 58);
+	public static var Color_Green : FlxColor  = FlxColor.fromRGB(70, 148, 80);
+	public static var Color_Yellow : FlxColor  = FlxColor.fromRGB(203, 122, 58);
 	
 	
 	public static function floatToStringPrecision(n:Float, prec:Int)

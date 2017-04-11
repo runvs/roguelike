@@ -27,14 +27,14 @@ class Creature extends FlxSprite
 		shadow.alpha = 0.25;
 	}
 	
-	override public function update()
+	override public function update(elapsed : Float)
 	{
 		if (alive)
 		{
 			updateHitbox();
 			doAnimationStuff();
 		}
-		super.update();
+		super.update(elapsed);
 		shadow.x = x;
 		shadow.y = y;
 	}

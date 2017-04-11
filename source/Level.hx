@@ -1,17 +1,16 @@
 import flixel.FlxObject;
-import flixel.group.FlxTypedGroup;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.math.FlxPoint;
+import flixel.math.FlxVector;
 import flixel.system.debug.Window;
 import flixel.system.FlxVersion;
 import flixel.tile.FlxTile;
-import flixel.util.FlxAngle;
-import flixel.util.FlxPoint;
-import flixel.util.FlxVector;
 
 class Level extends FlxObject
 {
 	
-	public var _grpEnemies:flixel.group.FlxTypedGroup<BasicEnemy>;
-	public var _grpDeadEnemies:flixel.group.FlxTypedGroup<BasicEnemy>;
+	public var _grpEnemies: FlxTypedGroup<BasicEnemy>;
+	public var _grpDeadEnemies:FlxTypedGroup<BasicEnemy>;
 
 	public var map : MyTileMap;
 	private var _level : Int;
@@ -303,17 +302,17 @@ class Level extends FlxObject
 	}
 	
 
-	public override function update():Void
+	public override function update(elapsed:Float):Void
 	{	
 		
-		super.update();
-		map.update();
+		super.update(elapsed);
+		map.update(elapsed);
 
-		_grpDeadEnemies.update();
-		_grpEnemies.update();
-		_grpShields.update();
-		_grpParticles.update();
-		_grpEnemyParticles.update();
+		_grpDeadEnemies.update(elapsed);
+		_grpEnemies.update(elapsed);
+		_grpShields.update(elapsed);
+		_grpParticles.update(elapsed);
+		_grpEnemyParticles.update(elapsed);
 	}
 
 	public override function draw():Void
@@ -372,7 +371,7 @@ class Level extends FlxObject
 		_grpShields = newShields;
 	}
 	
-	public function getPlayerStartingPosition () : FlxPoint { return new FlxPoint(StartPos.x * GameProperties.Tile_Size, StartPos.y * GameProperties.Tile_Size); };
+	public function getPlayerStartingPosition () : FlxPoint{ return new FlxPoint(StartPos.x * GameProperties.Tile_Size, StartPos.y * GameProperties.Tile_Size); };
 	public function getStartingPositionInTiles () : FlxPoint { return new FlxPoint(StartPos.x , StartPos.y); };
 	
 	public function spawnEnemyShot ( p : Projectile) : Void 

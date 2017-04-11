@@ -6,7 +6,6 @@ import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
-import flixel.util.FlxMath;
 
 using flixel.util.FlxSpriteUtil;
 import flash.system.System; 	// for System.exit(0);
@@ -85,13 +84,13 @@ class MenuState extends FlxState
 	/**
 	 * Function that is called once every frame.
 	 */
-	override public function update():Void
+	override public function update(elapsed : Float):Void
 	{
-		super.update();
+		super.update(elapsed);
 		
-		if (FlxG.keys.anyJustPressed(["Space", "Return"]))
-		{
-			StartGame();
-		}
+		//if (FlxG.keys.anyJustPressed(["Space", "Return"]))
+		//{
+			//StartGame();
+		//}
 	}	
 }

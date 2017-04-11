@@ -2,9 +2,9 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.math.FlxVector;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
-import flixel.util.FlxVector;
 
 /**
  * ...
@@ -30,7 +30,7 @@ class Projectile extends FlxSprite
 		this.origin.set(8, 8);
 		
 		
-		var dir : FlxVector = new FlxVector(tx, ty);
+		var dir : FlxVector= new FlxVector(tx, ty);
 		dir = dir.normalize();
 		dir = dir.scale(GameProperties.Skills_PowerShootSpeed * Math.sqrt(level*2));
 		

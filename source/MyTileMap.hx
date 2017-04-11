@@ -1,7 +1,7 @@
 package;
 
 import flixel.FlxObject;
-import flixel.group.FlxTypedGroup;
+import flixel.group.FlxGroup.FlxTypedGroup;
 
 /**
  * ...
@@ -21,11 +21,11 @@ class MyTileMap extends FlxObject
 		scrollFactor.set();
 	}
 	
-	override public function update()
+	override public function update(elapsed:Float)
 	{
-		//super.update();
-		floor.update();
-		walls.update();
+		//super.update(elapsed);
+		floor.update(elapsed);
+		walls.update(elapsed);
 	}
 	
 	override public function draw()

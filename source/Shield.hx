@@ -26,15 +26,16 @@ class Shield extends FlxSprite
 		this.scale.set(f, f);
 		this.updateHitbox();
 		
-		var t : FlxTimer = new FlxTimer( 3/9, function(t: FlxTimer) { this.animation.play("idle", true); } );
+		var t : FlxTimer = new FlxTimer();
+		t.start(3.0 / 9.0, function(t: FlxTimer) { this.animation.play("idle", true); } );
 		
 		lifeTime = (1.5 +  level* 0.85);
 		immovable = true;
 	}
 	
-	override public function update () : Void
+	override public function update (elapsed:Float) : Void
 	{
-		super.update();
+		super.update(elapsed);
 		lifeTime -= FlxG.elapsed;
 		if (lifeTime <= 0)
 		{

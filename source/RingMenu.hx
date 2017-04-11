@@ -2,14 +2,12 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.group.FlxSpriteGroup;
-import flixel.group.FlxTypedGroup;
-import flixel.input.gamepad.LogitechButtonID;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import flixel.util.FlxColorUtil;
 using flixel.util.FlxSpriteUtil;
 /**
  * ...
@@ -60,7 +58,9 @@ class RingMenu extends FlxSpriteGroup
 		Title.text = t;
 		Title.screenCenter();
 		Title.setFormat(40, FlxColor.WHITE, "center");
-		Title.setBorderStyle(FlxText.BORDER_OUTLINE, GameProperties.Color_Yellow, 2);
+		Title.borderStyle = FlxTextBorderStyle.OUTLINE;
+		Title.borderColor = GameProperties.Color_Yellow;
+		Title.borderSize = 2;
 		var finalTitlePosition : Float = Title.y -FlxG.height / 3;
 		Title.y = - 50;
 	
@@ -93,10 +93,10 @@ class RingMenu extends FlxSpriteGroup
 	
 	}
 	
-	public override function update()
+	public override function update(elapsed : Float)
 	{
-		super.update();
-		itemGroup.update();
+		super.update(elapsed);
+		itemGroup.update(elapsed);
 		if (itemGroup.length >= 1)
 		{
 			selector.x = FlxG.width / 2 - 25;
@@ -113,16 +113,20 @@ class RingMenu extends FlxSpriteGroup
 				{
 					if (r.result)
 					{
-						r.setBorderStyle(FlxText.BORDER_OUTLINE, GameProperties.Color_Green, 2);
+						r.borderStyle = FlxTextBorderStyle.OUTLINE;
+						r.borderSize = 2;
+						r.borderColor = GameProperties.Color_Green;
 					}
 					else
 					{
-						r.setBorderStyle(FlxText.BORDER_OUTLINE, GameProperties.Color_Red, 2);
+						r.borderStyle = FlxTextBorderStyle.OUTLINE;
+						r.borderSize = 2;
+						r.borderColor = GameProperties.Color_Red;
 					}
 				}
 				else
 				{
-					r.setBorderStyle(FlxText.BORDER_NONE, GameProperties.Color_Red, 2);
+					r.borderStyle = FlxTextBorderStyle.NONE;
 				}
 			}
 		}

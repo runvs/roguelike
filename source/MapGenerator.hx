@@ -1,24 +1,27 @@
 package;
+import flixel.FlxG;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.math.FlxRect;
 
 
 class MapGenerator
 {
-	public static function generateMapFromTree(tree:flixel.group.FlxTypedGroup<Leaf>): MyTileMap
+	public static function generateMapFromTree(tree:FlxTypedGroup<Leaf>): MyTileMap
 	{
 		//we need to give every room a roomType and every hall a hallType
 		//for now, we do it random
 		var currentLeaf:Leaf;
 
 		//so dirty...
-		var listOfHalls:Array<flixel.util.FlxRect> = new Array<flixel.util.FlxRect>();
-		var listOfRooms:Array<flixel.util.FlxRect> = new Array<flixel.util.FlxRect>();
+		var listOfHalls:Array<FlxRect> = new Array<FlxRect>();
+		var listOfRooms:Array<FlxRect> = new Array<FlxRect>();
 		var listOfTypes:Array<TileType> = new Array<TileType>();
 		
 		//iterate over all leafes
 		for(currentLeaf in tree)
 		{
 			//get current room
-			var room:flixel.util.FlxRect = currentLeaf.room;
+			var room:FlxRect = currentLeaf.room;
 			if(room != null)
 			{
 				//roll type for room
@@ -28,7 +31,7 @@ class MapGenerator
 				listOfTypes.push(roomType);
 			}
 			
-			var hall:flixel.util.FlxRect;
+			var hall:FlxRect;
 			if(currentLeaf.halls != null)
 			{
 				for(hall in currentLeaf.halls)
@@ -71,7 +74,7 @@ class MapGenerator
 				//trace(x + ","+y);
 				for(roomIndex in 0 ... listOfRooms.length)
 				{
-					var tmpRoom:flixel.util.FlxRect = listOfRooms[roomIndex];
+					var tmpRoom:FlxRect = listOfRooms[roomIndex];
 					//trace(x + "," + y + " in: " + tmpRoom.x + ", " + tmpRoom.y + " - (" + tmpRoom.width + ", " + tmpRoom.height +")");
 					if(isInRoom(x, y, tmpRoom))
 					{
@@ -81,7 +84,7 @@ class MapGenerator
 					}
 				}
 
-				var tmpHall:flixel.util.FlxRect;
+				var tmpHall:FlxRect;
 				for(tmpHall in listOfHalls)
 				{
 					if(isInHall(x, y, tmpHall))
@@ -111,7 +114,7 @@ class MapGenerator
 		return finalMap;
 	}
 
-	public static function isInHall(x:Int, y:Int, room:flixel.util.FlxRect):Bool
+	public static function isInHall(x:Int, y:Int, room:FlxRect):Bool
 	{
 		if(x >= room.x && x < room.x + room.width)
 		{
@@ -124,7 +127,7 @@ class MapGenerator
 		return false;
 	}
 
-	public static function isInRoom(x:Int, y:Int, room:flixel.util.FlxRect):Bool
+	public static function isInRoom(x:Int, y:Int, room:FlxRect):Bool
 	{
 		if(x > room.x && x <= room.x + room.width)
 		{
@@ -161,7 +164,7 @@ class MapGenerator
 		        if (currentLeaf.leftChild == null && currentLeaf.rightChild == null) // if this Leaf is not already split...
 		        {
 		            // if this Leaf is too big, or splitChance percent chance...
-		            if (currentLeaf.width > MAX_LEAF_SIZE || currentLeaf.height > MAX_LEAF_SIZE || flixel.util.FlxRandom.chanceRoll(splitChance))
+		            if (currentLeaf.width > MAX_LEAF_SIZE || currentLeaf.height > MAX_LEAF_SIZE || FlxG.random.bool(splitChance))
 		            {
 		                if (currentLeaf.split()) // split the Leaf!
 		                {

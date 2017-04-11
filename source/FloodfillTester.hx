@@ -1,6 +1,5 @@
 package;
-import flixel.group.FlxTypedGroup;
-import flixel.util.FlxPoint;
+import flixel.group.FlxGroup.FlxTypedGroup;
 
 /**
  * ...

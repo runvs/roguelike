@@ -2,8 +2,9 @@ package;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.math.FlxPoint;
 import flixel.text.FlxText;
-import flixel.util.FlxColorUtil;
+import flixel.util.FlxColor;
 
 /**
  * ...
@@ -33,7 +34,7 @@ class CharsheetIcon extends FlxSprite
 		this.scrollFactor.set();
 		
 		hitbox = new FlxSprite(X, Y);
-		hitbox.makeGraphic(32, 32, FlxColorUtil.makeFromARGB(0.1, 255, 255, 255));
+		hitbox.makeGraphic(32, 32, FlxColor.WHITE);
 		hitbox.scrollFactor.set();
 		
 		text = new FlxText(x, y + 32, 150, "" );
@@ -48,11 +49,11 @@ class CharsheetIcon extends FlxSprite
 	}
 	
 	
-	public override function update () : Void 
+	public override function update (elapsed:Float) : Void 
 	{
-		hitbox.update();
-		super.update();
-		text.update();
+		hitbox.update(elapsed);
+		super.update(elapsed);
+		text.update(elapsed);
 		if (maxLevel > 0)
 		{
 			text.text = skillName + "\n" + Std.string(currentLevel) + " / " + Std.string(maxLevel);
@@ -66,7 +67,7 @@ class CharsheetIcon extends FlxSprite
 		
 		
 		
-		if (hitbox.overlapsPoint(FlxG.mouse, true))
+		if (hitbox.overlapsPoint(new FlxPoint(FlxG.mouse.x, FlxG.mouse.y), true))
 		{
 			tooltip.alpha = 1.0;
 			tooltip.x = FlxG.mouse.screenX + 16;

@@ -4,11 +4,10 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup;
-import flixel.plugin.MouseEventManager;
+import flixel.input.mouse.FlxMouseEventManager;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
-import flixel.util.FlxColorUtil;
 
 /**
  * ...
@@ -701,52 +700,53 @@ class SkillTree extends FlxSpriteGroup
 	
 	private function Open() : Void 
 	{
-		MouseEventManager.add(btn_PowerShoot.hitbox, upgrade_PowerShoot);
-		MouseEventManager.add(btn_PowerShield.hitbox, upgrade_PowerShield);
-		MouseEventManager.add(btn_PowerHit.hitbox, upgrade_PowerHit);
-		MouseEventManager.add(btn_PowerBall.hitbox, upgrade_PowerBall);
-		MouseEventManager.add(btn_PowerArmor.hitbox, upgrade_PowerArmor);
-		MouseEventManager.add(btn_NaniteWeapon.hitbox, upgrade_NaniteWeapon);
-		MouseEventManager.add(btn_NaniteHealth.hitbox, upgrade_NaniteHealth);
-		MouseEventManager.add(btn_NaniteArmor.hitbox, upgrade_NaniteArmor);
-		MouseEventManager.add(btn_BoostAgi.hitbox, upgrade_BoostAgi);
-		MouseEventManager.add(btn_BoostExp.hitbox, upgrade_BoostExp);
-		MouseEventManager.add(btn_BoostRegen.hitbox, upgrade_BoostRegen);
 		
-		MouseEventManager.add(btn_St.hitbox, upgradeSt);
-		MouseEventManager.add(btn_Ag.hitbox, upgradeAg);
-		MouseEventManager.add(btn_En.hitbox, upgradeEn);
-		MouseEventManager.add(btn_Wi.hitbox, upgradeWi);
-		MouseEventManager.add(btn_Lk.hitbox, upgradeLk);
+		FlxMouseEventManager.add(btn_PowerShoot.hitbox, upgrade_PowerShoot);
+		FlxMouseEventManager.add(btn_PowerShield.hitbox, upgrade_PowerShield);
+		FlxMouseEventManager.add(btn_PowerHit.hitbox, upgrade_PowerHit);
+		FlxMouseEventManager.add(btn_PowerBall.hitbox, upgrade_PowerBall);
+		FlxMouseEventManager.add(btn_PowerArmor.hitbox, upgrade_PowerArmor);
+		FlxMouseEventManager.add(btn_NaniteWeapon.hitbox, upgrade_NaniteWeapon);
+		FlxMouseEventManager.add(btn_NaniteHealth.hitbox, upgrade_NaniteHealth);
+		FlxMouseEventManager.add(btn_NaniteArmor.hitbox, upgrade_NaniteArmor);
+		FlxMouseEventManager.add(btn_BoostAgi.hitbox, upgrade_BoostAgi);
+		FlxMouseEventManager.add(btn_BoostExp.hitbox, upgrade_BoostExp);
+		FlxMouseEventManager.add(btn_BoostRegen.hitbox, upgrade_BoostRegen);
+		
+		FlxMouseEventManager.add(btn_St.hitbox, upgradeSt);
+		FlxMouseEventManager.add(btn_Ag.hitbox, upgradeAg);
+		FlxMouseEventManager.add(btn_En.hitbox, upgradeEn);
+		FlxMouseEventManager.add(btn_Wi.hitbox, upgradeWi);
+		FlxMouseEventManager.add(btn_Lk.hitbox, upgradeLk);
 		
 	}
 	private function Close() : Void 
 	{
-		MouseEventManager.remove(btn_PowerShoot.hitbox);
-		MouseEventManager.remove(btn_PowerShield.hitbox);
-		MouseEventManager.remove(btn_PowerHit.hitbox);
-		MouseEventManager.remove(btn_PowerBall.hitbox);
-		MouseEventManager.remove(btn_PowerArmor.hitbox);
-		MouseEventManager.remove(btn_NaniteWeapon.hitbox);
-		MouseEventManager.remove(btn_NaniteHealth.hitbox);
-		MouseEventManager.remove(btn_NaniteArmor.hitbox);
-		MouseEventManager.remove(btn_BoostAgi.hitbox);
-		MouseEventManager.remove(btn_BoostExp.hitbox);
-		MouseEventManager.remove(btn_BoostRegen.hitbox);
+		FlxMouseEventManager.remove(btn_PowerShoot.hitbox);
+		FlxMouseEventManager.remove(btn_PowerShield.hitbox);
+		FlxMouseEventManager.remove(btn_PowerHit.hitbox);
+		FlxMouseEventManager.remove(btn_PowerBall.hitbox);
+		FlxMouseEventManager.remove(btn_PowerArmor.hitbox);
+		FlxMouseEventManager.remove(btn_NaniteWeapon.hitbox);
+		FlxMouseEventManager.remove(btn_NaniteHealth.hitbox);
+		FlxMouseEventManager.remove(btn_NaniteArmor.hitbox);
+		FlxMouseEventManager.remove(btn_BoostAgi.hitbox);
+		FlxMouseEventManager.remove(btn_BoostExp.hitbox);
+		FlxMouseEventManager.remove(btn_BoostRegen.hitbox);
 		
-		MouseEventManager.remove(btn_St.hitbox);
-		MouseEventManager.remove(btn_Ag.hitbox);
-		MouseEventManager.remove(btn_En.hitbox);
-		MouseEventManager.remove(btn_Wi.hitbox);
-		MouseEventManager.remove(btn_Lk.hitbox);
+		FlxMouseEventManager.remove(btn_St.hitbox);
+		FlxMouseEventManager.remove(btn_Ag.hitbox);
+		FlxMouseEventManager.remove(btn_En.hitbox);
+		FlxMouseEventManager.remove(btn_Wi.hitbox);
+		FlxMouseEventManager.remove(btn_Lk.hitbox);
 	}
 	
-	override public function update () : Void 
+	override public function update (elapsed:Float) : Void 
 	{
 		if (showMe)
 		{
-			super.update();
-			InfoString.color = FlxColorUtil.makeFromARGB(1.0, 203, 122, 58);
+			super.update(elapsed);
+			InfoString.color = FlxColor.fromRGB(203, 122, 58);
 			InfoString.text = "Level:\t\t" + Std.string(_properties.level) + 
 			"\nExp:\t\t\t" + Std.string(_properties.experience) + " / " + Std.string(_properties.experienceLevelUp) + "\n\n";
 			
@@ -779,25 +779,25 @@ class SkillTree extends FlxSpriteGroup
 		
 		CheckSkillLifeTime();
 		
-		btn_PowerHit.update();		
-		btn_PowerShoot.update();
-		btn_PowerShield.update();
-		btn_PowerBall.update();
-		btn_PowerArmor.update();
-		btn_NaniteWeapon.update();
-		btn_NaniteHealth.update();
-		btn_NaniteArmor.update();
-		btn_BoostAgi.update();
-		btn_BoostExp.update();
-		btn_BoostRegen.update();
+		btn_PowerHit.update(elapsed);		
+		btn_PowerShoot.update(elapsed);
+		btn_PowerShield.update(elapsed);
+		btn_PowerBall.update(elapsed);
+		btn_PowerArmor.update(elapsed);
+		btn_NaniteWeapon.update(elapsed);
+		btn_NaniteHealth.update(elapsed);
+		btn_NaniteArmor.update(elapsed);
+		btn_BoostAgi.update(elapsed);
+		btn_BoostExp.update(elapsed);
+		btn_BoostRegen.update(elapsed);
 		
-		btn_St.update();
-		btn_Ag.update();
-		btn_En.update();
-		btn_Wi.update();
-		btn_Lk.update();
+		btn_St.update(elapsed);
+		btn_Ag.update(elapsed);
+		btn_En.update(elapsed);
+		btn_Wi.update(elapsed);
+		btn_Lk.update(elapsed);
 
-		InfoString.update();
+		InfoString.update(elapsed);
 	}
 	
 	

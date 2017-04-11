@@ -1,4 +1,4 @@
-import flixel.util.FlxRandom;
+
 class ExitGenerator
 {
 

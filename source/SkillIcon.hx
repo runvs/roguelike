@@ -4,7 +4,6 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import flixel.util.FlxColorUtil;
 
 /**
  * ...
@@ -98,17 +97,17 @@ class SkillIcon extends FlxSprite
 		text.draw();
 	}
 	
-	public override function update () : Void 
+	public override function update (elapsed:Float) : Void 
 	{
-		super.update();
-		overlay.update();
-		text.update();
+		super.update(elapsed);
+		overlay.update(elapsed);
+		text.update(elapsed);
 		
-		if (FlxColorUtil.getRed(text.color) == FlxColorUtil.getRed(FlxColor.BLACK))
+		if ((text.color) == (FlxColor.BLACK))
 		{
 			avail = false;
 		} 
-		else if (FlxColorUtil.getRed(text.color) == FlxColorUtil.getRed(FlxColor.GRAY))
+		else if ((text.color) == (FlxColor.GRAY))
 		{
 			avail = true;
 			ready = false;
@@ -121,14 +120,14 @@ class SkillIcon extends FlxSprite
 		
 		if ( !avail)
 		{
-			this.color = FlxColorUtil.makeFromARGB(1.0, 50, 50, 50);
+			this.color = FlxColor.fromRGB(50, 50, 50);
 		}
 		else
 		{
-			this.color = FlxColorUtil.makeFromARGB(1.0, 150, 150, 150);
+			this.color = FlxColor.fromRGB( 150, 150, 150);
 			if (ready)
 			{
-				this.color = FlxColorUtil.makeFromARGB(1.0, 255, 255, 255);
+				this.color = FlxColor.fromRGB(255, 255, 255);
 			}
 		}
 		

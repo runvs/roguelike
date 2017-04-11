@@ -1,6 +1,5 @@
 package;
 import flixel.FlxG;
-import flixel.util.FlxRandom;
 
 /**
  * ...
@@ -14,9 +13,9 @@ class Enemy_CloseCombat extends BasicEnemy
 		super(l);
 
 		loadGraphic(AssetPaths.Enemy__png, true, 32, 32);
-		this.animation.add("idle", [0, 1, 2, 3, 4],FlxRandom.intRanged(4,6));
+		this.animation.add("idle", [0, 1, 2, 3, 4],FlxG.random.int(4,6));
 		this.animation.add("walk", [5, 6, 7, 8], 5);
-		this.animation.play("idle", false, FlxRandom.intRanged(0, 3));
+		this.animation.play("idle", false, FlxG.random.int(0, 3));
 		this.animation.add("dead", [9], 30, true);
 		
 		type = 0;
@@ -62,8 +61,8 @@ class Enemy_CloseCombat extends BasicEnemy
 			randomwalkTimer -= FlxG.elapsed;
 			if (randomwalkTimer <= 0)
 			{
-				randomwalkTimer = FlxRandom.floatRanged(2, 5);
-				randomWalkDirection = FlxRandom.intRanged(0, 3);
+				randomwalkTimer = FlxG.random.float(2, 5);
+				randomWalkDirection = FlxG.random.int(0, 3);
 			}
 			
 			if (randomWalkDirection == 0)

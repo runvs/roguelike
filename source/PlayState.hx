@@ -4,17 +4,14 @@ import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
-import flixel.plugin.MouseEventManager;
+import flixel.math.FlxRect;
+import flixel.math.FlxVector;
 import flixel.text.FlxText;
 import flixel.tile.FlxTile;
 import flixel.tweens.FlxTween;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
-import flixel.util.FlxMath;
-import flixel.util.FlxPoint;
-import flixel.util.FlxRect;
 import flixel.util.FlxTimer;
-import flixel.util.FlxVector;
 
 /**
  * A FlxState which can be used for the actual gameplay.
@@ -54,9 +51,8 @@ class PlayState extends FlxState
 		
 		skillz = new SkillTree(player.properties);
 		player.setSkills(skillz);
-		
-		FlxG.camera.follow(player, FlxCamera.STYLE_TOPDOWN);
-		FlxG.camera.setBounds(0, 0, level.sizeX*GameProperties.Tile_Size, level.sizeY*GameProperties.Tile_Size);
+		FlxG.camera.follow(player, FlxCameraFollowStyle.NO_DEAD_ZONE);
+		//FlxG.camera.setScrollBounds(0, 0, level.sizeX*GameProperties.Tile_Size, level.sizeY*GameProperties.Tile_Size);
 		
 		// overlay and vignette stuff
 		
@@ -119,7 +115,8 @@ class PlayState extends FlxState
 			{
 				switching = true;
 				FlxTween.tween(_overlay, { alpha:1 } );
-				var t : FlxTimer = new FlxTimer(1, function (t:FlxTimer) 
+				var t : FlxTimer = new FlxTimer();
+				t.start(1, function (t:FlxTimer) 
 				{
 					levelNumber++;
 					CreateNewLevel(player.properties.level);
@@ -147,9 +144,11 @@ class PlayState extends FlxState
 		{
 			level = new Level(GameProperties.World_SizeInTilesX, GameProperties.World_SizeInTilesY, playerLevel, levelNumber);
 		}
+		
+		//trace("end new level");
 	}
 		
-	function updateEnemies():Void 
+	function updateEnemies(elapsed:Float):Void 
 	{
 		level._grpEnemies.forEach(function(e:BasicEnemy) 
 		{
@@ -196,22 +195,22 @@ class PlayState extends FlxState
 		//FlxG.collide(player, level._grpEnemies);
 	}
 	
-	function updateLevel():Void 
+	function updateLevel(elapsed:Float):Void 
 	{
 		var px : Int = Std.int(player.x / GameProperties.Tile_Size+0.5);
 		var py : Int = Std.int(player.y / GameProperties.Tile_Size+0.5);
 		
-		level.update();
+		level.update(elapsed);
 		level.map.setVisibility(px, py, 4);
 		pathfinder.setLevel (level);
 		pathfinder.setPlayerPos(px, py);
 		pathfinder.update();
 	}
 	
-	function updatePlayer():Void 
+	function updatePlayer(elapsed:Float):Void 
 	{
-		player.update();
-		player.updateHud();
+		player.update(elapsed);
+		player.updateHud(elapsed);
 		
 		if (player.attack)
 		{
@@ -329,10 +328,10 @@ class PlayState extends FlxState
 	/**
 	 * Function that is called once every frame.
 	 */
-	override public function update():Void
+	override public function update(elapsed:Float):Void
 	{
-		_overlay.update();
-		skillz.update();
+		_overlay.update(elapsed);
+		skillz.update(elapsed);
 		player.getInputMenu();
 		if (!_ending && !switching )
 		{
@@ -346,15 +345,15 @@ class PlayState extends FlxState
 			
 			if (!skillz.showMe)
 			{
-				super.update();
+				super.update(elapsed);
 				
-				updateEnemies();
+				updateEnemies(elapsed);
 				
 				cleanUp();
 				
-				updateLevel();
+				updateLevel(elapsed);
 
-				updatePlayer();
+				updatePlayer(elapsed);
 				
 				updateCollisions();
 				
@@ -404,9 +403,9 @@ class PlayState extends FlxState
 		{
 			skillz.draw();
 		}
-		_vignette.draw();
-		_overlay.draw();
+		//_vignette.draw();
+		//_overlay.draw();
 		
-		super.draw();
+		//super.draw();
 	}
 }

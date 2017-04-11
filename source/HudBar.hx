@@ -2,7 +2,6 @@ package;
 
 import flixel.FlxSprite;
 import flixel.util.FlxColor;
-import flixel.util.FlxColorUtil;
 
 /**
  * ...
@@ -27,7 +26,7 @@ class HudBar extends FlxSprite
 		this.scrollFactor.set();
 
 		_background = new FlxSprite(x-2,y-2);
-		_background.makeGraphic(Std.int(w) + 4, Std.int(h) + 4, FlxColorUtil.makeFromARGB(0.25, 100,100,100));
+		_background.makeGraphic(Std.int(w) + 4, Std.int(h) + 4, FlxColor.fromRGB( 100,100,100, 100));
 		_background.scrollFactor.set();
 		if (vertical)
 		{
@@ -36,9 +35,9 @@ class HudBar extends FlxSprite
 		
 	}
 	
-	override public function update():Void
+	override public function update(elapsed:Float):Void
 	{
-		super.update();
+		super.update(elapsed);
 		var val : Float = health ;
 		if (val < 0 ) val = 0;
 		if (val > 1) val = 1;

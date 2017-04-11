@@ -1,12 +1,11 @@
 package;
 
+import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
-import flixel.util.FlxColorUtil;
-import flixel.util.FlxRandom;
 import flixel.util.FlxTimer;
 
 /**
@@ -41,7 +40,7 @@ class Tile extends FlxSprite
 		
 		visited = false;
 		visitedSprite = new FlxSprite();
-		visitedSprite.makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(1.0,50,50,50));
+		visitedSprite.makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColor.fromRGB(50,50,50));
 		visitedSprite.setPosition(x, y);
 		
 		shadow_rightSprite = null;
@@ -125,11 +124,11 @@ class Tile extends FlxSprite
 	
 	public function visitMe() : Void 
 	{
-		var delay : Float = FlxRandom.floatRanged(0.0, 0.4);
-		var t : FlxTimer = new FlxTimer(delay, function ( t: FlxTimer)
+		var delay : Float = FlxG.random.float(0.0, 0.4);
+		var t : FlxTimer = new FlxTimer();
+		t.start(delay, function ( t: FlxTimer)
 		{
 			FlxTween.tween(visitedSprite, { alpha : 0 }, 0.5 - delay);
-			//var t : FlxTimer = new FlxTimer(0.5, function(t : FlxTimer) {  visited = true;} );
 		});
 	}
 	
@@ -137,6 +136,7 @@ class Tile extends FlxSprite
 	{
 		if (!visited)
 		{
+			//trace("draw Tile");
 			visitedSprite.draw();
 		}
 		else
@@ -167,7 +167,7 @@ class Tile extends FlxSprite
 		}
 		else if (type == TileType.Floor)	// Floor
 		{
-			makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(1,78, 96, 81));
+			makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColor.fromRGB(78, 96, 81));
 		}
 		else if (type == TileType.Exit)	// exit
 		{
@@ -175,7 +175,7 @@ class Tile extends FlxSprite
 		}
 		else if (type == TileType.Ceiling)	// ceiling
 		{
-			makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(1.0, 14, 16, 16));
+			makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColor.fromRGB(14, 16, 16));
 		}
 		this.updateHitbox();
 	}

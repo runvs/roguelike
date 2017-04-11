@@ -3,18 +3,15 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
-import flixel.group.FlxTypedGroup;
-import flixel.plugin.MouseEventManager;
+import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRect;
 import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxCollision;
 import flixel.util.FlxColor;
-import flixel.util.FlxColorUtil;
-import flixel.util.FlxPoint;
-import flixel.util.FlxRect;
-import lime.math.Rectangle;
 
 /**
  * ...
@@ -64,6 +61,7 @@ class Player extends Creature
 		
 		
 		properties = new PlayerProperties();
+		properties.experience = 5000;
 		
 		levelUpSprite = new FlxSprite();
 		levelUpSprite.loadGraphic(AssetPaths.levelup__png, false, 16, 16);
@@ -110,7 +108,7 @@ class Player extends Creature
 		
 		attacTimer = 0;
 		targetbox = new FlxSprite();
-		targetbox.makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColorUtil.makeFromARGB(0.5, 100, 200, 200));
+		targetbox.makeGraphic(GameProperties.Tile_Size, GameProperties.Tile_Size, FlxColor.fromRGB(100, 200, 200, 100));
 		targetboxRect = new FlxRect(x, y, GameProperties.Tile_Size, GameProperties.Tile_Size);
 		
 		// hud stuff
@@ -165,7 +163,7 @@ class Player extends Creature
 		effectFGYellow.animation.add("cast", [4,5,6,7,8], 10, true);
 		
 		
-		MouseEventManager.add(charsheetSprite, OpenSkills);
+		//MouseEventManager.add(charsheetSprite, OpenSkills);
 		
 		//properties.attributePoints = 5;
 		
@@ -184,14 +182,14 @@ class Player extends Creature
 	{
 		skillz.Show();
 		blipSound.play();
-		MouseEventManager.remove(charsheetSprite);
+		//MouseEventManager.remove(charsheetSprite);
 	}
 	
 	private function CloseSkills (o:FlxObject = null) : Void 
 	{
 		skillz.Show();
 		blipSound.play();
-		MouseEventManager.add(charsheetSprite, OpenSkills);
+		//MouseEventManager.add(charsheetSprite, OpenSkills);
 	}
 	
 	public function setSkills (sk : SkillTree)
@@ -232,7 +230,7 @@ class Player extends Creature
 		skillIconList.draw();
 	}
 	
-	override public function update()
+	override public function update(elapsed:Float)
 	{
 		this.maxVelocity = new FlxPoint(GameProperties.Player_MaxSpeed * properties.getMoveSpeedFactor() ,  GameProperties.Player_MaxSpeed * properties.getMoveSpeedFactor());
 		if (properties.currentHP <= 0)
@@ -241,32 +239,32 @@ class Player extends Creature
 		}
 		
 		
-		charsheetSprite.update();
-		levelUpSprite.update();
+		charsheetSprite.update(elapsed);
+		levelUpSprite.update(elapsed);
 		
 		
 		effectFGRed.setPosition(x, y);
-		effectFGRed.update();
+		effectFGRed.update(elapsed);
 		effectBGRed.setPosition(x, y);
-		effectBGRed.update();
+		effectBGRed.update(elapsed);
 		
 		effectFGGreen.setPosition(x, y);
-		effectFGGreen.update();
+		effectFGGreen.update(elapsed);
 		effectBGGreen.setPosition(x, y);
-		effectBGGreen.update();
+		effectBGGreen.update(elapsed);
 		
 		effectFGYellow.setPosition(x, y);
-		effectFGYellow.update();
+		effectFGYellow.update(elapsed);
 		effectBGYellow.setPosition(x, y);
-		effectBGYellow.update();
+		effectBGYellow.update(elapsed);
 		
 		HPBar.health = properties.currentHP / properties.getHP();
-		HPBar.update();
+		HPBar.update(elapsed);
 		MPBar.health = properties.currentMP / properties.baseMP;
-		MPBar.update();
+		MPBar.update(elapsed);
 		var f : Float = (properties.experience - properties.experienceLevelUpLast) / (properties.experienceLevelUp - properties.experienceLevelUpLast) ;
 		ExpBar.health = f;
-		ExpBar.update();
+		ExpBar.update(elapsed);
 		
 		
 		attacTimer -= FlxG.elapsed;
@@ -276,7 +274,7 @@ class Player extends Creature
 		attackShield = false;
 		acceleration.set(0, 0);
 		getInput();
-		super.update();
+		super.update(elapsed);
 		
 		
 		properties.update();
@@ -305,10 +303,10 @@ class Player extends Creature
 		
 	}
 	
-	public function updateHud() : Void 
+	public function updateHud(elapsed : Float) : Void 
 	{
 
-		skillIconList.update();
+		skillIconList.update(elapsed);
 		skillIconList.members[0].currentTime = skillz.cooldown_PowerHit;
 		skillIconList.members[1].currentTime = skillz.cooldown_PowerShoot;
 		skillIconList.members[2].currentTime = skillz.cooldown_PowerShield;
@@ -459,10 +457,6 @@ class Player extends Creature
 		getInputSkills();
 		
 		EffectAnimations();
-		
-	
-			
-		
 	}
 
 	
@@ -543,7 +537,7 @@ class Player extends Creature
 		attackShield = false; 
 		if (FlxG.keys.justPressed.ONE)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[0].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
+			if (skillIconList.members[0].text.color.red == GameProperties.Color_Red.red)
 			{
 				skillz.activateSkillPowerHit();
 				skillz.payMP(GameProperties.Skills_PowerHitMPCost);
@@ -551,7 +545,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.TWO)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[1].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
+			if (skillIconList.members[1].text.color.red == GameProperties.Color_Red.red)
 			{
 				attackPowerShoot = true;
 				skillz.useSkillPowerShoot();
@@ -561,7 +555,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.THREE)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[2].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
+			if (skillIconList.members[2].text.color.red == GameProperties.Color_Red.red)
 			{
 				skillz.useSkillPowerShield();
 				attackShield = true;
@@ -570,7 +564,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.FOUR)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[3].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
+			if (skillIconList.members[3].text.color.red == GameProperties.Color_Red.red)
 			{
 				skillz.useSkillPowerBall();
 				attackPowerBall = true;
@@ -579,7 +573,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.FIVE)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[4].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
+			if (skillIconList.members[4].text.color.red == GameProperties.Color_Red.red)
 			{
 				skillz.useSkillPowerArmor();
 				skillz.payMP(GameProperties.Skills_PowerArmorMPCost);
@@ -587,7 +581,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.SIX)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[5].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
+			if (skillIconList.members[5].text.color.red == (GameProperties.Color_Red.red))
 			{
 				skillz.activateSkillBoostRegen();
 				skillz.payMP(GameProperties.Skills_BoostRegenMPCost);
@@ -596,7 +590,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.SEVEN)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[6].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
+			if ((skillIconList.members[6].text.color.red) == (GameProperties.Color_Red.red))
 			{
 				skillz.activateSkillBoostAgi();
 				skillz.payMP(GameProperties.Skills_BoostAgiMPCost);
@@ -605,7 +599,7 @@ class Player extends Creature
 		}
 		if (FlxG.keys.justPressed.EIGHT)
 		{
-			if (FlxColorUtil.getRed(skillIconList.members[7].text.color) == FlxColorUtil.getRed(GameProperties.Color_Red))
+			if ((skillIconList.members[7].text.color.red) == (GameProperties.Color_Red.red))
 			{
 				skillz.activateSkillBoostExp();
 				skillz.payMP(GameProperties.Skills_BoostExpMPCost);

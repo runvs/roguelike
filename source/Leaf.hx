@@ -1,4 +1,9 @@
-class Leaf extends flixel.FlxBasic
+import flixel.FlxBasic;
+import flixel.FlxG;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRect;
+
+class Leaf extends FlxBasic
 {
  
     private var MIN_LEAF_SIZE:Int = 6;
@@ -10,8 +15,8 @@ class Leaf extends flixel.FlxBasic
  
     public var leftChild:Leaf; // the Leaf's left child Leaf
     public var rightChild:Leaf; // the Leaf's right child Leaf
-    public var room:flixel.util.FlxRect; // the room that is inside this Leaf
-    public var halls:Array<flixel.util.FlxRect>; // hallways to connect this Leaf to other Leafs
+    public var room:FlxRect; // the room that is inside this Leaf
+    public var halls:Array<FlxRect>; // hallways to connect this Leaf to other Leafs
 
  
     public function new(X:Int, Y:Int, Width:Int, Height:Int)
@@ -34,7 +39,7 @@ class Leaf extends flixel.FlxBasic
         // if the width is >25% larger than height, we split vertically
         // if the height is >25% larger than the width, we split horizontally
         // otherwise we split randomly
-        var splitH:Bool = flixel.util.FlxRandom.float() > 0.5;
+        var splitH:Bool = FlxG.random.bool();
 		
         if (width > height && height / width >= 0.01)
             splitH = false;
@@ -45,7 +50,7 @@ class Leaf extends flixel.FlxBasic
         if (max <= MIN_LEAF_SIZE)
             return false; // the area is too small to split any more...
  
-        var split:Int = flixel.util.FlxRandom.intRanged(MIN_LEAF_SIZE,max);// determine where we're going to split
+        var split:Int = FlxG.random.int(MIN_LEAF_SIZE,max);// determine where we're going to split
  
         // create our left and right children based on the direction of the split
         if (splitH)
@@ -85,30 +90,30 @@ class Leaf extends flixel.FlxBasic
         else
         {
             // this Leaf is the ready to make a room
-            var roomSize:flixel.util.FlxPoint;
-            var roomPos:flixel.util.FlxPoint;
+            var roomSize:FlxPoint;
+            var roomPos:FlxPoint;
 
             // the room can be between 3 x 3 tiles to the size of the leaf - 2.
-            roomSize = new flixel.util.FlxPoint(flixel.util.FlxRandom.intRanged(3, width - 2), flixel.util.FlxRandom.intRanged(3, height - 2));
+            roomSize = new FlxPoint(FlxG.random.int(3, width - 2), FlxG.random.int(3, height - 2));
             //trace(roomSize);
             // place the room within the Leaf, but don't put it right 
             // against the side of the Leaf (that would merge rooms together)
             var maxX:Int = cast width - roomSize.x - 1 + 0.5;
             var maxY:Int = cast height - roomSize.y - 1 + 0.5;
-            roomPos = new flixel.util.FlxPoint(flixel.util.FlxRandom.intRanged(1, maxX), flixel.util.FlxRandom.intRanged(1, maxY));
-            room = new flixel.util.FlxRect(x + roomPos.x, y + roomPos.y, roomSize.x, roomSize.y);
+            roomPos = new FlxPoint(FlxG.random.int(1, maxX), FlxG.random.int(1, maxY));
+            room = new FlxRect(x + roomPos.x, y + roomPos.y, roomSize.x, roomSize.y);
         }
     } 
 
-    public function getRoom():flixel.util.FlxRect
+    public function getRoom():FlxRect
     {
         // iterate all the way through these leafs to find a room, if one exists.
         if (room != null)
             return room;
         else
         {
-            var lRoom:flixel.util.FlxRect = null;
-            var rRoom:flixel.util.FlxRect = null;
+            var lRoom:FlxRect = null;
+            var rRoom:FlxRect = null;
             if (leftChild != null)
             {
                 lRoom = leftChild.getRoom();
@@ -124,23 +129,23 @@ class Leaf extends flixel.FlxBasic
             else if (lRoom == null)
                 return rRoom;
             //else if (flixel.util.FlxRandom.chanceRoll(0.5)) //this is totally stupid, why do you write blogs 
-            else if (flixel.util.FlxRandom.float() > 0.5)    
+            else if (FlxG.random.float() > 0.5)    
                 return lRoom;
             else
                 return rRoom;
         }
     } 
 
-    public function createHall(l:flixel.util.FlxRect, r:flixel.util.FlxRect):Void
+    public function createHall(l:FlxRect, r:FlxRect):Void
     {
         // now we connect these two rooms together with hallways.
         // this looks pretty complicated, but it's just trying to figure out which point is where and then either draw a straight line, or a pair of lines to make a right-angle to connect them.
         // you could do some extra logic to make your halls more bendy, or do some more advanced things if you wanted.
      
-        halls = new Array<flixel.util.FlxRect>();
+        halls = new Array<FlxRect>();
      
-        var point1:flixel.util.FlxPoint = new flixel.util.FlxPoint(flixel.util.FlxRandom.floatRanged(l.left + 1, l.right - 2), flixel.util.FlxRandom.floatRanged(l.top + 1, l.bottom - 2));
-        var point2:flixel.util.FlxPoint = new flixel.util.FlxPoint(flixel.util.FlxRandom.floatRanged(r.left + 1, r.right - 2), flixel.util.FlxRandom.floatRanged(r.top + 1, r.bottom - 2));
+        var point1:FlxPoint = new FlxPoint(FlxG.random.float(l.left + 1, l.right - 2), FlxG.random.float(l.top + 1, l.bottom - 2));
+        var point2:FlxPoint = new FlxPoint(FlxG.random.float(r.left + 1, r.right - 2), FlxG.random.float(r.top + 1, r.bottom - 2));
      
         var w:Float = point2.x - point1.x;
         var h:Float = point2.y - point1.y;
@@ -151,72 +156,72 @@ class Leaf extends flixel.FlxBasic
             {
                 //if (flixel.util.FlxRandom.float() > 0.5)
                 {
-                    halls.push(new flixel.util.FlxRect(point2.x, point1.y, Math.abs(w) + 1, 2));
-                    halls.push(new flixel.util.FlxRect(point2.x, point2.y, 2, Math.abs(h) +1 ));
+                    halls.push(new FlxRect(point2.x, point1.y, Math.abs(w) + 1, 2));
+                    halls.push(new FlxRect(point2.x, point2.y, 2, Math.abs(h) +1 ));
                 }
               
             }
             else if (h > 0)
             {
                
-                if (flixel.util.FlxRandom.float() > 0.5)
+                if (FlxG.random.float() > 0.5)
                 {
-                    halls.push(new flixel.util.FlxRect(point2.x, point1.y, Math.abs(w), 2));
-                    halls.push(new flixel.util.FlxRect(point2.x, point1.y, 2, Math.abs(h)));
+                    halls.push(new FlxRect(point2.x, point1.y, Math.abs(w), 2));
+                    halls.push(new FlxRect(point2.x, point1.y, 2, Math.abs(h)));
                 }
                 else
                 {
-                    halls.push(new flixel.util.FlxRect(point2.x, point2.y, Math.abs(w), 2));
-                    halls.push(new flixel.util.FlxRect(point1.x, point1.y, 2, Math.abs(h)));
+                    halls.push(new FlxRect(point2.x, point2.y, Math.abs(w), 2));
+                    halls.push(new FlxRect(point1.x, point1.y, 2, Math.abs(h)));
                 }
             }
             else // if (h == 0)
             {
-                halls.push(new flixel.util.FlxRect(point2.x, point2.y, Math.abs(w), 2));
+                halls.push(new FlxRect(point2.x, point2.y, Math.abs(w), 2));
             }
         }
         else if (w > 0)
         {
             if (h < 0)
             {
-                if (flixel.util.FlxRandom.float() > 0.5)
+                if (FlxG.random.float() > 0.5)
                 {
-                    halls.push(new flixel.util.FlxRect(point1.x, point2.y, Math.abs(w), 2));
-                    halls.push(new flixel.util.FlxRect(point1.x, point2.y, 2, Math.abs(h)));
+                    halls.push(new FlxRect(point1.x, point2.y, Math.abs(w), 2));
+                    halls.push(new FlxRect(point1.x, point2.y, 2, Math.abs(h)));
                 }
                 else
                 {
-                    halls.push(new flixel.util.FlxRect(point1.x, point1.y, Math.abs(w), 2));
-                    halls.push(new flixel.util.FlxRect(point2.x, point2.y, 2, Math.abs(h)));
+                    halls.push(new FlxRect(point1.x, point1.y, Math.abs(w), 2));
+                    halls.push(new FlxRect(point2.x, point2.y, 2, Math.abs(h)));
                 }
             }
             else if (h > 0)
             {
-                if (flixel.util.FlxRandom.float() > 0.5)
+                if (FlxG.random.bool())
                 {
-                    halls.push(new flixel.util.FlxRect(point1.x, point1.y, Math.abs(w), 2));
-                    halls.push(new flixel.util.FlxRect(point2.x, point1.y, 2, Math.abs(h)));
+                    halls.push(new FlxRect(point1.x, point1.y, Math.abs(w), 2));
+                    halls.push(new FlxRect(point2.x, point1.y, 2, Math.abs(h)));
                 }
                 else
                 {
-                    halls.push(new flixel.util.FlxRect(point1.x, point2.y, Math.abs(w), 2));
-                    halls.push(new flixel.util.FlxRect(point1.x, point1.y, 2, Math.abs(h)));
+                    halls.push(new FlxRect(point1.x, point2.y, Math.abs(w), 2));
+                    halls.push(new FlxRect(point1.x, point1.y, 2, Math.abs(h)));
                 }
             }
             else // if (h == 0)
             {
-                halls.push(new flixel.util.FlxRect(point1.x, point1.y, Math.abs(w), 2));
+                halls.push(new FlxRect(point1.x, point1.y, Math.abs(w), 2));
             }
         }
         else // if (w == 0)
         {
             if (h < 0)
             {
-                halls.push(new flixel.util.FlxRect(point2.x, point2.y, 2, Math.abs(h)));
+                halls.push(new FlxRect(point2.x, point2.y, 2, Math.abs(h)));
             }
             else if (h > 0)
             {
-                halls.push(new flixel.util.FlxRect(point1.x, point1.y, 2, Math.abs(h)));
+                halls.push(new FlxRect(point1.x, point1.y, 2, Math.abs(h)));
             }
         }
     }    

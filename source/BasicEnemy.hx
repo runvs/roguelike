@@ -3,11 +3,9 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.math.FlxPoint;
 import flixel.system.FlxSound;
 import flixel.util.FlxColor;
-import flixel.util.FlxColorUtil;
-import flixel.util.FlxPoint;
-import flixel.util.FlxRandom;
 
 /**
  * ...
@@ -48,7 +46,7 @@ class BasicEnemy extends Creature
 		attackTimer = GameProperties.Enemy_AttackTimer;
 		
 		randomwalkTimer = 1.5;
-		randomWalkDirection = FlxRandom.intRanged(0, 3);
+		randomWalkDirection = FlxG.random.int(0, 3);
 		this.drag = new FlxPoint( GameProperties.Player_VelocityDecay, GameProperties.Player_VelocityDecay);
 		this.maxVelocity = new FlxPoint(GameProperties.Player_MaxSpeed * 0.5,  GameProperties.Player_MaxSpeed * 0.5);
 		
@@ -70,7 +68,7 @@ class BasicEnemy extends Creature
 		playerY = s.player.y;
 	}
 	
-	override  public function update ()
+	override  public function update (elapsed:Float)
 	{
 		doAttack = false;
 		if (alive)
@@ -86,7 +84,7 @@ class BasicEnemy extends Creature
 		{
 			animation.play("dead", true);
 		}
-		super.update();
+		super.update(elapsed);
 	}
 	
 	public  function doKIStuff()
@@ -107,7 +105,7 @@ class BasicEnemy extends Creature
 			animation.play("dead", true);
 			this.velocity.set();
 			acceleration.set();
-			this.color = FlxColorUtil.makeFromARGB(1.0, 100, 100, 100);
+			this.color = FlxColor.fromRGB(100, 100, 100);
 		}
 	}
 	
